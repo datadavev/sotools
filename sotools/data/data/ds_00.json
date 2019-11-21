@@ -1,0 +1,19 @@
+{
+   "@id":"ds-00",
+   "@context": {
+       "@vocab": "https://schema.org/"
+   },
+   "@type":"Dataset",
+   "name": "Dataset with metadata encoding",
+   "description": "Dataset snippet using SO:Encoding pattern for associated XML metadata",
+   "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+   "identifier": "dataset-00",
+   "encoding": {
+       "@id":"ds-00#media-object",
+       "@type":"MediaObject",
+       "contentUrl":"https://my.server.net/datasets/00.xml",
+       "dateModified":"2019-10-10T12:43:11+00:00.000",
+       "description":"ISO TC211 XML rendering of metadata",
+       "encodingFormat":"http://www.isotc211.org/2005/gmd"
+   }
+}

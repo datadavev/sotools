@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/"
+  },
+  "@graph": [
+    {
+      "@type": "Dataset",
+      "@id": "./",
+      "identifier": "dataset-01",
+      "name": "Dataset with metadata about",
+      "description": "Dataset snippet with metadata and data components indicated by hasPart and the descriptive metadata through an about association.",
+      "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "hasPart": [
+        {
+          "@id": "./metadata.xml"
+        },
+        {
+          "@id": "./data_part_a.csv"
+        }
+      ]
+    },
+    {
+      "@id": "./metadata.xml",
+      "@type": "MediaObject",
+      "contentUrl": "https://example.org/my/data/1/metadata.xml",
+      "dateModified": "2019-10-10T12:43:11+00:00.000",
+      "description": "A metadata document describing the Dataset and the data component",
+      "encodingFormat":"http://www.isotc211.org/2005/gmd",
+      "about": [
+        {
+          "@id": "./"
+        },
+        {
+          "@id": "./data_part_a.csv"
+        }
+      ]
+    },
+    {
+      "@id": "./data_part_a.csv",
+      "@type": "MediaObject",
+      "contentUrl": "https://example.org/my/data/1/data_part_a.csv"
+    }
+  ]
+}
