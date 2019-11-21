@@ -3,7 +3,7 @@
 """
 
 import io
-import rdflib
+from rdflib import ConjunctiveGraph, Namespace, plugin, URIRef
 from rdflib.tools import rdf2dot
 import graphviz
 
@@ -11,7 +11,7 @@ def _normalizeNode(t):
     """
     Hack the URIRefs to normalize schema.org to use "https://schema.org/"
     """
-    if isinstance(t, rdflib.URIRef):
+    if isinstance(t, URIRef):
         v = str(t)
         if v.startswith("http://schema.org"):
             v = v.replace("http://schema.org","https://schema.org",1)
@@ -19,13 +19,13 @@ def _normalizeNode(t):
                 v = "https://schema.org/" + v[18:]
                 if v[-1] == "/":
                     v = v[:-1]
-            return rdflib.URIRef(v)
+            return URIRef(v)
         elif v.startswith("https://schema.org"):
             if v[18] != "/":
                 v = "https://schema.org/" + v[18:]
                 if v[-1] == "/":
                     v = v[:-1]
-                return rdflib.URIRef(v)
+                return URIRef(v)
     return t
 
 
@@ -45,9 +45,9 @@ def loadJsonldGraph(filename=None, data=None):
     g2 = ConjunctiveGraph()
     for s, p, o in g:
         g2.add((
-            _normalize_node(s),
-            _normalize_node(p),
-            _normalize_node(o)
+            _normalizeNode(s),
+            _normalizeNode(p),
+            _normalizeNode(o)
         ))
     return g2
 
@@ -129,3 +129,107 @@ def getIdentifiers(g):
     # First get any identifiers that are literals with no additional context
     res = getLiteralIdentifiers(g)
     return res + getStructuredIdentifiers(g)
+
+def getMetadataLinksFromEncoding(g):
+    """
+    Return list of metadata encoding information
+    """
+    q = SPARQL_PREFIXES + """
+    SELECT ?dateModified ?encodingFormat ?contentUrl ?description ?x
+    WHERE {
+        ?x rdf:type schema:Dataset .
+        ?x schema:encoding ?y .
+        ?y schema:encodingFormat ?encodingFormat.
+        ?y schema:dateModified ?dateModified .
+        ?y schema:contentUrl ?contentUrl .
+        ?y schema:description ?description .
+    }
+    """
+    res = []
+    qres = g.query(q)
+    for item in qres:
+        entry = {
+            "dateModified" : item[0],
+            "encodingFormat" : str(item[1]),
+            "contentUrl" : str(item[2]),
+            "description" : str(item[3]),
+            "subjectOf" : str(item[4])
+        }
+        res.append(entry)
+    return res
+
+
+def getMetadataLinksFromSubjectOf(g):
+    """
+    return a list of metadata
+    """
+    q = SPARQL_PREFIXES + """
+    SELECT ?dateModified ?encodingFormat ?url ?description ?about
+    WHERE {
+        ?about rdf:type schema:Dataset .
+        ?about schema:subjectOf ?y .
+        ?y schema:url ?url .
+        ?y schema:encodingFormat ?encodingFormat .
+        OPTIONAL {
+          ?y schema:dateModified ?dateModified .
+          ?y schema:description ?description .
+        }    
+    }
+    """
+    res = []
+    qres = g.query(q)
+    for item in qres:
+        entry = {
+            "dateModified" : item[0],
+            "encodingFormat" : str(item[1]),
+            "contentUrl" : str(item[2]),
+            "description" : str(item[3]),
+            "subjectOf" : str(item[4])
+        }
+        res.append(entry)
+    return res
+
+
+def getMetadataLinksFromAbout(g):
+    """
+    return a list of metadata that describe this dataset, not necessarily the components.
+    """
+    q = SPARQL_PREFIXES + """
+    SELECT ?dateModified ?encodingFormat ?contentUrl ?description ?about
+    WHERE {
+        ?about rdf:type schema:Dataset .
+        ?y schema:about ?about .
+        ?y schema:contentUrl ?contentUrl .
+        ?y schema:encodingFormat ?encodingFormat .
+        OPTIONAL {
+          ?y schema:dateModified ?dateModified .
+          ?y schema:description ?description .
+        }
+    }
+    """
+    res = []
+    qres = g.query(q)
+    for item in qres:
+        entry = {
+            "dateModified" : item[0],
+            "encodingFormat" : str(item[1]),
+            "contentUrl" : str(item[2]),
+            "description" : str(item[3]),
+            "subjectOf" : str(item[4])
+        }
+        res.append(entry)
+    return res
+
+
+def getMetadataLinks(g):
+    """
+    Metadata docs can be referenced  couple different ways
+    1. as subjectOf
+    2. The inverse of 1, about
+    3. Encoding
+    """
+    res = getMetadataLinksFromEncoding(g)
+    res += getMetadataLinksFromSubjectOf(g)
+    res += getMetadataLinksFromAbout(g)
+    return res
+
