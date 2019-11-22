@@ -1,0 +1,453 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>sotools.common &#8212; SOtools Documentation (1.x)</title>
+    <link rel="stylesheet" href="../../_static/click.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../../';</script>
+   
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">SOtools Documentation (1.x)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sotools.common</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">from</span> <span class="nn">rdflib</span> <span class="k">import</span> <span class="n">ConjunctiveGraph</span><span class="p">,</span> <span class="n">Namespace</span><span class="p">,</span> <span class="n">plugin</span><span class="p">,</span> <span class="n">URIRef</span>
+<span class="kn">from</span> <span class="nn">rdflib.tools</span> <span class="k">import</span> <span class="n">rdf2dot</span>
+<span class="kn">import</span> <span class="nn">graphviz</span>
+
+<span class="n">SPARQL_PREFIXES</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    PREFIX rdf:      &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span>
+<span class="s2">    PREFIX schema:   &lt;https://schema.org/&gt;</span>
+<span class="s2">    PREFIX xsd:  &lt;http://www.w3.org/2001/XMLSchema#&gt;</span>
+<span class="s2">    PREFIX datacite: &lt;http://purl.org/spar/datacite/&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">_normalizeTerm</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Hack the URIRefs to normalize schema.org to use &quot;https://schema.org/&quot;</span>
+
+<span class="sd">    This is an ugly solution to the problem of variable representations of</span>
+<span class="sd">    the schema.org namespace in the wild.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        t: Graph term to process</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Graph term normalized to namespace &lt;https://schema.org/&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">URIRef</span><span class="p">):</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;http://schema.org&quot;</span><span class="p">):</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;http://schema.org&quot;</span><span class="p">,</span> <span class="s2">&quot;https://schema.org&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="mi">18</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;/&quot;</span><span class="p">:</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="s2">&quot;https://schema.org/&quot;</span> <span class="o">+</span> <span class="n">v</span><span class="p">[</span><span class="mi">18</span><span class="p">:]</span>
+                <span class="c1"># rdflib will append a / to the end of terms where the predicate is rdf:type</span>
+                <span class="c1"># when converting to a string even though internally it is treated as a</span>
+                <span class="c1"># value without a trailing slash.</span>
+                <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;/&quot;</span><span class="p">:</span>
+                    <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">URIRef</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">v</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;https://schema.org&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="mi">18</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;/&quot;</span><span class="p">:</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="s2">&quot;https://schema.org/&quot;</span> <span class="o">+</span> <span class="n">v</span><span class="p">[</span><span class="mi">18</span><span class="p">:]</span>
+                <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;/&quot;</span><span class="p">:</span>
+                    <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">return</span> <span class="n">URIRef</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">t</span>
+
+
+<div class="viewcode-block" id="loadJsonldGraph"><a class="viewcode-back" href="../../sotools.common.html#sotools.common.loadJsonldGraph">[docs]</a><span class="k">def</span> <span class="nf">loadJsonldGraph</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">publicID</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load json-ld string or file to an RDFLib ConjunctiveGraph</span>
+
+<span class="sd">    Creates a ConjunctiveGraph from  the provided file or text. If both are</span>
+<span class="sd">    provided then text is used.</span>
+
+<span class="sd">    NOTE: Namespace use of &lt;http://schema.org&gt;, &lt;https://schema.org&gt;, or</span>
+<span class="sd">    &lt;http://schema.org/&gt; is normalized to &lt;https://schema.org/&gt;.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename: path to json-ld file on disk</span>
+<span class="sd">        data: json-ld text</span>
+<span class="sd">        publicID: (from rdflib) The logical URI to use as the document base. If None specified the document location is used.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ConjunctiveGraph instance</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        &gt;&gt;&gt; import sotools</span>
+<span class="sd">        INFO:rdflib:RDFLib Version: 4.2.2</span>
+<span class="sd">        &gt;&gt;&gt; g = sotools.loadJsonldGraph(filename=&quot;sotools/data/data/ds_00.json&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; g</span>
+<span class="sd">        &lt;Graph identifier=N3026433194a2427b840aea582bfba9e1 (&lt;class &#39;rdflib.graph.ConjunctiveGraph&#39;&gt;)&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">ConjunctiveGraph</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">g</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;json-ld&quot;</span><span class="p">,</span> <span class="n">publicID</span><span class="o">=</span><span class="n">publicID</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">g</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;json-ld&quot;</span><span class="p">,</span> <span class="n">publicID</span><span class="o">=</span><span class="n">publicID</span><span class="p">)</span>
+    <span class="c1"># Now normalize the graph namespace use to https://schema.org/</span>
+    <span class="n">g2</span> <span class="o">=</span> <span class="n">ConjunctiveGraph</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">g</span><span class="p">:</span>
+        <span class="n">g2</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">_normalizeTerm</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="n">_normalizeTerm</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="n">_normalizeTerm</span><span class="p">(</span><span class="n">o</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">g2</span></div>
+
+
+<div class="viewcode-block" id="renderGraph"><a class="viewcode-back" href="../../sotools.common.html#sotools.common.renderGraph">[docs]</a><span class="k">def</span> <span class="nf">renderGraph</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    For rendering an rdflib graph in Jupyter notebooks</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        g: Graph or ConjunctiveGraph</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Output for rendering directly in the notebook</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+    <span class="n">rdf2dot</span><span class="o">.</span><span class="n">rdf2dot</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">graphviz</span><span class="o">.</span><span class="n">Source</span><span class="p">(</span><span class="n">fp</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="isDataset"><a class="viewcode-back" href="../../sotools.common.html#sotools.common.isDataset">[docs]</a><span class="k">def</span> <span class="nf">isDataset</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Evaluate if the Graph g is a SO:Dataset</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        g: ConjunctiveGraph</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        boolean</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        &gt;&gt;&gt; import sotools</span>
+<span class="sd">        INFO:rdflib:RDFLib Version: 4.2.2</span>
+<span class="sd">        &gt;&gt;&gt; g = sotools.loadJsonldGraph(filename=&quot;sotools/data/data/ds_00.json&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; sotools.isDataset(g)</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">SPARQL_PREFIXES</span>
+        <span class="o">+</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    SELECT ?x </span>
+<span class="s2">    { </span>
+<span class="s2">        ?x rdf:type schema:Dataset .        </span>
+<span class="s2">    }</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="p">)</span>
+    <span class="n">qres</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">qres</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="getLiteralIdentifiers"><a class="viewcode-back" href="../../sotools.common.html#sotools.common.getLiteralIdentifiers">[docs]</a><span class="k">def</span> <span class="nf">getLiteralIdentifiers</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Retrieve literal SO:Dataset.identifier entries</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        g: ConjunctiveGraph</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list of identifier strings</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">SPARQL_PREFIXES</span>
+        <span class="o">+</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    SELECT ?y ?tt</span>
+<span class="s2">    WHERE {</span>
+<span class="s2">        ?x rdf:type schema:Dataset .</span>
+<span class="s2">        ?x schema:identifier ?y.</span>
+<span class="s2">        ?y rdf:type ?tt .</span>
+<span class="s2">        FILTER (datatype(?y) = xsd:string)</span>
+<span class="s2">    }</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">qres</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">qres</span><span class="p">:</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="getStructuredIdentifiers"><a class="viewcode-back" href="../../sotools.common.html#sotools.common.getStructuredIdentifiers">[docs]</a><span class="k">def</span> <span class="nf">getStructuredIdentifiers</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract structured SO:Dataset.identifier entries</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        g: ConjunctiveGraph</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: A list of ``{value:, url:, propertyId:}``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">SPARQL_PREFIXES</span>
+        <span class="o">+</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    SELECT DISTINCT ?value ?url ?propid</span>
+<span class="s2">    WHERE {</span>
+<span class="s2">        ?x rdf:type schema:Dataset .</span>
+<span class="s2">        ?x schema:identifier ?y .</span>
+<span class="s2">        ?y rdf:type ?tt .</span>
+<span class="s2">        ?y schema:value ?value.</span>
+<span class="s2">        ?y schema:url ?url .</span>
+<span class="s2">        ?y schema:propertyID ?propid .</span>
+<span class="s2">        FILTER (?tt = schema:PropertyValue || ?tt = datacite:ResourceIdentifier)</span>
+<span class="s2">    }</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">qres</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">qres</span><span class="p">:</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="s2">&quot;propertyId&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">])}</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="getIdentifiers"><a class="viewcode-back" href="../../sotools.common.html#sotools.common.getIdentifiers">[docs]</a><span class="k">def</span> <span class="nf">getIdentifiers</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a list of SO:Dataset.identifier entries from the provided Graph</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        g: ConjunctiveGraph</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: A list of ``string`` or ``{value:, url:, propertyId:}``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># First get any identifiers that are literals with no additional context</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">getLiteralIdentifiers</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span> <span class="o">+</span> <span class="n">getStructuredIdentifiers</span><span class="p">(</span><span class="n">g</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="getMetadataLinksFromEncoding"><a class="viewcode-back" href="../../sotools.common.html#sotools.common.getMetadataLinksFromEncoding">[docs]</a><span class="k">def</span> <span class="nf">getMetadataLinksFromEncoding</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract link to metadata from SO:Dataset.encoding</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        g: ConjunctiveGraph</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: A list of ``{dateModified:, encodingFormat:, contentUrl:, description:, subjectOf:,}``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">SPARQL_PREFIXES</span>
+        <span class="o">+</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    SELECT ?dateModified ?encodingFormat ?contentUrl ?description ?x</span>
+<span class="s2">    WHERE {</span>
+<span class="s2">        ?x rdf:type schema:Dataset .</span>
+<span class="s2">        ?x schema:encoding ?y .</span>
+<span class="s2">        ?y schema:encodingFormat ?encodingFormat.</span>
+<span class="s2">        ?y schema:dateModified ?dateModified .</span>
+<span class="s2">        ?y schema:contentUrl ?contentUrl .</span>
+<span class="s2">        ?y schema:description ?description .</span>
+<span class="s2">    }</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">qres</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">qres</span><span class="p">:</span>
+        <span class="n">entry</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;dateModified&quot;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="s2">&quot;encodingFormat&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+            <span class="s2">&quot;contentUrl&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
+            <span class="s2">&quot;subjectOf&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">4</span><span class="p">]),</span>
+        <span class="p">}</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="getMetadataLinksFromSubjectOf"><a class="viewcode-back" href="../../sotools.common.html#sotools.common.getMetadataLinksFromSubjectOf">[docs]</a><span class="k">def</span> <span class="nf">getMetadataLinksFromSubjectOf</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract list of metadata links from SO.Dataset.subjectOf</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        g: ConjunctiveGraph</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: A list of ``{dateModified:, encodingFormat:, contentUrl:, description:, subjectOf:,}``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">SPARQL_PREFIXES</span>
+        <span class="o">+</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    SELECT ?dateModified ?encodingFormat ?url ?description ?about</span>
+<span class="s2">    WHERE {</span>
+<span class="s2">        ?about rdf:type schema:Dataset .</span>
+<span class="s2">        ?about schema:subjectOf ?y .</span>
+<span class="s2">        ?y schema:url ?url .</span>
+<span class="s2">        ?y schema:encodingFormat ?encodingFormat .</span>
+<span class="s2">        OPTIONAL {</span>
+<span class="s2">          ?y schema:dateModified ?dateModified .</span>
+<span class="s2">          ?y schema:description ?description .</span>
+<span class="s2">        }    </span>
+<span class="s2">    }</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">qres</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">qres</span><span class="p">:</span>
+        <span class="n">entry</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;dateModified&quot;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="s2">&quot;encodingFormat&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+            <span class="s2">&quot;contentUrl&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
+            <span class="s2">&quot;subjectOf&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">4</span><span class="p">]),</span>
+        <span class="p">}</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="getMetadataLinksFromAbout"><a class="viewcode-back" href="../../sotools.common.html#sotools.common.getMetadataLinksFromAbout">[docs]</a><span class="k">def</span> <span class="nf">getMetadataLinksFromAbout</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract a list of metadata links SO:about(SO:Dataset)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        g: ConjunctiveGraph</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: A list of ``{dateModified:, encodingFormat:, contentUrl:, description:, subjectOf:,}``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">SPARQL_PREFIXES</span>
+        <span class="o">+</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    SELECT ?dateModified ?encodingFormat ?contentUrl ?description ?about</span>
+<span class="s2">    WHERE {</span>
+<span class="s2">        ?about rdf:type schema:Dataset .</span>
+<span class="s2">        ?y schema:about ?about .</span>
+<span class="s2">        ?y schema:contentUrl ?contentUrl .</span>
+<span class="s2">        ?y schema:encodingFormat ?encodingFormat .</span>
+<span class="s2">        OPTIONAL {</span>
+<span class="s2">          ?y schema:dateModified ?dateModified .</span>
+<span class="s2">          ?y schema:description ?description .</span>
+<span class="s2">        }</span>
+<span class="s2">    }</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">qres</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">qres</span><span class="p">:</span>
+        <span class="n">entry</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;dateModified&quot;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="s2">&quot;encodingFormat&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+            <span class="s2">&quot;contentUrl&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
+            <span class="s2">&quot;subjectOf&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">4</span><span class="p">]),</span>
+        <span class="p">}</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="getMetadataLinks"><a class="viewcode-back" href="../../sotools.common.html#sotools.common.getMetadataLinks">[docs]</a><span class="k">def</span> <span class="nf">getMetadataLinks</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract links to metadata documents describing SO:Dataset</span>
+
+<span class="sd">    Metadata docs can be referenced different ways</span>
+<span class="sd">    * as SO:Dataset.subjectOf</span>
+<span class="sd">    * the inverse of 1, SO:CreativeWork.about(SO:Dataset)</span>
+<span class="sd">    * SO:Dataset.encoding</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        g: ConjunctiveGraph</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: A list of ``{dateModified:, encodingFormat:, contentUrl:, description:, subjectOf:,}``</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        &gt;&gt;&gt; from pprint import pprint</span>
+<span class="sd">        &gt;&gt;&gt; import sotools</span>
+<span class="sd">        INFO:rdflib:RDFLib Version: 4.2.2</span>
+<span class="sd">        &gt;&gt;&gt; g = sotools.loadJsonldGraph(filename=&quot;sotools/data/data/ds_00.json&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; links = sotools.getMetadataLinks(g)</span>
+<span class="sd">        &gt;&gt;&gt; pprint(links)</span>
+<span class="sd">        [{&#39;contentUrl&#39;: &#39;https://my.server.net/datasets/00.xml&#39;,</span>
+<span class="sd">          &#39;dateModified&#39;: rdflib.term.Literal(&#39;2019-10-10T12:43:11+00:00.000&#39;),</span>
+<span class="sd">          &#39;description&#39;: &#39;ISO TC211 XML rendering of metadata&#39;,</span>
+<span class="sd">          &#39;encodingFormat&#39;: &#39;http://www.isotc211.org/2005/gmd&#39;,</span>
+<span class="sd">          &#39;subjectOf&#39;: &#39;file:///Users/vieglais/git/sotools/sotools/sotools/data/data/ds-00&#39;}]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">getMetadataLinksFromEncoding</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">+=</span> <span class="n">getMetadataLinksFromSubjectOf</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">+=</span> <span class="n">getMetadataLinksFromAbout</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+  
+<h3>Navigation</h3>
+<ul>
+  <li><a href="../../index.html">Overview</a>
+    <ul>
+      <li><a href="../index.html">Module code</a>
+        
+          
+          </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dave Vieglais.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  <script type="text/javascript" src="../../_static/version_warning_offset.js"></script>
+
+  </body>
+</html>
