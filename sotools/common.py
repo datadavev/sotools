@@ -6,6 +6,9 @@ import io
 from rdflib import ConjunctiveGraph, Namespace, plugin, URIRef
 from rdflib.tools import rdf2dot
 import graphviz
+import json
+import requests
+from extruct.jsonld import JsonLdExtractor
 
 SPARQL_PREFIXES = """
     PREFIX rdf:      <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -87,6 +90,28 @@ def loadJsonldGraph(filename=None, data=None, publicID=None):
     return g2
 
 
+def loadJsonldGraphFromUrl(url):
+    """
+    Loads graph from json-ld contained in a landing page.
+
+    Args:
+        url: String, url to process
+
+    Returns:
+        ConjunctiveGraph instance
+    """
+    response = requests.get(url)
+    if response.status_code != requests.codes.ok:
+        raise ValueError(f"GET request to {url} returned a status of {response.status_code}")
+    jslde = JsonLdExtractor()
+    json_content = jslde.extract(response.text)
+    g = ConjunctiveGraph()
+    for json_data in json_content:
+        g_data = loadJsonldGraph(data=json.dumps(json_data), publicID=url)
+        g += g_data
+    return g
+
+
 def renderGraph(g):
     """
     For rendering an rdflib graph in Jupyter notebooks
@@ -133,7 +158,7 @@ def isDataset(g):
     return len(qres) >= 1
 
 
-def getLiteralIdentifiers(g):
+def getLiteralDatasetIdentifiers(g):
     """
     Retrieve literal SO:Dataset.identifier entries
 
@@ -146,12 +171,11 @@ def getLiteralIdentifiers(g):
     q = (
         SPARQL_PREFIXES
         + """
-    SELECT ?y ?tt
+    SELECT ?y
     WHERE {
         ?x rdf:type schema:Dataset .
-        ?x schema:identifier ?y.
-        ?y rdf:type ?tt .
-        FILTER (datatype(?y) = xsd:string)
+        ?x schema:identifier ?y .
+        FILTER (isLiteral(?y)) .
     }
     """
     )
@@ -162,7 +186,7 @@ def getLiteralIdentifiers(g):
     return res
 
 
-def getStructuredIdentifiers(g):
+def getStructuredDatasetIdentifiers(g):
     """
     Extract structured SO:Dataset.identifier entries
 
@@ -195,7 +219,7 @@ def getStructuredIdentifiers(g):
     return res
 
 
-def getIdentifiers(g):
+def getDatasetIdentifiers(g):
     """
     Return a list of SO:Dataset.identifier entries from the provided Graph
 
@@ -206,11 +230,11 @@ def getIdentifiers(g):
         list: A list of ``string`` or ``{value:, url:, propertyId:}``
     """
     # First get any identifiers that are literals with no additional context
-    res = getLiteralIdentifiers(g)
-    return res + getStructuredIdentifiers(g)
+    res = getLiteralDatasetIdentifiers(g)
+    return res + getStructuredDatasetIdentifiers(g)
 
 
-def getMetadataLinksFromEncoding(g):
+def getDatasetMetadataLinksFromEncoding(g):
     """
     Extract link to metadata from SO:Dataset.encoding
 
@@ -248,7 +272,7 @@ def getMetadataLinksFromEncoding(g):
     return res
 
 
-def getMetadataLinksFromSubjectOf(g):
+def getDatasetMetadataLinksFromSubjectOf(g):
     """
     Extract list of metadata links from SO.Dataset.subjectOf
 
@@ -288,7 +312,7 @@ def getMetadataLinksFromSubjectOf(g):
     return res
 
 
-def getMetadataLinksFromAbout(g):
+def getDatasetMetadataLinksFromAbout(g):
     """
     Extract a list of metadata links SO:about(SO:Dataset)
 
@@ -328,7 +352,7 @@ def getMetadataLinksFromAbout(g):
     return res
 
 
-def getMetadataLinks(g):
+def getDatasetMetadataLinks(g):
     """
     Extract links to metadata documents describing SO:Dataset
 
@@ -357,7 +381,7 @@ def getMetadataLinks(g):
           'encodingFormat': 'http://www.isotc211.org/2005/gmd',
           'subjectOf': 'file:///Users/vieglais/git/sotools/sotools/sotools/data/data/ds-00'}]
     """
-    res = getMetadataLinksFromEncoding(g)
-    res += getMetadataLinksFromSubjectOf(g)
-    res += getMetadataLinksFromAbout(g)
+    res = getDatasetMetadataLinksFromEncoding(g)
+    res += getDatasetMetadataLinksFromSubjectOf(g)
+    res += getDatasetMetadataLinksFromAbout(g)
     return res
