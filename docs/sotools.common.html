@@ -19,7 +19,7 @@
     <script type="text/javascript" src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Loading JSON LD" href="loading_jsonld.html" />
+    <link rel="prev" title="Linking to metadata documents" href="external_metadata.html" />
   <script>DOCUMENTATION_OPTIONS.URL_ROOT = './';</script>
    
   </head><body>
@@ -33,7 +33,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="loading_jsonld.html" title="Loading JSON LD"
+          <a href="external_metadata.html" title="Linking to metadata documents"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">SOtools Documentation (1.x)</a> &#187;</li> 
       </ul>
@@ -53,25 +53,25 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#sotools.common.getIdentifiers" title="sotools.common.getIdentifiers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getIdentifiers</span></code></a>(g)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sotools.common.getDatasetIdentifiers" title="sotools.common.getDatasetIdentifiers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getDatasetIdentifiers</span></code></a>(g)</p></td>
 <td><p>Return a list of SO:Dataset.identifier entries from the provided Graph</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#sotools.common.getLiteralIdentifiers" title="sotools.common.getLiteralIdentifiers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getLiteralIdentifiers</span></code></a>(g)</p></td>
-<td><p>Retrieve literal SO:Dataset.identifier entries</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#sotools.common.getMetadataLinks" title="sotools.common.getMetadataLinks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getMetadataLinks</span></code></a>(g)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#sotools.common.getDatasetMetadataLinks" title="sotools.common.getDatasetMetadataLinks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getDatasetMetadataLinks</span></code></a>(g)</p></td>
 <td><p>Extract links to metadata documents describing SO:Dataset</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#sotools.common.getMetadataLinksFromAbout" title="sotools.common.getMetadataLinksFromAbout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getMetadataLinksFromAbout</span></code></a>(g)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sotools.common.getDatasetMetadataLinksFromAbout" title="sotools.common.getDatasetMetadataLinksFromAbout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getDatasetMetadataLinksFromAbout</span></code></a>(g)</p></td>
 <td><p>Extract a list of metadata links SO:about(SO:Dataset)</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#sotools.common.getMetadataLinksFromEncoding" title="sotools.common.getMetadataLinksFromEncoding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getMetadataLinksFromEncoding</span></code></a>(g)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#sotools.common.getDatasetMetadataLinksFromEncoding" title="sotools.common.getDatasetMetadataLinksFromEncoding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getDatasetMetadataLinksFromEncoding</span></code></a>(g)</p></td>
 <td><p>Extract link to metadata from SO:Dataset.encoding</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#sotools.common.getMetadataLinksFromSubjectOf" title="sotools.common.getMetadataLinksFromSubjectOf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getMetadataLinksFromSubjectOf</span></code></a>(g)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sotools.common.getDatasetMetadataLinksFromSubjectOf" title="sotools.common.getDatasetMetadataLinksFromSubjectOf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getDatasetMetadataLinksFromSubjectOf</span></code></a>(g)</p></td>
 <td><p>Extract list of metadata links from SO.Dataset.subjectOf</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#sotools.common.getStructuredIdentifiers" title="sotools.common.getStructuredIdentifiers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getStructuredIdentifiers</span></code></a>(g)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#sotools.common.getLiteralDatasetIdentifiers" title="sotools.common.getLiteralDatasetIdentifiers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getLiteralDatasetIdentifiers</span></code></a>(g)</p></td>
+<td><p>Retrieve literal SO:Dataset.identifier entries</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sotools.common.getStructuredDatasetIdentifiers" title="sotools.common.getStructuredDatasetIdentifiers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getStructuredDatasetIdentifiers</span></code></a>(g)</p></td>
 <td><p>Extract structured SO:Dataset.identifier entries</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#sotools.common.isDataset" title="sotools.common.isDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isDataset</span></code></a>(g)</p></td>
@@ -80,14 +80,17 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#sotools.common.loadJsonldGraph" title="sotools.common.loadJsonldGraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loadJsonldGraph</span></code></a>([filename, data, publicID])</p></td>
 <td><p>Load json-ld string or file to an RDFLib ConjunctiveGraph</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#sotools.common.renderGraph" title="sotools.common.renderGraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">renderGraph</span></code></a>(g)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#sotools.common.loadJsonldGraphFromUrl" title="sotools.common.loadJsonldGraphFromUrl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loadJsonldGraphFromUrl</span></code></a>(url)</p></td>
+<td><p>Loads graph from json-ld contained in a landing page.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sotools.common.renderGraph" title="sotools.common.renderGraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">renderGraph</span></code></a>(g)</p></td>
 <td><p>For rendering an rdflib graph in Jupyter notebooks</p></td>
 </tr>
 </tbody>
 </table>
 <span class="target" id="module-sotools.common"></span><dl class="function">
-<dt id="sotools.common.getIdentifiers">
-<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getIdentifiers</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#getIdentifiers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.getIdentifiers" title="Permalink to this definition">¶</a></dt>
+<dt id="sotools.common.getDatasetIdentifiers">
+<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getDatasetIdentifiers</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#getDatasetIdentifiers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.getDatasetIdentifiers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a list of SO:Dataset.identifier entries from the provided Graph</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -103,22 +106,8 @@
 </dd></dl>
 
 <dl class="function">
-<dt id="sotools.common.getLiteralIdentifiers">
-<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getLiteralIdentifiers</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#getLiteralIdentifiers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.getLiteralIdentifiers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieve literal SO:Dataset.identifier entries</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>g</strong> – ConjunctiveGraph</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>list of identifier strings</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="sotools.common.getMetadataLinks">
-<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getMetadataLinks</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#getMetadataLinks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.getMetadataLinks" title="Permalink to this definition">¶</a></dt>
+<dt id="sotools.common.getDatasetMetadataLinks">
+<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getDatasetMetadataLinks</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#getDatasetMetadataLinks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.getDatasetMetadataLinks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract links to metadata documents describing SO:Dataset</p>
 <p>Metadata docs can be referenced different ways
 * as SO:Dataset.subjectOf
@@ -152,8 +141,8 @@
 </dd></dl>
 
 <dl class="function">
-<dt id="sotools.common.getMetadataLinksFromAbout">
-<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getMetadataLinksFromAbout</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#getMetadataLinksFromAbout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.getMetadataLinksFromAbout" title="Permalink to this definition">¶</a></dt>
+<dt id="sotools.common.getDatasetMetadataLinksFromAbout">
+<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getDatasetMetadataLinksFromAbout</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#getDatasetMetadataLinksFromAbout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.getDatasetMetadataLinksFromAbout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract a list of metadata links SO:about(SO:Dataset)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -169,8 +158,8 @@
 </dd></dl>
 
 <dl class="function">
-<dt id="sotools.common.getMetadataLinksFromEncoding">
-<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getMetadataLinksFromEncoding</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#getMetadataLinksFromEncoding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.getMetadataLinksFromEncoding" title="Permalink to this definition">¶</a></dt>
+<dt id="sotools.common.getDatasetMetadataLinksFromEncoding">
+<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getDatasetMetadataLinksFromEncoding</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#getDatasetMetadataLinksFromEncoding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.getDatasetMetadataLinksFromEncoding" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract link to metadata from SO:Dataset.encoding</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -186,8 +175,8 @@
 </dd></dl>
 
 <dl class="function">
-<dt id="sotools.common.getMetadataLinksFromSubjectOf">
-<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getMetadataLinksFromSubjectOf</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#getMetadataLinksFromSubjectOf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.getMetadataLinksFromSubjectOf" title="Permalink to this definition">¶</a></dt>
+<dt id="sotools.common.getDatasetMetadataLinksFromSubjectOf">
+<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getDatasetMetadataLinksFromSubjectOf</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#getDatasetMetadataLinksFromSubjectOf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.getDatasetMetadataLinksFromSubjectOf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract list of metadata links from SO.Dataset.subjectOf</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -203,8 +192,22 @@
 </dd></dl>
 
 <dl class="function">
-<dt id="sotools.common.getStructuredIdentifiers">
-<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getStructuredIdentifiers</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#getStructuredIdentifiers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.getStructuredIdentifiers" title="Permalink to this definition">¶</a></dt>
+<dt id="sotools.common.getLiteralDatasetIdentifiers">
+<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getLiteralDatasetIdentifiers</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#getLiteralDatasetIdentifiers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.getLiteralDatasetIdentifiers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve literal SO:Dataset.identifier entries</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>g</strong> – ConjunctiveGraph</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of identifier strings</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="sotools.common.getStructuredDatasetIdentifiers">
+<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getStructuredDatasetIdentifiers</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#getStructuredDatasetIdentifiers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.getStructuredDatasetIdentifiers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract structured SO:Dataset.identifier entries</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -272,6 +275,20 @@ provided then text is used.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="sotools.common.loadJsonldGraphFromUrl">
+<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">loadJsonldGraphFromUrl</code><span class="sig-paren">(</span><em class="sig-param">url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#loadJsonldGraphFromUrl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.loadJsonldGraphFromUrl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads graph from json-ld contained in a landing page.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>url</strong> – String, url to process</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ConjunctiveGraph instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
 <dt id="sotools.common.renderGraph">
 <code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">renderGraph</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#renderGraph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.renderGraph" title="Permalink to this definition">¶</a></dt>
 <dd><p>For rendering an rdflib graph in Jupyter notebooks</p>
@@ -301,7 +318,7 @@ provided then text is used.</p>
 <ul>
   <li><a href="index.html">Overview</a>
     <ul>
-          <li>Previous: <a href="loading_jsonld.html" title="previous chapter">Loading JSON LD</a>
+          <li>Previous: <a href="external_metadata.html" title="previous chapter">Linking to metadata documents</a>
           
     </ul>
   </li>

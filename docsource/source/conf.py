@@ -70,7 +70,7 @@ html_static_path = ['_static']
 html_theme_options = {"index_sidebar_logo": False}
 html_context = {
     "project_links": [
-        ProjectLink("Source Code", "https://github.com/datadavev/sotools/"),
+        ProjectLink("Source on GitHub", "https://github.com/datadavev/sotools/"),
         ProjectLink("Issue Tracker", "https://github.com/datadavev/sotools/issues/"),
     ]
 }
