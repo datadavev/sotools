@@ -41,6 +41,7 @@ extensions = [
     "pallets_sphinx_themes",
     "sphinx_issues",
     "sphinx.ext.napoleon",
+    "jupyter_sphinx.execute",
 ]
 
 # Add any paths that contain templates here, relative to this directory.

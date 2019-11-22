@@ -11,19 +11,15 @@ on crawling and indexing with DataONE infrastructure.
 
 .. note::
 
-   Herein the term ``SO:`` refers to the ``https://schema.org/`` namespace or any equivalents.
+   Herein the term "``SO:``" refers to the ``https://schema.org/`` namespace or any equivalents.
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-.. autofuncsummary:: sotools.common
-   :functions:
+   sotools.common
+   loading_jsonld
 
-.. automodule:: sotools.common
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 Indices and tables
 __________________

@@ -1,0 +1,334 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>sotools.common package &#8212; SOtools Documentation (1.x)</title>
+    <link rel="stylesheet" href="_static/click.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Loading JSON LD" href="loading_jsonld.html" />
+    <link rel="prev" title="Tools for Schema.org Datasets" href="index.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = './';</script>
+   
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="loading_jsonld.html" title="Loading JSON LD"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Tools for Schema.org Datasets"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SOtools Documentation (1.x)</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sotools-common-package">
+<h1>sotools.common package<a class="headerlink" href="#sotools-common-package" title="Permalink to this headline">¶</a></h1>
+<p>Methods for common operations when reading and interpreting schema.org markup.</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sotools.common.getIdentifiers" title="sotools.common.getIdentifiers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getIdentifiers</span></code></a>(g)</p></td>
+<td><p>Return a list of SO:Dataset.identifier entries from the provided Graph</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sotools.common.getLiteralIdentifiers" title="sotools.common.getLiteralIdentifiers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getLiteralIdentifiers</span></code></a>(g)</p></td>
+<td><p>Retrieve literal SO:Dataset.identifier entries</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sotools.common.getMetadataLinks" title="sotools.common.getMetadataLinks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getMetadataLinks</span></code></a>(g)</p></td>
+<td><p>Extract links to metadata documents describing SO:Dataset</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sotools.common.getMetadataLinksFromAbout" title="sotools.common.getMetadataLinksFromAbout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getMetadataLinksFromAbout</span></code></a>(g)</p></td>
+<td><p>Extract a list of metadata links SO:about(SO:Dataset)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sotools.common.getMetadataLinksFromEncoding" title="sotools.common.getMetadataLinksFromEncoding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getMetadataLinksFromEncoding</span></code></a>(g)</p></td>
+<td><p>Extract link to metadata from SO:Dataset.encoding</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sotools.common.getMetadataLinksFromSubjectOf" title="sotools.common.getMetadataLinksFromSubjectOf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getMetadataLinksFromSubjectOf</span></code></a>(g)</p></td>
+<td><p>Extract list of metadata links from SO.Dataset.subjectOf</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sotools.common.getStructuredIdentifiers" title="sotools.common.getStructuredIdentifiers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getStructuredIdentifiers</span></code></a>(g)</p></td>
+<td><p>Extract structured SO:Dataset.identifier entries</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sotools.common.isDataset" title="sotools.common.isDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isDataset</span></code></a>(g)</p></td>
+<td><p>Evaluate if the Graph g is a SO:Dataset</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sotools.common.loadJsonldGraph" title="sotools.common.loadJsonldGraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loadJsonldGraph</span></code></a>([filename, data, publicID])</p></td>
+<td><p>Load json-ld string or file to an RDFLib ConjunctiveGraph</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sotools.common.renderGraph" title="sotools.common.renderGraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">renderGraph</span></code></a>(g)</p></td>
+<td><p>For rendering an rdflib graph in Jupyter notebooks</p></td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-sotools.common"></span><dl class="function">
+<dt id="sotools.common.getIdentifiers">
+<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getIdentifiers</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="headerlink" href="#sotools.common.getIdentifiers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of SO:Dataset.identifier entries from the provided Graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>g</strong> – ConjunctiveGraph</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of <code class="docutils literal notranslate"><span class="pre">string</span></code> or <code class="docutils literal notranslate"><span class="pre">{value:,</span> <span class="pre">url:,</span> <span class="pre">propertyId:}</span></code></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="sotools.common.getLiteralIdentifiers">
+<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getLiteralIdentifiers</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="headerlink" href="#sotools.common.getLiteralIdentifiers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve literal SO:Dataset.identifier entries</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>g</strong> – ConjunctiveGraph</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of identifier strings</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="sotools.common.getMetadataLinks">
+<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getMetadataLinks</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="headerlink" href="#sotools.common.getMetadataLinks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract links to metadata documents describing SO:Dataset</p>
+<p>Metadata docs can be referenced different ways
+* as SO:Dataset.subjectOf
+* the inverse of 1, SO:CreativeWork.about(SO:Dataset)
+* SO:Dataset.encoding</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>g</strong> – ConjunctiveGraph</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of <code class="docutils literal notranslate"><span class="pre">{dateModified:,</span> <span class="pre">encodingFormat:,</span> <span class="pre">contentUrl:,</span> <span class="pre">description:,</span> <span class="pre">subjectOf:,}</span></code></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="k">import</span> <span class="n">pprint</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sotools</span>
+<span class="go">INFO:rdflib:RDFLib Version: 4.2.2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadJsonldGraph</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;sotools/data/data/ds_00.json&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">links</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">getMetadataLinks</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">links</span><span class="p">)</span>
+<span class="go">[{&#39;contentUrl&#39;: &#39;https://my.server.net/datasets/00.xml&#39;,</span>
+<span class="go">  &#39;dateModified&#39;: rdflib.term.Literal(&#39;2019-10-10T12:43:11+00:00.000&#39;),</span>
+<span class="go">  &#39;description&#39;: &#39;ISO TC211 XML rendering of metadata&#39;,</span>
+<span class="go">  &#39;encodingFormat&#39;: &#39;http://www.isotc211.org/2005/gmd&#39;,</span>
+<span class="go">  &#39;subjectOf&#39;: &#39;file:///Users/vieglais/git/sotools/sotools/sotools/data/data/ds-00&#39;}]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="sotools.common.getMetadataLinksFromAbout">
+<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getMetadataLinksFromAbout</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="headerlink" href="#sotools.common.getMetadataLinksFromAbout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract a list of metadata links SO:about(SO:Dataset)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>g</strong> – ConjunctiveGraph</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of <code class="docutils literal notranslate"><span class="pre">{dateModified:,</span> <span class="pre">encodingFormat:,</span> <span class="pre">contentUrl:,</span> <span class="pre">description:,</span> <span class="pre">subjectOf:,}</span></code></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="sotools.common.getMetadataLinksFromEncoding">
+<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getMetadataLinksFromEncoding</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="headerlink" href="#sotools.common.getMetadataLinksFromEncoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract link to metadata from SO:Dataset.encoding</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>g</strong> – ConjunctiveGraph</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of <code class="docutils literal notranslate"><span class="pre">{dateModified:,</span> <span class="pre">encodingFormat:,</span> <span class="pre">contentUrl:,</span> <span class="pre">description:,</span> <span class="pre">subjectOf:,}</span></code></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="sotools.common.getMetadataLinksFromSubjectOf">
+<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getMetadataLinksFromSubjectOf</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="headerlink" href="#sotools.common.getMetadataLinksFromSubjectOf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract list of metadata links from SO.Dataset.subjectOf</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>g</strong> – ConjunctiveGraph</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of <code class="docutils literal notranslate"><span class="pre">{dateModified:,</span> <span class="pre">encodingFormat:,</span> <span class="pre">contentUrl:,</span> <span class="pre">description:,</span> <span class="pre">subjectOf:,}</span></code></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="sotools.common.getStructuredIdentifiers">
+<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getStructuredIdentifiers</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="headerlink" href="#sotools.common.getStructuredIdentifiers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract structured SO:Dataset.identifier entries</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>g</strong> – ConjunctiveGraph</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of <code class="docutils literal notranslate"><span class="pre">{value:,</span> <span class="pre">url:,</span> <span class="pre">propertyId:}</span></code></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="sotools.common.isDataset">
+<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">isDataset</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="headerlink" href="#sotools.common.isDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate if the Graph g is a SO:Dataset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>g</strong> – ConjunctiveGraph</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>boolean</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sotools</span>
+<span class="go">INFO:rdflib:RDFLib Version: 4.2.2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadJsonldGraph</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;sotools/data/data/ds_00.json&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sotools</span><span class="o">.</span><span class="n">isDataset</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="sotools.common.loadJsonldGraph">
+<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">loadJsonldGraph</code><span class="sig-paren">(</span><em class="sig-param">filename=None</em>, <em class="sig-param">data=None</em>, <em class="sig-param">publicID=None</em><span class="sig-paren">)</span><a class="headerlink" href="#sotools.common.loadJsonldGraph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load json-ld string or file to an RDFLib ConjunctiveGraph</p>
+<p>Creates a ConjunctiveGraph from  the provided file or text. If both are
+provided then text is used.</p>
+<p>NOTE: Namespace use of &lt;<a class="reference external" href="http://schema.org">http://schema.org</a>&gt;, &lt;<a class="reference external" href="https://schema.org">https://schema.org</a>&gt;, or
+&lt;<a class="reference external" href="http://schema.org/">http://schema.org/</a>&gt; is normalized to &lt;<a class="reference external" href="https://schema.org/">https://schema.org/</a>&gt;.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> – path to json-ld file on disk</p></li>
+<li><p><strong>data</strong> – json-ld text</p></li>
+<li><p><strong>publicID</strong> – (from rdflib) The logical URI to use as the document base. If None specified the document location is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ConjunctiveGraph instance</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sotools</span>
+<span class="go">INFO:rdflib:RDFLib Version: 4.2.2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadJsonldGraph</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;sotools/data/data/ds_00.json&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span>
+<span class="go">&lt;Graph identifier=N3026433194a2427b840aea582bfba9e1 (&lt;class &#39;rdflib.graph.ConjunctiveGraph&#39;&gt;)&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="sotools.common.renderGraph">
+<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">renderGraph</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="headerlink" href="#sotools.common.renderGraph" title="Permalink to this definition">¶</a></dt>
+<dd><p>For rendering an rdflib graph in Jupyter notebooks</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>g</strong> – Graph or ConjunctiveGraph</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Output for rendering directly in the notebook</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+  
+<h3>Navigation</h3>
+<ul>
+  <li><a href="index.html">Overview</a>
+    <ul>
+          <li>Previous: <a href="index.html" title="previous chapter">Tools for Schema.org Datasets</a>
+          <li>Next: <a href="loading_jsonld.html" title="next chapter">Loading JSON LD</a>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dave Vieglais.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  <script type="text/javascript" src="_static/version_warning_offset.js"></script>
+
+  </body>
+</html>

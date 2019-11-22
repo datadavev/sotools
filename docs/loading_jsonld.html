@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Loading JSON LD &#8212; SOtools Documentation (1.x)</title>
+    <link rel="stylesheet" href="_static/click.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="sotools.common package" href="sotools.common.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = './';</script>
+   
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sotools.common.html" title="sotools.common package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SOtools Documentation (1.x)</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="loading-json-ld">
+<h1>Loading JSON LD<a class="headerlink" href="#loading-json-ld" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="s2">&quot;ds-00&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;@context&quot;</span><span class="p">:</span> <span class="p">{</span>
+       <span class="nt">&quot;@vocab&quot;</span><span class="p">:</span> <span class="s2">&quot;https://schema.org/&quot;</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="s2">&quot;Dataset&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Dataset with metadata encoding&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Dataset snippet using SO:Encoding pattern for associated XML metadata&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;license&quot;</span><span class="p">:</span> <span class="s2">&quot;https://creativecommons.org/publicdomain/zero/1.0/&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;identifier&quot;</span><span class="p">:</span> <span class="s2">&quot;dataset-00&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;encoding&quot;</span><span class="p">:</span> <span class="p">{</span>
+       <span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="s2">&quot;ds-00#media-object&quot;</span><span class="p">,</span>
+       <span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="s2">&quot;MediaObject&quot;</span><span class="p">,</span>
+       <span class="nt">&quot;contentUrl&quot;</span><span class="p">:</span><span class="s2">&quot;https://my.server.net/datasets/00.xml&quot;</span><span class="p">,</span>
+       <span class="nt">&quot;dateModified&quot;</span><span class="p">:</span><span class="s2">&quot;2019-10-10T12:43:11+00:00.000&quot;</span><span class="p">,</span>
+       <span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="s2">&quot;ISO TC211 XML rendering of metadata&quot;</span><span class="p">,</span>
+       <span class="nt">&quot;encodingFormat&quot;</span><span class="p">:</span><span class="s2">&quot;http://www.isotc211.org/2005/gmd&quot;</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="jupyter_container docutils container">
+<div class="code_cell highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sotools</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadJsonldGraph</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;source/examples/data/ds_00.json&quot;</span><span class="p">,</span> <span class="n">publicID</span><span class="o">=</span><span class="s2">&quot;https://my.data/&quot;</span><span class="p">)</span>
+<span class="n">sotools</span><span class="o">.</span><span class="n">renderGraph</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/loading_jsonld_0_0.svg" src="_images/loading_jsonld_0_0.svg" /></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+  
+<h3>Navigation</h3>
+<ul>
+  <li><a href="index.html">Overview</a>
+    <ul>
+          <li>Previous: <a href="sotools.common.html" title="previous chapter">sotools.common package</a>
+          
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dave Vieglais.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  <script type="text/javascript" src="_static/version_warning_offset.js"></script>
+
+  </body>
+</html>

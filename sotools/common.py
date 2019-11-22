@@ -43,7 +43,7 @@ def _normalizeNode(t):
     return t
 
 
-def loadJsonldGraph(filename=None, data=None):
+def loadJsonldGraph(filename=None, data=None, publicID=None):
     """
     Load json-ld string or file to an RDFLib ConjunctiveGraph
 
@@ -56,6 +56,7 @@ def loadJsonldGraph(filename=None, data=None):
     Args:
         filename: path to json-ld file on disk
         data: json-ld text
+        publicID: (from rdflib) The logical URI to use as the document base. If None specified the document location is used.
 
     Returns:
         ConjunctiveGraph instance
@@ -70,9 +71,9 @@ def loadJsonldGraph(filename=None, data=None):
     """
     g = ConjunctiveGraph()
     if data is not None:
-        g.parse(data=data, format="json-ld")
+        g.parse(data=data, format="json-ld", publicID=publicID)
     elif filename is not None:
-        g.parse(filename, format="json-ld")
+        g.parse(filename, format="json-ld", publicID=publicID)
     # Now normalize the graph namespace use to https://schema.org/
     g2 = ConjunctiveGraph()
     for s, p, o in g:
@@ -283,7 +284,7 @@ def getMetadataLinksFromSubjectOf(g):
 
 def getMetadataLinksFromAbout(g):
     """
-    Extract a list of metadata links SO:about( SO:Dataset ).
+    Extract a list of metadata links SO:about(SO:Dataset)
 
     Args:
         g: ConjunctiveGraph
