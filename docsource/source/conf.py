@@ -42,6 +42,7 @@ extensions = [
     "sphinx_issues",
     "sphinx.ext.napoleon",
     "jupyter_sphinx.execute",
+    "sphinx.ext.viewcode",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -78,9 +79,12 @@ html_sidebars = {
     "**": ["localtoc.html", "relations.html", "searchbox.html"],
 }
 singlehtml_sidebars = {"index": ["project.html", "localtoc.html"]}
-html_static_path = ["_static"]
 html_title = f"SOtools Documentation ({version})"
 html_show_sourcelink = False
+
+html_css_files = [
+    "css/custom.css",
+]
 
 autoclass_content = 'both'
 

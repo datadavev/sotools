@@ -12,8 +12,7 @@ Tools for Schema.org Datasets
 Collection of notes and tools on working with Schema.org Dataset structures, with particular emphasis
 on crawling and indexing with DataONE infrastructure.
 
-Topics
-------
+Topics include:
 
 * Schema.org namespace normalization for efficient processing
 * Dataset identification
@@ -28,8 +27,9 @@ Topics
    :maxdepth: 2
    :caption: Contents:
 
-   sotools.common
+   ns_normalize
    loading_jsonld
+   sotools.common
 
 
 Indices and tables

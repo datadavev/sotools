@@ -1,0 +1,26 @@
+[
+  {
+    "@context": {
+      "@vocab": "https://schema.org"
+    },
+    "@id":"demo_0",
+    "@type":"Dataset",
+    "name": "https, no trailing slash"
+  },
+  {
+    "@context": {
+      "@vocab": "http://schema.org"
+    },
+    "@id":"demo_1",
+    "@type":"Dataset",
+    "name": "http, no trailing slash"
+  },
+  {
+    "@context": {
+      "@vocab": "http://schema.org/"
+    },
+    "@id":"demo_2",
+    "@type":"Dataset",
+    "name": "http only"
+  }
+]
