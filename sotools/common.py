@@ -15,9 +15,12 @@ SPARQL_PREFIXES = """
 """
 
 
-def _normalizeNode(t):
+def _normalizeTerm(t):
     """
     Hack the URIRefs to normalize schema.org to use "https://schema.org/"
+
+    This is an ugly solution to the problem of variable representations of
+    the schema.org namespace in the wild.
 
     Args:
         t: Graph term to process
@@ -77,7 +80,7 @@ def loadJsonldGraph(filename=None, data=None, publicID=None):
     # Now normalize the graph namespace use to https://schema.org/
     g2 = ConjunctiveGraph()
     for s, p, o in g:
-        g2.add((_normalizeNode(s), _normalizeNode(p), _normalizeNode(o)))
+        g2.add((_normalizeTerm(s), _normalizeTerm(p), _normalizeTerm(o)))
     return g2
 
 
