@@ -6,8 +6,19 @@
 Tools for Schema.org Datasets
 =============================
 
+.. image:: https://travis-ci.com/datadavev/sotools.svg?branch=master
+    :target: https://travis-ci.com/datadavev/sotools
+
 Collection of notes and tools on working with Schema.org Dataset structures, with particular emphasis
 on crawling and indexing with DataONE infrastructure.
+
+Topics
+------
+
+* Schema.org namespace normalization for efficient processing
+* Dataset identification
+* Handling references to external metadata
+* Identifiers for Datasets and their components
 
 .. note::
 
