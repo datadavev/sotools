@@ -34,6 +34,9 @@ def _normalizeTerm(t):
             v = v.replace("http://schema.org", "https://schema.org", 1)
             if v[18] != "/":
                 v = "https://schema.org/" + v[18:]
+                # rdflib will append a / to the end of terms where the predicate is rdf:type
+                # when converting to a string even though internally it is treated as a
+                # value without a trailing slash. 
                 if v[-1] == "/":
                     v = v[:-1]
             return URIRef(v)
