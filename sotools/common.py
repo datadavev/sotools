@@ -90,6 +90,26 @@ def loadJsonldGraph(filename=None, data=None, publicID=None):
     return g2
 
 
+def loadJsonLdGraphFromHtml(html, url):
+    """
+    Extract jsonld entries from provided HTML text
+
+    Args:
+        html: HTML text to be parsed
+
+    Returns:
+        ConjunctiveGraph instance
+
+    """
+    jslde = JsonLdExtractor()
+    json_content = jslde.extract(html)
+    g = ConjunctiveGraph()
+    for json_data in json_content:
+        g_data = loadJsonldGraph(data=json.dumps(json_data), publicID=url)
+        g += g_data
+    return g
+
+
 def loadJsonldGraphFromUrl(url):
     """
     Loads graph from json-ld contained in a landing page.
@@ -102,14 +122,10 @@ def loadJsonldGraphFromUrl(url):
     """
     response = requests.get(url)
     if response.status_code != requests.codes.ok:
-        raise ValueError(f"GET request to {url} returned a status of {response.status_code}")
-    jslde = JsonLdExtractor()
-    json_content = jslde.extract(response.text)
-    g = ConjunctiveGraph()
-    for json_data in json_content:
-        g_data = loadJsonldGraph(data=json.dumps(json_data), publicID=url)
-        g += g_data
-    return g
+        raise ValueError(
+            f"GET request to {url} returned a status of {response.status_code}"
+        )
+    return loadJsonLdGraphFromHtml(response.text, response.url)
 
 
 def renderGraph(g):
@@ -196,21 +212,18 @@ def getStructuredDatasetIdentifiers(g):
     Returns:
         list: A list of ``{value:, url:, propertyId:}``
     """
-    q = (
-        SPARQL_PREFIXES
-        + """
+    q = SPARQL_PREFIXES + """
     SELECT DISTINCT ?value ?url ?propid
     WHERE {
         ?x rdf:type schema:Dataset .
         ?x schema:identifier ?y .
         ?y rdf:type ?tt .
-        ?y schema:value ?value.
-        ?y schema:url ?url .
+        ?y schema:value ?value .
         ?y schema:propertyID ?propid .
+        OPTIONAL { ?y schema:url ?url } .
         FILTER (?tt = schema:PropertyValue || ?tt = datacite:ResourceIdentifier)
     }
     """
-    )
     res = []
     qres = g.query(q)
     for v in qres:

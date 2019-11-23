@@ -4,3 +4,4 @@ rdflib-jsonld
 pytest
 requests
 extruct
+scrapy
