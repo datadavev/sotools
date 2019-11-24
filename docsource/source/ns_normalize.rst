@@ -54,14 +54,14 @@ There are however, many real world examples of each use of the schema.org namesp
 
 In order to simplify tooling for extracting information from schema.org resources, ``sotools`` will normalize all
 json-ld graphs to use the namespace ``https://schema.org/``. The normalization is performed when loading with the
-:func:`sotools.common.loadJsonldGraph` method. For example, loading the same data with normalization and applying
+:func:`sotools.common.loadSOGraph` method. For example, loading the same data with normalization and applying
 the same queries:
 
 .. jupyter-execute::
 
    import sotools
 
-   g = sotools.loadJsonldGraph(
+   g = sotools.loadSOGraph(
        filename="source/examples/data/ds_bad_namespace.json",
        publicID="https://my.server.net/data/"
    )

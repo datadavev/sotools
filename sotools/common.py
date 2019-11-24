@@ -18,7 +18,7 @@ SO_PREFIX = "SO"
 
 SPARQL_PREFIXES = """
     PREFIX rdf:      <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-    PREFIX schema:   <https://schema.org/>
+    PREFIX SO:   <https://schema.org/>
     PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
     PREFIX datacite: <http://purl.org/spar/datacite/>
 """
@@ -89,7 +89,7 @@ def _normalizeTerm(t):
     return t
 
 
-def loadJsonldGraph(
+def loadSOGraph(
     filename=None,
     data=None,
     publicID=None,
@@ -153,7 +153,7 @@ def loadJsonldGraph(
     return g2
 
 
-def loadJsonLdGraphFromHtml(html, url):
+def loadSOGraphFromHtml(html, url):
     """
     Extract jsonld entries from provided HTML text
 
@@ -168,12 +168,12 @@ def loadJsonLdGraphFromHtml(html, url):
     json_content = jslde.extract(html)
     g = ConjunctiveGraph()
     for json_data in json_content:
-        g_data = loadJsonldGraph(data=json.dumps(json_data), publicID=url)
+        g_data = loadSOGraph(data=json.dumps(json_data), publicID=url)
         g += g_data
     return g
 
 
-def loadJsonldGraphFromUrl(url):
+def loadSOGraphFromUrl(url):
     """
     Loads graph from json-ld contained in a landing page.
 
@@ -188,7 +188,7 @@ def loadJsonldGraphFromUrl(url):
         raise ValueError(
             f"GET request to {url} returned a status of {response.status_code}"
         )
-    return loadJsonLdGraphFromHtml(response.text, response.url)
+    return loadSOGraphFromHtml(response.text, response.url)
 
 
 def renderGraph(g):
@@ -220,7 +220,7 @@ def isDataset(g):
 
         >>> import sotools
         INFO:rdflib:RDFLib Version: 4.2.2
-        >>> g = sotools.loadJsonldGraph(filename="sotools/data/data/ds_m_encoding.json")
+        >>> g = sotools.loadSOGraph(filename="sotools/data/data/ds_m_encoding.json")
         >>> sotools.isDataset(g)
         True
     """
@@ -229,7 +229,7 @@ def isDataset(g):
         + """
     SELECT ?x 
     { 
-        ?x rdf:type schema:Dataset .        
+        ?x rdf:type SO:Dataset .        
     }
     """
     )
@@ -252,8 +252,8 @@ def getLiteralDatasetIdentifiers(g):
         + """
     SELECT ?y
     WHERE {
-        ?x rdf:type schema:Dataset .
-        ?x schema:identifier ?y .
+        ?x rdf:type SO:Dataset .
+        ?x SO:identifier ?y .
         FILTER (isLiteral(?y)) .
     }
     """
@@ -280,13 +280,13 @@ def getStructuredDatasetIdentifiers(g):
         + """
     SELECT DISTINCT ?value ?url ?propid
     WHERE {
-        ?x rdf:type schema:Dataset .
-        ?x schema:identifier ?y .
+        ?x rdf:type SO:Dataset .
+        ?x SO:identifier ?y .
         ?y rdf:type ?tt .
-        ?y schema:value ?value .
-        ?y schema:propertyID ?propid .
-        OPTIONAL { ?y schema:url ?url } .
-        FILTER (?tt = schema:PropertyValue || ?tt = datacite:ResourceIdentifier)
+        ?y SO:value ?value .
+        ?y SO:propertyID ?propid .
+        OPTIONAL { ?y SO:url ?url } .
+        FILTER (?tt = SO:PropertyValue || ?tt = datacite:ResourceIdentifier)
     }
     """
     )
@@ -328,12 +328,12 @@ def getDatasetMetadataLinksFromEncoding(g):
         + """
     SELECT ?dateModified ?encodingFormat ?contentUrl ?description ?x
     WHERE {
-        ?x rdf:type schema:Dataset .
-        ?x schema:encoding ?y .
-        ?y schema:encodingFormat ?encodingFormat.
-        ?y schema:dateModified ?dateModified .
-        ?y schema:contentUrl ?contentUrl .
-        ?y schema:description ?description .
+        ?x rdf:type SO:Dataset .
+        ?x SO:encoding ?y .
+        ?y SO:encodingFormat ?encodingFormat.
+        ?y SO:dateModified ?dateModified .
+        ?y SO:contentUrl ?contentUrl .
+        ?y SO:description ?description .
     }
     """
     )
@@ -366,13 +366,13 @@ def getDatasetMetadataLinksFromSubjectOf(g):
         + """
     SELECT ?dateModified ?encodingFormat ?url ?description ?about
     WHERE {
-        ?about rdf:type schema:Dataset .
-        ?about schema:subjectOf ?y .
-        ?y schema:url ?url .
-        ?y schema:encodingFormat ?encodingFormat .
+        ?about rdf:type SO:Dataset .
+        ?about SO:subjectOf ?y .
+        ?y SO:url ?url .
+        ?y SO:encodingFormat ?encodingFormat .
         OPTIONAL {
-          ?y schema:dateModified ?dateModified .
-          ?y schema:description ?description .
+          ?y SO:dateModified ?dateModified .
+          ?y SO:description ?description .
         }    
     }
     """
@@ -406,13 +406,13 @@ def getDatasetMetadataLinksFromAbout(g):
         + """
     SELECT ?dateModified ?encodingFormat ?contentUrl ?description ?about
     WHERE {
-        ?about rdf:type schema:Dataset .
-        ?y schema:about ?about .
-        ?y schema:contentUrl ?contentUrl .
-        ?y schema:encodingFormat ?encodingFormat .
+        ?about rdf:type SO:Dataset .
+        ?y SO:about ?about .
+        ?y SO:contentUrl ?contentUrl .
+        ?y SO:encodingFormat ?encodingFormat .
         OPTIONAL {
-          ?y schema:dateModified ?dateModified .
-          ?y schema:description ?description .
+          ?y SO:dateModified ?dateModified .
+          ?y SO:description ?description .
         }
     }
     """
@@ -451,7 +451,7 @@ def getDatasetMetadataLinks(g):
         >>> from pprint import pprint
         >>> import sotools
         INFO:rdflib:RDFLib Version: 4.2.2
-        >>> g = sotools.loadJsonldGraph(filename=ds_m_encoding.json)ds_m_encoding.json>> links = sotools.getMetadataLinks(g)
+        >>> g = sotools.loadSOGraph(filename=ds_m_encoding.json)ds_m_encoding.json>> links = sotools.getMetadataLinks(g)
         >>> pprint(links)
         [{'contentUrl': 'https://my.server.net/datasets/00.xml',
           'dateModified': rdflib.term.Literal('2019-10-10T12:43:11+00:00.000'),

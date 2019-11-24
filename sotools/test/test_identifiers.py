@@ -101,13 +101,13 @@ structured_identifier_json_no_value = """
 class TestIdentifierIdentification:
 
     def test_literalDatasetIdentifier(self):
-        g = sotools.loadJsonldGraph(data=literal_identifier_json)
+        g = sotools.loadSOGraph(data=literal_identifier_json)
         ids = sotools.getDatasetIdentifiers(g)
         assert len(ids) == 1
         assert ids[0] == "simple_literal_string"
 
     def test_structuredDatasetIdentifier(self):
-        g = sotools.loadJsonldGraph(data=structured_identifier_json)
+        g = sotools.loadSOGraph(data=structured_identifier_json)
         ids = sotools.getDatasetIdentifiers(g)
         assert len(ids) == 1
         assert ids[0]["value"] == "10.1575/1912/bco-dmo.665253"
@@ -124,7 +124,7 @@ class TestIdentifierIdentification:
                 i += 1
             return -1
 
-        g = sotools.loadJsonldGraph(data=structured_identifier_json_multiple)
+        g = sotools.loadSOGraph(data=structured_identifier_json_multiple)
         ids = sotools.getDatasetIdentifiers(g)
         assert len(ids) == 3
         idx = find_id(ids, "10.1575/1912/bco-dmo.665253")
@@ -137,6 +137,6 @@ class TestIdentifierIdentification:
 
 
     def test_badDatasetIdentifier(self):
-        g = sotools.loadJsonldGraph(data=structured_identifier_json_no_value)
+        g = sotools.loadSOGraph(data=structured_identifier_json_no_value)
         ids = sotools.getDatasetIdentifiers(g)
         assert len(ids) == 0

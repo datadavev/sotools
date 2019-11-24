@@ -22,19 +22,19 @@ test_data = {
 
 class TestMetadataLinks:
     def test_encodingPattern(self):
-        g = sotools.common.loadJsonldGraph(test_data["encoding"])
+        g = sotools.common.loadSOGraph(test_data["encoding"])
         links = sotools.common.getDatasetMetadataLinks(g)
         assert len(links) == 1
         assert links[0]["contentUrl"] == "https://my.server.net/datasets/00.xml"
 
     def test_subjectOfPattern(self):
-        g = sotools.common.loadJsonldGraph(test_data["subjectof"])
+        g = sotools.common.loadSOGraph(test_data["subjectof"])
         links = sotools.common.getDatasetMetadataLinks(g)
         assert len(links) >= 1
         assert links[0]["contentUrl"] == "https://my.server.org/data/ds-02/metadata.xml"
 
     def test_aboutPattern(self):
-        g = sotools.common.loadJsonldGraph(test_data["about"])
+        g = sotools.common.loadSOGraph(test_data["about"])
         links = sotools.common.getDatasetMetadataLinks(g)
         assert len(links) == 1
         assert links[0]["contentUrl"] == "https://example.org/my/data/1/metadata.xml"

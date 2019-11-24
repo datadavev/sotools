@@ -52,7 +52,7 @@ class TestNamespaceNormalization:
         """
         Check http://schema.org => https://schema.org/
         """
-        g = sotools.common.loadJsonldGraph(data=http_context_json)
+        g = sotools.common.loadSOGraph(data=http_context_json)
         qres = g.query(TestNamespaceNormalization.q_dataset)
         assert(len(qres) == 1)
 
@@ -61,9 +61,9 @@ class TestNamespaceNormalization:
         """
         Check http://schema.org or https://schema.org => https://schema.org/
         """
-        g = sotools.common.loadJsonldGraph(data=http_context_noslash_json)
+        g = sotools.common.loadSOGraph(data=http_context_noslash_json)
         qres = g.query(TestNamespaceNormalization.q_dataset)
         assert(len(qres) == 1)
-        g = sotools.common.loadJsonldGraph(data=https_context_noslash_json)
+        g = sotools.common.loadSOGraph(data=https_context_noslash_json)
         qres = g.query(TestNamespaceNormalization.q_dataset)
         assert(len(qres) == 1)
