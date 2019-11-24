@@ -7,6 +7,6 @@ Loading JSON LD
 .. jupyter-execute::
 
     import sotools
-    g = sotools.loadJsonldGraph(filename="source/examples/data/ds_m_encoding.json", publicID="https://my.data/")
+    g = sotools.loadSOGraph(filename="source/examples/data/ds_m_encoding.json", publicID="https://my.data/")
     sotools.renderGraph(g)
 

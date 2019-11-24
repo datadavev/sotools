@@ -62,7 +62,7 @@
 
 <span class="n">SPARQL_PREFIXES</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    PREFIX rdf:      &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span>
-<span class="s2">    PREFIX schema:   &lt;https://schema.org/&gt;</span>
+<span class="s2">    PREFIX SO:   &lt;https://schema.org/&gt;</span>
 <span class="s2">    PREFIX xsd:  &lt;http://www.w3.org/2001/XMLSchema#&gt;</span>
 <span class="s2">    PREFIX datacite: &lt;http://purl.org/spar/datacite/&gt;</span>
 <span class="s2">&quot;&quot;&quot;</span>
@@ -133,7 +133,7 @@
     <span class="k">return</span> <span class="n">t</span>
 
 
-<div class="viewcode-block" id="loadJsonldGraph"><a class="viewcode-back" href="../../sotools.common.html#sotools.common.loadJsonldGraph">[docs]</a><span class="k">def</span> <span class="nf">loadJsonldGraph</span><span class="p">(</span>
+<div class="viewcode-block" id="loadSOGraph"><a class="viewcode-back" href="../../sotools.common.html#sotools.common.loadSOGraph">[docs]</a><span class="k">def</span> <span class="nf">loadSOGraph</span><span class="p">(</span>
     <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">publicID</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -197,7 +197,7 @@
     <span class="k">return</span> <span class="n">g2</span></div>
 
 
-<div class="viewcode-block" id="loadJsonLdGraphFromHtml"><a class="viewcode-back" href="../../sotools.common.html#sotools.common.loadJsonLdGraphFromHtml">[docs]</a><span class="k">def</span> <span class="nf">loadJsonLdGraphFromHtml</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+<div class="viewcode-block" id="loadSOGraphFromHtml"><a class="viewcode-back" href="../../sotools.common.html#sotools.common.loadSOGraphFromHtml">[docs]</a><span class="k">def</span> <span class="nf">loadSOGraphFromHtml</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Extract jsonld entries from provided HTML text</span>
 
@@ -212,12 +212,12 @@
     <span class="n">json_content</span> <span class="o">=</span> <span class="n">jslde</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
     <span class="n">g</span> <span class="o">=</span> <span class="n">ConjunctiveGraph</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">json_data</span> <span class="ow">in</span> <span class="n">json_content</span><span class="p">:</span>
-        <span class="n">g_data</span> <span class="o">=</span> <span class="n">loadJsonldGraph</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">json_data</span><span class="p">),</span> <span class="n">publicID</span><span class="o">=</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">g_data</span> <span class="o">=</span> <span class="n">loadSOGraph</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">json_data</span><span class="p">),</span> <span class="n">publicID</span><span class="o">=</span><span class="n">url</span><span class="p">)</span>
         <span class="n">g</span> <span class="o">+=</span> <span class="n">g_data</span>
     <span class="k">return</span> <span class="n">g</span></div>
 
 
-<div class="viewcode-block" id="loadJsonldGraphFromUrl"><a class="viewcode-back" href="../../sotools.common.html#sotools.common.loadJsonldGraphFromUrl">[docs]</a><span class="k">def</span> <span class="nf">loadJsonldGraphFromUrl</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+<div class="viewcode-block" id="loadSOGraphFromUrl"><a class="viewcode-back" href="../../sotools.common.html#sotools.common.loadSOGraphFromUrl">[docs]</a><span class="k">def</span> <span class="nf">loadSOGraphFromUrl</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Loads graph from json-ld contained in a landing page.</span>
 
@@ -232,7 +232,7 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="n">f</span><span class="s2">&quot;GET request to </span><span class="si">{url}</span><span class="s2"> returned a status of </span><span class="si">{response.status_code}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
-    <span class="k">return</span> <span class="n">loadJsonLdGraphFromHtml</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">loadSOGraphFromHtml</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="renderGraph"><a class="viewcode-back" href="../../sotools.common.html#sotools.common.renderGraph">[docs]</a><span class="k">def</span> <span class="nf">renderGraph</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
@@ -264,7 +264,7 @@
 
 <span class="sd">        &gt;&gt;&gt; import sotools</span>
 <span class="sd">        INFO:rdflib:RDFLib Version: 4.2.2</span>
-<span class="sd">        &gt;&gt;&gt; g = sotools.loadJsonldGraph(filename=&quot;sotools/data/data/ds_m_encoding.json&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; g = sotools.loadSOGraph(filename=&quot;sotools/data/data/ds_m_encoding.json&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; sotools.isDataset(g)</span>
 <span class="sd">        True</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -273,7 +273,7 @@
         <span class="o">+</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    SELECT ?x </span>
 <span class="s2">    { </span>
-<span class="s2">        ?x rdf:type schema:Dataset .        </span>
+<span class="s2">        ?x rdf:type SO:Dataset .        </span>
 <span class="s2">    }</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="p">)</span>
@@ -296,8 +296,8 @@
         <span class="o">+</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    SELECT ?y</span>
 <span class="s2">    WHERE {</span>
-<span class="s2">        ?x rdf:type schema:Dataset .</span>
-<span class="s2">        ?x schema:identifier ?y .</span>
+<span class="s2">        ?x rdf:type SO:Dataset .</span>
+<span class="s2">        ?x SO:identifier ?y .</span>
 <span class="s2">        FILTER (isLiteral(?y)) .</span>
 <span class="s2">    }</span>
 <span class="s2">    &quot;&quot;&quot;</span>
@@ -324,13 +324,13 @@
         <span class="o">+</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    SELECT DISTINCT ?value ?url ?propid</span>
 <span class="s2">    WHERE {</span>
-<span class="s2">        ?x rdf:type schema:Dataset .</span>
-<span class="s2">        ?x schema:identifier ?y .</span>
+<span class="s2">        ?x rdf:type SO:Dataset .</span>
+<span class="s2">        ?x SO:identifier ?y .</span>
 <span class="s2">        ?y rdf:type ?tt .</span>
-<span class="s2">        ?y schema:value ?value .</span>
-<span class="s2">        ?y schema:propertyID ?propid .</span>
-<span class="s2">        OPTIONAL { ?y schema:url ?url } .</span>
-<span class="s2">        FILTER (?tt = schema:PropertyValue || ?tt = datacite:ResourceIdentifier)</span>
+<span class="s2">        ?y SO:value ?value .</span>
+<span class="s2">        ?y SO:propertyID ?propid .</span>
+<span class="s2">        OPTIONAL { ?y SO:url ?url } .</span>
+<span class="s2">        FILTER (?tt = SO:PropertyValue || ?tt = datacite:ResourceIdentifier)</span>
 <span class="s2">    }</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="p">)</span>
@@ -372,12 +372,12 @@
         <span class="o">+</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    SELECT ?dateModified ?encodingFormat ?contentUrl ?description ?x</span>
 <span class="s2">    WHERE {</span>
-<span class="s2">        ?x rdf:type schema:Dataset .</span>
-<span class="s2">        ?x schema:encoding ?y .</span>
-<span class="s2">        ?y schema:encodingFormat ?encodingFormat.</span>
-<span class="s2">        ?y schema:dateModified ?dateModified .</span>
-<span class="s2">        ?y schema:contentUrl ?contentUrl .</span>
-<span class="s2">        ?y schema:description ?description .</span>
+<span class="s2">        ?x rdf:type SO:Dataset .</span>
+<span class="s2">        ?x SO:encoding ?y .</span>
+<span class="s2">        ?y SO:encodingFormat ?encodingFormat.</span>
+<span class="s2">        ?y SO:dateModified ?dateModified .</span>
+<span class="s2">        ?y SO:contentUrl ?contentUrl .</span>
+<span class="s2">        ?y SO:description ?description .</span>
 <span class="s2">    }</span>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="p">)</span>
@@ -410,13 +410,13 @@
         <span class="o">+</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    SELECT ?dateModified ?encodingFormat ?url ?description ?about</span>
 <span class="s2">    WHERE {</span>
-<span class="s2">        ?about rdf:type schema:Dataset .</span>
-<span class="s2">        ?about schema:subjectOf ?y .</span>
-<span class="s2">        ?y schema:url ?url .</span>
-<span class="s2">        ?y schema:encodingFormat ?encodingFormat .</span>
+<span class="s2">        ?about rdf:type SO:Dataset .</span>
+<span class="s2">        ?about SO:subjectOf ?y .</span>
+<span class="s2">        ?y SO:url ?url .</span>
+<span class="s2">        ?y SO:encodingFormat ?encodingFormat .</span>
 <span class="s2">        OPTIONAL {</span>
-<span class="s2">          ?y schema:dateModified ?dateModified .</span>
-<span class="s2">          ?y schema:description ?description .</span>
+<span class="s2">          ?y SO:dateModified ?dateModified .</span>
+<span class="s2">          ?y SO:description ?description .</span>
 <span class="s2">        }    </span>
 <span class="s2">    }</span>
 <span class="s2">    &quot;&quot;&quot;</span>
@@ -450,13 +450,13 @@
         <span class="o">+</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    SELECT ?dateModified ?encodingFormat ?contentUrl ?description ?about</span>
 <span class="s2">    WHERE {</span>
-<span class="s2">        ?about rdf:type schema:Dataset .</span>
-<span class="s2">        ?y schema:about ?about .</span>
-<span class="s2">        ?y schema:contentUrl ?contentUrl .</span>
-<span class="s2">        ?y schema:encodingFormat ?encodingFormat .</span>
+<span class="s2">        ?about rdf:type SO:Dataset .</span>
+<span class="s2">        ?y SO:about ?about .</span>
+<span class="s2">        ?y SO:contentUrl ?contentUrl .</span>
+<span class="s2">        ?y SO:encodingFormat ?encodingFormat .</span>
 <span class="s2">        OPTIONAL {</span>
-<span class="s2">          ?y schema:dateModified ?dateModified .</span>
-<span class="s2">          ?y schema:description ?description .</span>
+<span class="s2">          ?y SO:dateModified ?dateModified .</span>
+<span class="s2">          ?y SO:description ?description .</span>
 <span class="s2">        }</span>
 <span class="s2">    }</span>
 <span class="s2">    &quot;&quot;&quot;</span>
@@ -495,7 +495,7 @@
 <span class="sd">        &gt;&gt;&gt; from pprint import pprint</span>
 <span class="sd">        &gt;&gt;&gt; import sotools</span>
 <span class="sd">        INFO:rdflib:RDFLib Version: 4.2.2</span>
-<span class="sd">        &gt;&gt;&gt; g = sotools.loadJsonldGraph(filename=ds_m_encoding.json)ds_m_encoding.json&gt;&gt; links = sotools.getMetadataLinks(g)</span>
+<span class="sd">        &gt;&gt;&gt; g = sotools.loadSOGraph(filename=ds_m_encoding.json)ds_m_encoding.json&gt;&gt; links = sotools.getMetadataLinks(g)</span>
 <span class="sd">        &gt;&gt;&gt; pprint(links)</span>
 <span class="sd">        [{&#39;contentUrl&#39;: &#39;https://my.server.net/datasets/00.xml&#39;,</span>
 <span class="sd">          &#39;dateModified&#39;: rdflib.term.Literal(&#39;2019-10-10T12:43:11+00:00.000&#39;),</span>

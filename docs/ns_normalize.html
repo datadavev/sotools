@@ -157,12 +157,12 @@ a term like “<a class="reference external" href="https://schema.orgDataset">ht
 <p>There are however, many real world examples of each use of the schema.org namespace variants.</p>
 <p>In order to simplify tooling for extracting information from schema.org resources, <code class="docutils literal notranslate"><span class="pre">sotools</span></code> will normalize all
 json-ld graphs to use the namespace <code class="docutils literal notranslate"><span class="pre">https://schema.org/</span></code>. The normalization is performed when loading with the
-<a class="reference internal" href="sotools.common.html#sotools.common.loadJsonldGraph" title="sotools.common.loadJsonldGraph"><code class="xref py py-func docutils literal notranslate"><span class="pre">sotools.common.loadJsonldGraph()</span></code></a> method. For example, loading the same data with normalization and applying
+<a class="reference internal" href="sotools.common.html#sotools.common.loadSOGraph" title="sotools.common.loadSOGraph"><code class="xref py py-func docutils literal notranslate"><span class="pre">sotools.common.loadSOGraph()</span></code></a> method. For example, loading the same data with normalization and applying
 the same queries:</p>
 <div class="jupyter_container docutils container">
 <div class="code_cell highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sotools</span>
 
-<span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadJsonldGraph</span><span class="p">(</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadSOGraph</span><span class="p">(</span>
     <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;source/examples/data/ds_bad_namespace.json&quot;</span><span class="p">,</span>
     <span class="n">publicID</span><span class="o">=</span><span class="s2">&quot;https://my.server.net/data/&quot;</span>
 <span class="p">)</span>

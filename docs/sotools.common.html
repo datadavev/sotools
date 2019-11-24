@@ -77,13 +77,13 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#sotools.common.isDataset" title="sotools.common.isDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isDataset</span></code></a>(g)</p></td>
 <td><p>Evaluate if the Graph g is a SO:Dataset</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#sotools.common.loadJsonLdGraphFromHtml" title="sotools.common.loadJsonLdGraphFromHtml"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loadJsonLdGraphFromHtml</span></code></a>(html, url)</p></td>
-<td><p>Extract jsonld entries from provided HTML text</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#sotools.common.loadJsonldGraph" title="sotools.common.loadJsonldGraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loadJsonldGraph</span></code></a>([filename, data, publicID, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sotools.common.loadSOGraph" title="sotools.common.loadSOGraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loadSOGraph</span></code></a>([filename, data, publicID, …])</p></td>
 <td><p>Load RDF string or file to an RDFLib ConjunctiveGraph</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#sotools.common.loadJsonldGraphFromUrl" title="sotools.common.loadJsonldGraphFromUrl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loadJsonldGraphFromUrl</span></code></a>(url)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#sotools.common.loadSOGraphFromHtml" title="sotools.common.loadSOGraphFromHtml"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loadSOGraphFromHtml</span></code></a>(html, url)</p></td>
+<td><p>Extract jsonld entries from provided HTML text</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sotools.common.loadSOGraphFromUrl" title="sotools.common.loadSOGraphFromUrl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loadSOGraphFromUrl</span></code></a>(url)</p></td>
 <td><p>Loads graph from json-ld contained in a landing page.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#sotools.common.renderGraph" title="sotools.common.renderGraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">renderGraph</span></code></a>(g)</p></td>
@@ -131,7 +131,7 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="k">import</span> <span class="n">pprint</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sotools</span>
 <span class="go">INFO:rdflib:RDFLib Version: 4.2.2</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadJsonldGraph</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">ds_m_encoding</span><span class="o">.</span><span class="n">json</span><span class="p">)</span><span class="n">ds_m_encoding</span><span class="o">.</span><span class="n">json</span><span class="o">&gt;&gt;</span> <span class="n">links</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">getMetadataLinks</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadSOGraph</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">ds_m_encoding</span><span class="o">.</span><span class="n">json</span><span class="p">)</span><span class="n">ds_m_encoding</span><span class="o">.</span><span class="n">json</span><span class="o">&gt;&gt;</span> <span class="n">links</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">getMetadataLinks</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">links</span><span class="p">)</span>
 <span class="go">[{&#39;contentUrl&#39;: &#39;https://my.server.net/datasets/00.xml&#39;,</span>
 <span class="go">  &#39;dateModified&#39;: rdflib.term.Literal(&#39;2019-10-10T12:43:11+00:00.000&#39;),</span>
@@ -239,7 +239,7 @@
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sotools</span>
 <span class="go">INFO:rdflib:RDFLib Version: 4.2.2</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadJsonldGraph</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;sotools/data/data/ds_m_encoding.json&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadSOGraph</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;sotools/data/data/ds_m_encoding.json&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sotools</span><span class="o">.</span><span class="n">isDataset</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
 <span class="go">True</span>
 </pre></div>
@@ -247,22 +247,8 @@
 </dd></dl>
 
 <dl class="function">
-<dt id="sotools.common.loadJsonLdGraphFromHtml">
-<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">loadJsonLdGraphFromHtml</code><span class="sig-paren">(</span><em class="sig-param">html</em>, <em class="sig-param">url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#loadJsonLdGraphFromHtml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.loadJsonLdGraphFromHtml" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extract jsonld entries from provided HTML text</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>html</strong> – HTML text to be parsed</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>ConjunctiveGraph instance</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="sotools.common.loadJsonldGraph">
-<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">loadJsonldGraph</code><span class="sig-paren">(</span><em class="sig-param">filename=None</em>, <em class="sig-param">data=None</em>, <em class="sig-param">publicID=None</em>, <em class="sig-param">normalize=True</em>, <em class="sig-param">deslop=True</em>, <em class="sig-param">format='json-ld'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#loadJsonldGraph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.loadJsonldGraph" title="Permalink to this definition">¶</a></dt>
+<dt id="sotools.common.loadSOGraph">
+<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">loadSOGraph</code><span class="sig-paren">(</span><em class="sig-param">filename=None</em>, <em class="sig-param">data=None</em>, <em class="sig-param">publicID=None</em>, <em class="sig-param">normalize=True</em>, <em class="sig-param">deslop=True</em>, <em class="sig-param">format='json-ld'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#loadSOGraph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.loadSOGraph" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load RDF string or file to an RDFLib ConjunctiveGraph</p>
 <p>Creates a ConjunctiveGraph from  the provided file or text. If both are
 provided then text is used.</p>
@@ -297,8 +283,22 @@ is True.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="sotools.common.loadJsonldGraphFromUrl">
-<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">loadJsonldGraphFromUrl</code><span class="sig-paren">(</span><em class="sig-param">url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#loadJsonldGraphFromUrl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.loadJsonldGraphFromUrl" title="Permalink to this definition">¶</a></dt>
+<dt id="sotools.common.loadSOGraphFromHtml">
+<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">loadSOGraphFromHtml</code><span class="sig-paren">(</span><em class="sig-param">html</em>, <em class="sig-param">url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#loadSOGraphFromHtml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.loadSOGraphFromHtml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract jsonld entries from provided HTML text</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>html</strong> – HTML text to be parsed</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ConjunctiveGraph instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="sotools.common.loadSOGraphFromUrl">
+<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">loadSOGraphFromUrl</code><span class="sig-paren">(</span><em class="sig-param">url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#loadSOGraphFromUrl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.loadSOGraphFromUrl" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads graph from json-ld contained in a landing page.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
