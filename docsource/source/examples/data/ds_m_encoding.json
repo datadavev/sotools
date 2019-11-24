@@ -5,7 +5,7 @@
    },
    "@type":"Dataset",
    "name": "Dataset with metadata encoding",
-   "description": "Dataset snippet using SO:Encoding pattern for associated XML metadata",
+   "description": "Dataset snippet using SO:Encoding pattern for associated XML metadata.",
    "license": "https://creativecommons.org/publicdomain/zero/1.0/",
    "identifier": "dataset-00",
    "encoding": {

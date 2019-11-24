@@ -62,7 +62,19 @@ structured_identifier_json_multiple = """
            },
            "propertyID": "http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/sha1",
            "value": "urn:hash:sha1:19E517D7BFD58A64225E258CFEA8E3550E94D742"
-       }
+       },
+      {
+        "@type": [
+          "PropertyValue",
+          "datacite:ResourceIdentifier"
+        ],
+        "datacite:usesIdentifierScheme": {
+          "@id": "datacite:doi"
+        },
+        "propertyId": "DOI",
+        "url": "http://dx.doi.org/10.5439/1566826",
+        "value": "http://dx.doi.org/10.5439/1566826"
+      }       
    ]
 }
 """
@@ -114,13 +126,14 @@ class TestIdentifierIdentification:
 
         g = sotools.loadJsonldGraph(data=structured_identifier_json_multiple)
         ids = sotools.getDatasetIdentifiers(g)
-        assert len(ids) == 2
+        assert len(ids) == 3
         idx = find_id(ids, "10.1575/1912/bco-dmo.665253")
         assert idx >= 0
         assert ids[idx]["propertyId"] == "DOI"
         idx = find_id(ids, "urn:hash:sha1:19E517D7BFD58A64225E258CFEA8E3550E94D742")
         assert idx >= 0
         assert ids[idx]["propertyId"] == "http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/sha1"
+
 
 
     def test_badDatasetIdentifier(self):

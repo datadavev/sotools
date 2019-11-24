@@ -8,15 +8,43 @@ Run with::
 """
 import sotools.common
 
+http_context_json = """
+{
+   "@context": {
+      "@vocab": "http://schema.org/"
+   },
+   "@type":"Dataset"
+}
+"""
+
+http_context_noslash_json = """
+{
+   "@context": {
+      "@vocab": "http://schema.org"
+   },
+   "@type":"Dataset"
+}
+"""
+
+https_context_noslash_json = """
+{
+   "@context": {
+      "@vocab": "https://schema.org"
+   },
+   "@type":"Dataset"
+}
+"""
+
+
 class TestNamespaceNormalization:
 
     # Query to retrieve the graph that is of type https://schema.org/Dataset
     q_dataset = """
         PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX so:  <https://schema.org/>
+        PREFIX SO:  <https://schema.org/>
         SELECT ?x 
         { 
-            ?x rdf:type so:Dataset .
+            ?x rdf:type SO:Dataset .
         }        
     """
 
@@ -24,35 +52,18 @@ class TestNamespaceNormalization:
         """
         Check http://schema.org => https://schema.org/
         """
-        j = """{
-           "@context": {
-              "@vocab": "http://schema.org/"
-           },
-           "@type":"Dataset"
-        }"""
-        g = sotools.common.loadJsonldGraph(data=j)
+        g = sotools.common.loadJsonldGraph(data=http_context_json)
         qres = g.query(TestNamespaceNormalization.q_dataset)
         assert(len(qres) == 1)
+
 
     def test_noslash(self):
         """
         Check http://schema.org or https://schema.org => https://schema.org/
         """
-        j = """{
-           "@context": {
-              "@vocab": "http://schema.org"
-           },
-           "@type":"Dataset"
-        }"""
-        g = sotools.common.loadJsonldGraph(data=j)
+        g = sotools.common.loadJsonldGraph(data=http_context_noslash_json)
         qres = g.query(TestNamespaceNormalization.q_dataset)
         assert(len(qres) == 1)
-        j = """{
-           "@context": {
-              "@vocab": "https://schema.org"
-           },
-           "@type":"Dataset"
-        }"""
-        g = sotools.common.loadJsonldGraph(data=j)
+        g = sotools.common.loadJsonldGraph(data=https_context_noslash_json)
         qres = g.query(TestNamespaceNormalization.q_dataset)
         assert(len(qres) == 1)

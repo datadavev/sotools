@@ -13,7 +13,7 @@ Collection of notes and tools on working with Schema.org Dataset structures, wit
 on crawling and indexing with DataONE infrastructure.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents:
 
    ns_normalize
