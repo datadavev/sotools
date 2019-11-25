@@ -1,0 +1,38 @@
+{
+   "@context": {
+      "@vocab": "http://schema.org",
+      "datacite": "http://purl.org/spar/datacite/"
+   },
+   "@type":"Dataset",
+   "identifier": [
+       {
+           "@type": ["PropertyValue", "datacite:ResourceIdentifier"],
+           "datacite:usesIdentifierScheme": {
+                "@id": "datacite:doi"
+           },
+           "propertyID": "DOI",
+           "url": "https://doi.org/10.1575/1912/bco-dmo.665253",
+           "value": "10.1575/1912/bco-dmo.665253"
+       },
+       {
+           "@type":["PropertyValue", "datacite:ResourceIdentifier"],
+           "datacite:usesIdentifierScheme": {
+               "@id": "datacite:urn"
+           },
+           "propertyID": "http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/sha1",
+           "value": "urn:hash:sha1:19E517D7BFD58A64225E258CFEA8E3550E94D742"
+       },
+      {
+        "@type": [
+          "PropertyValue",
+          "datacite:ResourceIdentifier"
+        ],
+        "datacite:usesIdentifierScheme": {
+          "@id": "datacite:doi"
+        },
+        "propertyId": "DOI",
+        "url": "http://dx.doi.org/10.5439/1566826",
+        "value": "http://dx.doi.org/10.5439/1566826"
+      }
+   ]
+}

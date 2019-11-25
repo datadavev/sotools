@@ -6,34 +6,18 @@ Run with::
   $ pytest
 
 """
+import os.path
 import sotools.common
 
-http_context_json = """
-{
-   "@context": {
-      "@vocab": "http://schema.org/"
-   },
-   "@type":"Dataset"
-}
-"""
+test_data_folder = os.path.join(
+    os.path.dirname(__file__), "../../docsource/source/examples/data/"
+)
 
-http_context_noslash_json = """
-{
-   "@context": {
-      "@vocab": "http://schema.org"
-   },
-   "@type":"Dataset"
+test_data = {
+    "http": os.path.join(test_data_folder, "ns_so_http.json"),
+    "http_noslash": os.path.join(test_data_folder, "ns_so_http_noslash.json"),
+    "https_noslash": os.path.join(test_data_folder, "ns_so_https_noslash.json"),
 }
-"""
-
-https_context_noslash_json = """
-{
-   "@context": {
-      "@vocab": "https://schema.org"
-   },
-   "@type":"Dataset"
-}
-"""
 
 
 class TestNamespaceNormalization:
@@ -52,7 +36,7 @@ class TestNamespaceNormalization:
         """
         Check http://schema.org => https://schema.org/
         """
-        g = sotools.common.loadSOGraph(data=http_context_json)
+        g = sotools.common.loadSOGraph(filename=test_data["http"])
         qres = g.query(TestNamespaceNormalization.q_dataset)
         assert(len(qres) == 1)
 
@@ -61,9 +45,9 @@ class TestNamespaceNormalization:
         """
         Check http://schema.org or https://schema.org => https://schema.org/
         """
-        g = sotools.common.loadSOGraph(data=http_context_noslash_json)
+        g = sotools.common.loadSOGraph(filename=test_data["http_noslash"])
         qres = g.query(TestNamespaceNormalization.q_dataset)
         assert(len(qres) == 1)
-        g = sotools.common.loadSOGraph(data=https_context_noslash_json)
+        g = sotools.common.loadSOGraph(filename=test_data["https_noslash"])
         qres = g.query(TestNamespaceNormalization.q_dataset)
         assert(len(qres) == 1)

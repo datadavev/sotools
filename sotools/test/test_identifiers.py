@@ -6,108 +6,35 @@ Run with::
   $ pytest
 
 """
+import os.path
 import sotools.common
 
-literal_identifier_json = """
-{
-   "@context": {
-      "@vocab": "http://schema.org"
-   },
-   "@type":"Dataset",
-   "identifier":"simple_literal_string"
-}
-"""
+# References to test data
+# These are located in the docsource folder
+test_data_folder = os.path.join(
+    os.path.dirname(__file__), "../../docsource/source/examples/data/"
+)
 
-structured_identifier_json = """
-{
-   "@context": {
-      "@vocab": "http://schema.org",
-      "datacite": "http://purl.org/spar/datacite/"
-   },
-   "@type":"Dataset",
-   "identifier": {
-       "@type": ["PropertyValue", "datacite:ResourceIdentifier"],
-       "datacite:usesIdentifierScheme": { 
-            "@id": "datacite:doi" 
-       },
-       "propertyID": "DOI",
-       "url": "https://doi.org/10.1575/1912/bco-dmo.665253",
-       "value": "10.1575/1912/bco-dmo.665253"
-   }       
+test_data = {
+    "literal": os.path.join(test_data_folder, "id_literal.json"),
+    "structured_01": os.path.join(test_data_folder, "id_structured_01.json"),
+    # multiple structured identifiers, one for a DOI, the other for a checksum as URN
+    "structured_02": os.path.join(test_data_folder, "id_structured_02.json"),
+    # Structured identifier, but no value for the identifier
+    "structured_novalue": os.path.join(test_data_folder, "id_structured_novalue.json"),
 }
-"""
 
-# multiple structured identifiers, one for a DOI, the other for a checksum as URN
-structured_identifier_json_multiple = """
-{
-   "@context": {
-      "@vocab": "http://schema.org",
-      "datacite": "http://purl.org/spar/datacite/"
-   },
-   "@type":"Dataset",
-   "identifier": [
-       {
-           "@type": ["PropertyValue", "datacite:ResourceIdentifier"],
-           "datacite:usesIdentifierScheme": { 
-                "@id": "datacite:doi" 
-           },
-           "propertyID": "DOI",
-           "url": "https://doi.org/10.1575/1912/bco-dmo.665253",
-           "value": "10.1575/1912/bco-dmo.665253"
-       },
-       {
-           "@type":["PropertyValue", "datacite:ResourceIdentifier"],
-           "datacite:usesIdentifierScheme": { 
-               "@id": "datacite:urn" 
-           },
-           "propertyID": "http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/sha1",
-           "value": "urn:hash:sha1:19E517D7BFD58A64225E258CFEA8E3550E94D742"
-       },
-      {
-        "@type": [
-          "PropertyValue",
-          "datacite:ResourceIdentifier"
-        ],
-        "datacite:usesIdentifierScheme": {
-          "@id": "datacite:doi"
-        },
-        "propertyId": "DOI",
-        "url": "http://dx.doi.org/10.5439/1566826",
-        "value": "http://dx.doi.org/10.5439/1566826"
-      }       
-   ]
-}
-"""
-
-# Structured identifier, but no value for the identifier
-structured_identifier_json_no_value = """
-{
-   "@context": {
-      "@vocab": "http://schema.org",
-      "datacite": "http://purl.org/spar/datacite/"
-   },
-   "@type":"Dataset",
-   "identifier": {
-       "@type": ["PropertyValue", "datacite:ResourceIdentifier"],
-       "datacite:usesIdentifierScheme": { 
-            "@id": "datacite:doi" 
-       },
-       "propertyID": "DOI",
-       "url": "https://doi.org/10.1575/1912/bco-dmo.665253"
-   }       
-}
-"""
 
 class TestIdentifierIdentification:
 
     def test_literalDatasetIdentifier(self):
-        g = sotools.loadSOGraph(data=literal_identifier_json)
+        g = sotools.loadSOGraph(filename=test_data["literal"])
         ids = sotools.getDatasetIdentifiers(g)
         assert len(ids) == 1
         assert ids[0] == "simple_literal_string"
 
     def test_structuredDatasetIdentifier(self):
-        g = sotools.loadSOGraph(data=structured_identifier_json)
+        g = sotools.loadSOGraph(filename=test_data["structured_01"])
         ids = sotools.getDatasetIdentifiers(g)
         assert len(ids) == 1
         assert ids[0]["value"] == "10.1575/1912/bco-dmo.665253"
@@ -124,7 +51,7 @@ class TestIdentifierIdentification:
                 i += 1
             return -1
 
-        g = sotools.loadSOGraph(data=structured_identifier_json_multiple)
+        g = sotools.loadSOGraph(filename=test_data["structured_02"])
         ids = sotools.getDatasetIdentifiers(g)
         assert len(ids) == 3
         idx = find_id(ids, "10.1575/1912/bco-dmo.665253")
@@ -135,8 +62,7 @@ class TestIdentifierIdentification:
         assert ids[idx]["propertyId"] == "http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/sha1"
 
 
-
     def test_badDatasetIdentifier(self):
-        g = sotools.loadSOGraph(data=structured_identifier_json_no_value)
+        g = sotools.loadSOGraph(filename=test_data["structured_novalue"])
         ids = sotools.getDatasetIdentifiers(g)
         assert len(ids) == 0

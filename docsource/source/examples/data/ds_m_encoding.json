@@ -1,5 +1,5 @@
 {
-   "@id":"ds-00",
+   "@id":"ds_m_encoding",
    "@context": {
        "@vocab": "https://schema.org/"
    },
@@ -9,7 +9,7 @@
    "license": "https://creativecommons.org/publicdomain/zero/1.0/",
    "identifier": "dataset-00",
    "encoding": {
-       "@id":"ds-00#media-object",
+       "@id":"ds_m_encoding#media-object",
        "@type":"MediaObject",
        "contentUrl":"https://my.server.net/datasets/00.xml",
        "dateModified":"2019-10-10T12:43:11+00:00.000",

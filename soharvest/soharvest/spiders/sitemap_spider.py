@@ -12,11 +12,18 @@ class SOBaseSpider(SitemapSpider):
     def parse(self, response):
         g = None
         try:
-            g = sotools.loadJsonLdGraphFromHtml(response.body, response.url)
+            g = sotools.loadSOGraphFromHtml(response.body, response.url)
         except Exception as e:
             self.logger.warning(e)
         self.logger.info(f"response url = {response.url} has a Dataset = {sotools.isDataset(g)}")
         identifiers = sotools.getDatasetIdentifiers(g)
         print(str(identifiers))
+        metadata = sotools.getDatasetMetadataLinks(g)
+        res = {
+            "source": response.url,
+            "identifiers": identifiers,
+            "metadata": metadata
+        }
+        yield res
         #for identifier in identifiers:
         #    yield identifier

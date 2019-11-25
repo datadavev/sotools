@@ -74,8 +74,8 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#sotools.common.getStructuredDatasetIdentifiers" title="sotools.common.getStructuredDatasetIdentifiers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getStructuredDatasetIdentifiers</span></code></a>(g)</p></td>
 <td><p>Extract structured SO:Dataset.identifier entries</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#sotools.common.isDataset" title="sotools.common.isDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isDataset</span></code></a>(g)</p></td>
-<td><p>Evaluate if the Graph g is a SO:Dataset</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#sotools.common.hasDataset" title="sotools.common.hasDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hasDataset</span></code></a>(g)</p></td>
+<td><p>Number of SO:Dataset graphs in g</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#sotools.common.loadSOGraph" title="sotools.common.loadSOGraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loadSOGraph</span></code></a>([filename, data, publicID, …])</p></td>
 <td><p>Load RDF string or file to an RDFLib ConjunctiveGraph</p></td>
@@ -225,24 +225,31 @@
 </dd></dl>
 
 <dl class="function">
-<dt id="sotools.common.isDataset">
-<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">isDataset</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#isDataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.isDataset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Evaluate if the Graph g is a SO:Dataset</p>
+<dt id="sotools.common.hasDataset">
+<code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">hasDataset</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#hasDataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.hasDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of SO:Dataset graphs in g</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>g</strong> – ConjunctiveGraph</p>
+<dd class="field-odd"><p><strong>g</strong> (<em>Graph</em>) – The graph to evaluate</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>boolean</p>
+<dd class="field-even"><p>Number of SO:Dataset graphs in g</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>integer</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sotools</span>
-<span class="go">INFO:rdflib:RDFLib Version: 4.2.2</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadSOGraph</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;sotools/data/data/ds_m_encoding.json&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">sotools</span><span class="o">.</span><span class="n">isDataset</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
-<span class="go">True</span>
+<div class="jupyter_container docutils container">
+<div class="code_cell highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load a graph and evaluate if it contains a SO:Dataset</span>
+<span class="kn">import</span> <span class="nn">sotools</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadSOGraph</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;source/examples/data/ds_bad_namespace.json&quot;</span><span class="p">)</span>
+<span class="n">sotools</span><span class="o">.</span><span class="n">hasDataset</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
 </pre></div>
+</div>
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>3
+</pre></div>
+</div>
 </div>
 </dd></dl>
 
@@ -269,16 +276,78 @@ is True.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>ConjunctiveGraph instance</p>
+<dd class="field-even"><p>The loaded graph</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ConjunctiveGraph</p>
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sotools</span>
-<span class="go">INFO:rdflib:RDFLib Version: 4.2.2</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadJsonldGraph</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">ds_m_encoding</span><span class="o">.</span><span class="n">jsonng</span><span class="o">.</span><span class="n">json</span><span class="s2">&quot;)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span>
-<span class="go">&lt;Graph identifier=N3026433194a2427b840aea582bfba9e1 (&lt;class &#39;rdflib.graph.ConjunctiveGraph&#39;&gt;)&gt;</span>
+<div class="jupyter_container docutils container">
+<div class="code_cell highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load a Dataset from json-ld, normalize schema.org namespace, and dump as ttl.</span>
+<span class="kn">import</span> <span class="nn">sotools</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="n">json_source</span> <span class="o">=</span> <span class="s2">&quot;source/examples/data/ds_bad_namespace.json&quot;</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadSOGraph</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">json_source</span><span class="p">,</span>
+                        <span class="n">publicID</span><span class="o">=</span><span class="s2">&quot;https://my.data.net/data/&quot;</span><span class="p">,</span>
+                        <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">deslop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loaded JSON:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">json_source</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Normalized schema.org namespace and serialized to ttl:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s2">&quot;ttl&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Loaded JSON:
+[
+  {
+    &quot;@context&quot;: {
+      &quot;@vocab&quot;: &quot;https://schema.org&quot;
+    },
+    &quot;@id&quot;: &quot;demo_0&quot;,
+    &quot;@type&quot;: &quot;Dataset&quot;,
+    &quot;name&quot;: &quot;https, no trailing slash&quot;
+  },
+  {
+    &quot;@context&quot;: {
+      &quot;@vocab&quot;: &quot;http://schema.org&quot;
+    },
+    &quot;@id&quot;: &quot;demo_1&quot;,
+    &quot;@type&quot;: &quot;Dataset&quot;,
+    &quot;name&quot;: &quot;http, no trailing slash&quot;
+  },
+  {
+    &quot;@context&quot;: {
+      &quot;@vocab&quot;: &quot;http://schema.org/&quot;
+    },
+    &quot;@id&quot;: &quot;demo_2&quot;,
+    &quot;@type&quot;: &quot;Dataset&quot;,
+    &quot;name&quot;: &quot;http only&quot;
+  }
+]
+
+Normalized schema.org namespace and serialized to ttl:
+
+@prefix SO: &lt;https://schema.org/&gt; .
+@prefix ns1: &lt;https://my.data.net/data/&gt; .
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix xml: &lt;http://www.w3.org/XML/1998/namespace&gt; .
+@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+
+ns1:demo_0 a SO:Dataset ;
+    SO:name &quot;https, no trailing slash&quot; .
+
+ns1:demo_1 a SO:Dataset ;
+    SO:name &quot;http, no trailing slash&quot; .
+
+ns1:demo_2 a SO:Dataset ;
+    SO:name &quot;http only&quot; .
+
+
+</pre></div>
+</div>
 </div>
 </dd></dl>
 
@@ -302,7 +371,7 @@ is True.</p>
 <dd><p>Loads graph from json-ld contained in a landing page.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>url</strong> – String, url to process</p>
+<dd class="field-odd"><p><strong>url</strong> (<em>string</em>) – Url to process</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>ConjunctiveGraph instance</p>
@@ -316,12 +385,24 @@ is True.</p>
 <dd><p>For rendering an rdflib graph in Jupyter notebooks</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>g</strong> – Graph or ConjunctiveGraph</p>
+<dd class="field-odd"><p><strong>g</strong> (<em>Graph</em>) – The graph to render</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Output for rendering directly in the notebook</p>
 </dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Jupyter cell</p>
+</dd>
 </dl>
+<p>Example:</p>
+<div class="jupyter_container docutils container">
+<div class="code_cell highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load a graph and render the output (for jupyter notebooks)</span>
+<span class="kn">import</span> <span class="nn">sotools</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadSOGraph</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;source/examples/data/ds_m_subjectof.json&quot;</span><span class="p">)</span>
+<span class="n">sotools</span><span class="o">.</span><span class="n">renderGraph</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/sotools.common_2_0.svg" src="_images/sotools.common_2_0.svg" /></div>
 </dd></dl>
 
 </div>

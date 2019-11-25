@@ -1,0 +1,7 @@
+{
+   "@context": {
+      "@vocab": "https://schema.org/"
+   },
+   "@type":"Dataset",
+   "identifier":"simple_literal_string"
+}

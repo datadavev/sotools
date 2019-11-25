@@ -1,0 +1,16 @@
+{
+   "@context": {
+      "@vocab": "http://schema.org",
+      "datacite": "http://purl.org/spar/datacite/"
+   },
+   "@type":"Dataset",
+   "identifier": {
+       "@type": ["PropertyValue", "datacite:ResourceIdentifier"],
+       "datacite:usesIdentifierScheme": {
+            "@id": "datacite:doi"
+       },
+       "propertyID": "DOI",
+       "url": "https://doi.org/10.1575/1912/bco-dmo.665253",
+       "value": "10.1575/1912/bco-dmo.665253"
+   }
+}

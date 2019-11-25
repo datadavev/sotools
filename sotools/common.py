@@ -119,19 +119,14 @@ def loadSOGraph(
         format (string): The serialization format of the RDF to load
 
     Returns:
-        ConjunctiveGraph instance
+        ConjunctiveGraph: The loaded graph
 
-    Example::
+    Example:
 
-        >>> import sotools
-        INFO:rdflib:RDFLib Version: 4.2.2
-        >>> g = sotools.loadJsonldGraph(filename=ds_m_encoding.jsonng.json")
-        >>> g
-        <Graph identifier=N3026433194a2427b840aea582bfba9e1 (<class 'rdflib.graph.ConjunctiveGraph'>)>
+    .. jupyter-execute:: examples/code/eg_loadsograph_01.py
+
     """
     g = ConjunctiveGraph()
-    ns = NamespaceManager(g)
-    ns.bind(SO_PREFIX, SCHEMA_ORG, override=True)
     if data is not None:
         g.parse(data=data, format=format, publicID=publicID)
     elif filename is not None:
@@ -139,6 +134,8 @@ def loadSOGraph(
     if not (normalize or deslop):
         return g
     # Now normalize the graph namespace use to https://schema.org/
+    ns = NamespaceManager(g)
+    ns.bind(SO_PREFIX, SCHEMA_ORG, override=True, replace=True)
     g2 = ConjunctiveGraph()
     g2.namespace_manager = ns
     for s, p, o in g:
@@ -178,7 +175,7 @@ def loadSOGraphFromUrl(url):
     Loads graph from json-ld contained in a landing page.
 
     Args:
-        url: String, url to process
+        url (string): Url to process
 
     Returns:
         ConjunctiveGraph instance
@@ -196,33 +193,34 @@ def renderGraph(g):
     For rendering an rdflib graph in Jupyter notebooks
 
     Args:
-        g: Graph or ConjunctiveGraph
+        g (Graph): The graph to render
 
     Returns:
-        Output for rendering directly in the notebook
+        Jupyter cell: Output for rendering directly in the notebook
+
+    Example:
+
+    .. jupyter-execute:: examples/code/eg_rendergraph_01.py
     """
     fp = io.StringIO()
     rdf2dot.rdf2dot(g, fp)
     return graphviz.Source(fp.getvalue())
 
 
-def isDataset(g):
+def hasDataset(g):
     """
-    Evaluate if the Graph g is a SO:Dataset
+    Number of SO:Dataset graphs in g
 
     Args:
-        g: ConjunctiveGraph
+        g (Graph): The graph to evaluate
 
     Returns:
-        boolean
+        integer: Number of SO:Dataset graphs in g
 
-    Example::
+    Example:
 
-        >>> import sotools
-        INFO:rdflib:RDFLib Version: 4.2.2
-        >>> g = sotools.loadSOGraph(filename="sotools/data/data/ds_m_encoding.json")
-        >>> sotools.isDataset(g)
-        True
+    .. jupyter-execute:: examples/code/eg_hasdataset_01.py
+
     """
     q = (
         SPARQL_PREFIXES
@@ -234,7 +232,7 @@ def isDataset(g):
     """
     )
     qres = g.query(q)
-    return len(qres) >= 1
+    return len(qres)
 
 
 def getLiteralDatasetIdentifiers(g):
