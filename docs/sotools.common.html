@@ -54,7 +54,7 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#sotools.common.getDatasetIdentifiers" title="sotools.common.getDatasetIdentifiers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getDatasetIdentifiers</span></code></a>(g)</p></td>
-<td><p>Return a list of SO:Dataset.identifier entries from the provided Graph</p></td>
+<td><p>Return a list of <code class="docutils literal notranslate"><span class="pre">SO:Dataset.identifier</span></code> entries from the provided Graph</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#sotools.common.getDatasetMetadataLinks" title="sotools.common.getDatasetMetadataLinks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getDatasetMetadataLinks</span></code></a>(g)</p></td>
 <td><p>Extract links to metadata documents describing SO:Dataset</p></td>
@@ -91,34 +91,82 @@
 </tr>
 </tbody>
 </table>
-<span class="target" id="module-sotools.common"></span><dl class="function">
+<div class="section" id="module-sotools.common">
+<span id="method-descriptions"></span><h2>Method Descriptions<a class="headerlink" href="#module-sotools.common" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
 <dt id="sotools.common.getDatasetIdentifiers">
 <code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getDatasetIdentifiers</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#getDatasetIdentifiers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.getDatasetIdentifiers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a list of SO:Dataset.identifier entries from the provided Graph</p>
+<dd><p>Return a list of <code class="docutils literal notranslate"><span class="pre">SO:Dataset.identifier</span></code> entries from the provided Graph</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>g</strong> – ConjunctiveGraph</p>
+<dd class="field-odd"><p><strong>g</strong> (<em>Graph</em>) – Graph containing <code class="docutils literal notranslate"><span class="pre">SO:Dataset</span></code></p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A list of <code class="docutils literal notranslate"><span class="pre">string</span></code> or <code class="docutils literal notranslate"><span class="pre">{value:,</span> <span class="pre">url:,</span> <span class="pre">propertyId:}</span></code></p>
+<dd class="field-even"><p>A list of <code class="docutils literal notranslate"><span class="pre">{value:,</span> <span class="pre">url:,</span> <span class="pre">propertyId:}</span></code></p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>list</p>
 </dd>
 </dl>
+<p>Example:</p>
+<div class="jupyter_container docutils container">
+<div class="code_cell highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load graph and show SO:Dataset.identifier entries</span>
+<span class="kn">import</span> <span class="nn">sotools</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="k">import</span> <span class="n">pprint</span>
+
+<span class="n">json_source</span> <span class="o">=</span> <span class="s2">&quot;source/examples/data/id_structured_01.json&quot;</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadSOGraph</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">json_source</span><span class="p">)</span>
+<span class="n">identifiers</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">getDatasetIdentifiers</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The json-ld source graph:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">json_source</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The identifier(s) used in the dataset:&quot;</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">identifiers</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The json-ld source graph:
+{
+  &quot;@context&quot;: {
+    &quot;@vocab&quot;: &quot;http://schema.org&quot;,
+    &quot;datacite&quot;: &quot;http://purl.org/spar/datacite/&quot;
+  },
+  &quot;@type&quot;: &quot;Dataset&quot;,
+  &quot;identifier&quot;: {
+    &quot;@type&quot;: [
+      &quot;PropertyValue&quot;,
+      &quot;datacite:ResourceIdentifier&quot;
+    ],
+    &quot;datacite:usesIdentifierScheme&quot;: {
+      &quot;@id&quot;: &quot;datacite:doi&quot;
+    },
+    &quot;propertyID&quot;: &quot;DOI&quot;,
+    &quot;url&quot;: &quot;https://doi.org/10.1575/1912/bco-dmo.665253&quot;,
+    &quot;value&quot;: &quot;10.1575/1912/bco-dmo.665253&quot;
+  }
+}
+
+The identifier(s) used in the dataset:
+[ { &#39;propertyId&#39;: &#39;DOI&#39;,
+    &#39;url&#39;: &#39;https://doi.org/10.1575/1912/bco-dmo.665253&#39;,
+    &#39;value&#39;: &#39;10.1575/1912/bco-dmo.665253&#39;}]
+</pre></div>
+</div>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="sotools.common.getDatasetMetadataLinks">
 <code class="sig-prename descclassname">sotools.common.</code><code class="sig-name descname">getDatasetMetadataLinks</code><span class="sig-paren">(</span><em class="sig-param">g</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sotools/common.html#getDatasetMetadataLinks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sotools.common.getDatasetMetadataLinks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract links to metadata documents describing SO:Dataset</p>
-<p>Metadata docs can be referenced different ways
-* as SO:Dataset.subjectOf
-* the inverse of 1, SO:CreativeWork.about(SO:Dataset)
-* SO:Dataset.encoding</p>
+<p>Metadata docs can be referenced different ways</p>
+<ul class="simple">
+<li><p>as SO:Dataset.subjectOf</p></li>
+<li><p>the inverse of 1, SO:CreativeWork.about(SO:Dataset)</p></li>
+<li><p>SO:Dataset.encoding</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>g</strong> – ConjunctiveGraph</p>
+<dd class="field-odd"><p><strong>g</strong> (<em>Graph</em>) – Graph containing <code class="docutils literal notranslate"><span class="pre">SO:Dataset</span></code></p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>A list of <code class="docutils literal notranslate"><span class="pre">{dateModified:,</span> <span class="pre">encodingFormat:,</span> <span class="pre">contentUrl:,</span> <span class="pre">description:,</span> <span class="pre">subjectOf:,}</span></code></p>
@@ -128,17 +176,61 @@
 </dd>
 </dl>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="k">import</span> <span class="n">pprint</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sotools</span>
-<span class="go">INFO:rdflib:RDFLib Version: 4.2.2</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadSOGraph</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">ds_m_encoding</span><span class="o">.</span><span class="n">json</span><span class="p">)</span><span class="n">ds_m_encoding</span><span class="o">.</span><span class="n">json</span><span class="o">&gt;&gt;</span> <span class="n">links</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">getMetadataLinks</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">links</span><span class="p">)</span>
-<span class="go">[{&#39;contentUrl&#39;: &#39;https://my.server.net/datasets/00.xml&#39;,</span>
-<span class="go">  &#39;dateModified&#39;: rdflib.term.Literal(&#39;2019-10-10T12:43:11+00:00.000&#39;),</span>
-<span class="go">  &#39;description&#39;: &#39;ISO TC211 XML rendering of metadata&#39;,</span>
-<span class="go">  &#39;encodingFormat&#39;: &#39;http://www.isotc211.org/2005/gmd&#39;,</span>
-<span class="go">  &#39;subjectOf&#39;: &#39;file:///Users/vieglais/git/sotools/sotools/sotools/data/data/ds-00&#39;}]</span>
+<div class="jupyter_container docutils container">
+<div class="code_cell highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get links to metadata documents referenced from a SO:dataset</span>
+<span class="kn">import</span> <span class="nn">sotools</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="k">import</span> <span class="n">pprint</span>
+
+<span class="c1"># Note: in this case two entries are returned because the single</span>
+<span class="c1"># link is recognized with two different encodingFormats</span>
+<span class="n">json_source</span> <span class="o">=</span> <span class="s2">&quot;source/examples/data/ds_m_subjectof.json&quot;</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadSOGraph</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">json_source</span><span class="p">)</span>
+<span class="n">links</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">getDatasetMetadataLinks</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The source graph:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">json_source</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The links to external metadata:&quot;</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">links</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The source graph:
+{
+  &quot;@context&quot;: {
+    &quot;@vocab&quot;: &quot;https://schema.org/&quot;,
+    &quot;datacite&quot;: &quot;http://purl.org/spar/datacite/&quot;
+  },
+  &quot;@id&quot;: &quot;ds-02&quot;,
+  &quot;url&quot;: &quot;https://my.server.org/data/ds-02&quot;,
+  &quot;@type&quot;: &quot;Dataset&quot;,
+  &quot;identifier&quot;: &quot;dataset-02&quot;,
+  &quot;name&quot;: &quot;Dataset subjectOf metadata&quot;,
+  &quot;description&quot;: &quot;Dataset snippet with descriptive metadata indicated through subjectOf relation.&quot;,
+  &quot;license&quot;: &quot;https://creativecommons.org/publicdomain/zero/1.0/&quot;,
+  &quot;subjectOf&quot;: {
+    &quot;@id&quot;: &quot;ds-02/metadata.xml&quot;,
+    &quot;@type&quot;: &quot;CreativeWork&quot;,
+    &quot;name&quot;: &quot;Dublin Core Metadata Document Describing the Dataset&quot;,
+    &quot;url&quot;: &quot;https://my.server.org/data/ds-02/metadata.xml&quot;,
+    &quot;encodingFormat&quot;: [
+      &quot;application/rdf+xml&quot;,
+      &quot;http://ns.dataone.org/metadata/schema/onedcx/v1.0&quot;
+    ]
+  }
+}
+
+The links to external metadata:
+[ { &#39;contentUrl&#39;: &#39;https://my.server.org/data/ds-02/metadata.xml&#39;,
+    &#39;dateModified&#39;: None,
+    &#39;description&#39;: &#39;None&#39;,
+    &#39;encodingFormat&#39;: &#39;application/rdf+xml&#39;,
+    &#39;subjectOf&#39;: &#39;file:///Users/vieglais/git/sotools/sotools/docsource/source/examples/data/ds-02&#39;},
+  { &#39;contentUrl&#39;: &#39;https://my.server.org/data/ds-02/metadata.xml&#39;,
+    &#39;dateModified&#39;: None,
+    &#39;description&#39;: &#39;None&#39;,
+    &#39;encodingFormat&#39;: &#39;http://ns.dataone.org/metadata/schema/onedcx/v1.0&#39;,
+    &#39;subjectOf&#39;: &#39;file:///Users/vieglais/git/sotools/sotools/docsource/source/examples/data/ds-02&#39;}]
+</pre></div>
+</div>
 </div>
 </dd></dl>
 
@@ -148,7 +240,7 @@
 <dd><p>Extract a list of metadata links SO:about(SO:Dataset)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>g</strong> – ConjunctiveGraph</p>
+<dd class="field-odd"><p><strong>g</strong> (<em>Graph</em>) – Graph containing an <code class="docutils literal notranslate"><span class="pre">SO:Dataset</span></code></p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>A list of <code class="docutils literal notranslate"><span class="pre">{dateModified:,</span> <span class="pre">encodingFormat:,</span> <span class="pre">contentUrl:,</span> <span class="pre">description:,</span> <span class="pre">subjectOf:,}</span></code></p>
@@ -157,6 +249,78 @@
 <dd class="field-odd"><p>list</p>
 </dd>
 </dl>
+<p>Example:</p>
+<div class="jupyter_container docutils container">
+<div class="code_cell highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get links to metadata documents referenced from a SO:dataset</span>
+<span class="kn">import</span> <span class="nn">sotools</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="k">import</span> <span class="n">pprint</span>
+
+<span class="n">json_source</span> <span class="o">=</span> <span class="s2">&quot;source/examples/data/ds_m_about.json&quot;</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadSOGraph</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">json_source</span><span class="p">)</span>
+<span class="n">links</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">getDatasetMetadataLinks</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The source graph:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">json_source</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The links to external metadata:&quot;</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">links</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>The source graph:
+{
+  &quot;@context&quot;: {
+    &quot;@vocab&quot;: &quot;https://schema.org/&quot;
+  },
+  &quot;@graph&quot;: [
+    {
+      &quot;@type&quot;: &quot;Dataset&quot;,
+      &quot;@id&quot;: &quot;./&quot;,
+      &quot;identifier&quot;: &quot;dataset-01&quot;,
+      &quot;name&quot;: &quot;Dataset with metadata about&quot;,
+      &quot;description&quot;: &quot;Dataset snippet with metadata and data components indicated by hasPart and the descriptive metadata through an about association.&quot;,
+      &quot;license&quot;: &quot;https://creativecommons.org/publicdomain/zero/1.0/&quot;,
+      &quot;hasPart&quot;: [
+        {
+          &quot;@id&quot;: &quot;./metadata.xml&quot;
+        },
+        {
+          &quot;@id&quot;: &quot;./data_part_a.csv&quot;
+        }
+      ]
+    },
+    {
+      &quot;@id&quot;: &quot;./metadata.xml&quot;,
+      &quot;@type&quot;: &quot;MediaObject&quot;,
+      &quot;contentUrl&quot;: &quot;https://example.org/my/data/1/metadata.xml&quot;,
+      &quot;dateModified&quot;: &quot;2019-10-10T12:43:11+00:00.000&quot;,
+      &quot;description&quot;: &quot;A metadata document describing the Dataset and the data component&quot;,
+      &quot;encodingFormat&quot;: &quot;http://www.isotc211.org/2005/gmd&quot;,
+      &quot;about&quot;: [
+        {
+          &quot;@id&quot;: &quot;./&quot;
+        },
+        {
+          &quot;@id&quot;: &quot;./data_part_a.csv&quot;
+        }
+      ]
+    },
+    {
+      &quot;@id&quot;: &quot;./data_part_a.csv&quot;,
+      &quot;@type&quot;: &quot;MediaObject&quot;,
+      &quot;contentUrl&quot;: &quot;https://example.org/my/data/1/data_part_a.csv&quot;
+    }
+  ]
+}
+
+The links to external metadata:
+[ { &#39;contentUrl&#39;: &#39;https://example.org/my/data/1/metadata.xml&#39;,
+    &#39;dateModified&#39;: rdflib.term.Literal(&#39;2019-10-10T12:43:11+00:00.000&#39;),
+    &#39;description&#39;: &#39;A metadata document describing the Dataset and the data &#39;
+                   &#39;component&#39;,
+    &#39;encodingFormat&#39;: &#39;http://www.isotc211.org/2005/gmd&#39;,
+    &#39;subjectOf&#39;: &#39;file:///Users/vieglais/git/sotools/sotools/docsource/source/examples/data/&#39;}]
+</pre></div>
+</div>
+</div>
 </dd></dl>
 
 <dl class="function">
@@ -199,10 +363,13 @@
 <dd><p>Retrieve literal SO:Dataset.identifier entries</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>g</strong> – ConjunctiveGraph</p>
+<dd class="field-odd"><p><strong>g</strong> (<em>Graph</em>) – Graph containing <code class="docutils literal notranslate"><span class="pre">SO:Dataset</span></code></p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>list of identifier strings</p>
+<dd class="field-even"><p>A list of <code class="docutils literal notranslate"><span class="pre">{value:,</span> <span class="pre">url:,</span> <span class="pre">propertyId:}</span></code> with url=None and propertyId=”Literal”</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -213,7 +380,7 @@
 <dd><p>Extract structured SO:Dataset.identifier entries</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>g</strong> – ConjunctiveGraph</p>
+<dd class="field-odd"><p><strong>g</strong> (<em>Graph</em>) – Graph containing <code class="docutils literal notranslate"><span class="pre">SO:Dataset</span></code></p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>A list of <code class="docutils literal notranslate"><span class="pre">{value:,</span> <span class="pre">url:,</span> <span class="pre">propertyId:}</span></code></p>
@@ -259,10 +426,10 @@
 <dd><p>Load RDF string or file to an RDFLib ConjunctiveGraph</p>
 <p>Creates a ConjunctiveGraph from  the provided file or text. If both are
 provided then text is used.</p>
-<p>NOTE: Namespace use of &lt;<a class="reference external" href="http://schema.org">http://schema.org</a>&gt;, &lt;<a class="reference external" href="https://schema.org">https://schema.org</a>&gt;, or
-&lt;<a class="reference external" href="http://schema.org/">http://schema.org/</a>&gt; is normalized to &lt;<a class="reference external" href="https://schema.org/">https://schema.org/</a>&gt; if <code class="docutils literal notranslate"><span class="pre">normalize</span></code>
-is True.</p>
-<p>NOTE: Case of SO: properties in SO_TERMS is adjusted consistency if
+<p>NOTE: Namespace use of <code class="docutils literal notranslate"><span class="pre">&lt;http://schema.org&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;https://schema.org&gt;</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">&lt;http://schema.org/&gt;</span></code> is normalized to <code class="docutils literal notranslate"><span class="pre">&lt;https://schema.org/&gt;</span></code> if
+<code class="docutils literal notranslate"><span class="pre">normalize</span></code> is True.</p>
+<p>NOTE: Case of <code class="docutils literal notranslate"><span class="pre">SO:</span></code> properties in <cite>SO_TERMS</cite> is adjusted consistency if
 <code class="docutils literal notranslate"><span class="pre">deslop</span></code> is True</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -357,10 +524,13 @@ ns1:demo_2 a SO:Dataset ;
 <dd><p>Extract jsonld entries from provided HTML text</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>html</strong> – HTML text to be parsed</p>
+<dd class="field-odd"><p><strong>html</strong> (<em>string</em>) – HTML text to be parsed</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>ConjunctiveGraph instance</p>
+<dd class="field-even"><p>Graph loaded from html</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ConjunctiveGraph</p>
 </dd>
 </dl>
 </dd></dl>
@@ -402,9 +572,10 @@ ns1:demo_2 a SO:Dataset ;
 <span class="n">sotools</span><span class="o">.</span><span class="n">renderGraph</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
 </pre></div>
 </div>
-<img alt="_images/sotools.common_2_0.svg" src="_images/sotools.common_2_0.svg" /></div>
+<img alt="_images/sotools.common_5_0.svg" src="_images/sotools.common_5_0.svg" /></div>
 </dd></dl>
 
+</div>
 </div>
 
 
@@ -417,6 +588,14 @@ ns1:demo_2 a SO:Dataset ;
   
     
   
+
+  <h3>Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">sotools.common package</a><ul>
+<li><a class="reference internal" href="#module-sotools.common">Method Descriptions</a></li>
+</ul>
+</li>
+</ul>
 <h3>Navigation</h3>
 <ul>
   <li><a href="index.html">Overview</a>

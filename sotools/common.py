@@ -82,7 +82,7 @@ def _normalizeTerm(t):
         v = str(t)
         so_match = RE_SO.match(v)
         if so_match is not None:
-            v = v[so_match.end() :]
+            v = v[so_match.end():]
             if v[-1] == "/":
                 v = v[:-1]
             return URIRef(v, SCHEMA_ORG)
@@ -103,11 +103,11 @@ def loadSOGraph(
     Creates a ConjunctiveGraph from  the provided file or text. If both are
     provided then text is used.
 
-    NOTE: Namespace use of <http://schema.org>, <https://schema.org>, or
-    <http://schema.org/> is normalized to <https://schema.org/> if ``normalize``
-    is True.
+    NOTE: Namespace use of ``<http://schema.org>``, ``<https://schema.org>``, or
+    ``<http://schema.org/>`` is normalized to ``<https://schema.org/>`` if
+    ``normalize`` is True.
 
-    NOTE: Case of SO: properties in SO_TERMS is adjusted consistency if
+    NOTE: Case of ``SO:`` properties in `SO_TERMS` is adjusted consistency if
     ``deslop`` is True
 
     Args:
@@ -155,10 +155,10 @@ def loadSOGraphFromHtml(html, url):
     Extract jsonld entries from provided HTML text
 
     Args:
-        html: HTML text to be parsed
+        html(string): HTML text to be parsed
 
     Returns:
-        ConjunctiveGraph instance
+        ConjunctiveGraph: Graph loaded from html
 
     """
     jslde = JsonLdExtractor()
@@ -240,10 +240,10 @@ def getLiteralDatasetIdentifiers(g):
     Retrieve literal SO:Dataset.identifier entries
 
     Args:
-        g: ConjunctiveGraph
+        g (Graph): Graph containing ``SO:Dataset``
 
     Returns:
-        list of identifier strings
+        list: A list of ``{value:, url:, propertyId:}`` with url=None and propertyId="Literal"
     """
     q = (
         SPARQL_PREFIXES
@@ -259,7 +259,7 @@ def getLiteralDatasetIdentifiers(g):
     res = []
     qres = g.query(q)
     for v in qres:
-        res.append(str(v[0]))
+        res.append({"value": str(v[0]), "propertyId":"Literal", "url": None})
     return res
 
 
@@ -268,7 +268,7 @@ def getStructuredDatasetIdentifiers(g):
     Extract structured SO:Dataset.identifier entries
 
     Args:
-        g: ConjunctiveGraph
+        g (Graph): Graph containing ``SO:Dataset``
 
     Returns:
         list: A list of ``{value:, url:, propertyId:}``
@@ -298,13 +298,17 @@ def getStructuredDatasetIdentifiers(g):
 
 def getDatasetIdentifiers(g):
     """
-    Return a list of SO:Dataset.identifier entries from the provided Graph
+    Return a list of ``SO:Dataset.identifier`` entries from the provided Graph
 
     Args:
-        g: ConjunctiveGraph
+        g (Graph): Graph containing ``SO:Dataset``
 
     Returns:
-        list: A list of ``string`` or ``{value:, url:, propertyId:}``
+        list: A list of ``{value:, url:, propertyId:}``
+
+    Example:
+
+    .. jupyter-execute:: examples/code/eg_datasetidentifiers_01.py
     """
     # First get any identifiers that are literals with no additional context
     res = getLiteralDatasetIdentifiers(g)
@@ -394,10 +398,14 @@ def getDatasetMetadataLinksFromAbout(g):
     Extract a list of metadata links SO:about(SO:Dataset)
 
     Args:
-        g: ConjunctiveGraph
+        g(Graph): Graph containing an ``SO:Dataset``
 
     Returns:
         list: A list of ``{dateModified:, encodingFormat:, contentUrl:, description:, subjectOf:,}``
+
+    Example:
+
+    .. jupyter-execute:: examples/code/eg_metadatalinks_about.py
     """
     q = (
         SPARQL_PREFIXES
@@ -434,28 +442,20 @@ def getDatasetMetadataLinks(g):
     Extract links to metadata documents describing SO:Dataset
 
     Metadata docs can be referenced different ways
+
     * as SO:Dataset.subjectOf
     * the inverse of 1, SO:CreativeWork.about(SO:Dataset)
     * SO:Dataset.encoding
 
     Args:
-        g: ConjunctiveGraph
+        g (Graph): Graph containing ``SO:Dataset``
 
     Returns:
         list: A list of ``{dateModified:, encodingFormat:, contentUrl:, description:, subjectOf:,}``
 
-    Example::
+    Example:
 
-        >>> from pprint import pprint
-        >>> import sotools
-        INFO:rdflib:RDFLib Version: 4.2.2
-        >>> g = sotools.loadSOGraph(filename=ds_m_encoding.json)ds_m_encoding.json>> links = sotools.getMetadataLinks(g)
-        >>> pprint(links)
-        [{'contentUrl': 'https://my.server.net/datasets/00.xml',
-          'dateModified': rdflib.term.Literal('2019-10-10T12:43:11+00:00.000'),
-          'description': 'ISO TC211 XML rendering of metadata',
-          'encodingFormat': 'http://www.isotc211.org/2005/gmd',
-          'subjectOf': 'file:///Users/vieglais/git/sotools/sotools/sotools/data/data/ds-00'}]
+    .. jupyter-execute:: examples/code/eg_metadatalinks_01.py
     """
     res = getDatasetMetadataLinksFromEncoding(g)
     res += getDatasetMetadataLinksFromSubjectOf(g)

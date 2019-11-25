@@ -31,7 +31,8 @@ class TestIdentifierIdentification:
         g = sotools.loadSOGraph(filename=test_data["literal"])
         ids = sotools.getDatasetIdentifiers(g)
         assert len(ids) == 1
-        assert ids[0] == "simple_literal_string"
+        assert ids[0]["value"] == "simple_literal_string"
+        assert ids[0]["propertyId"] == "Literal"
 
     def test_structuredDatasetIdentifier(self):
         g = sotools.loadSOGraph(filename=test_data["structured_01"])

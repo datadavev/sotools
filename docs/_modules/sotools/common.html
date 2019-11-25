@@ -126,7 +126,7 @@
         <span class="n">v</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
         <span class="n">so_match</span> <span class="o">=</span> <span class="n">RE_SO</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">so_match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">so_match</span><span class="o">.</span><span class="n">end</span><span class="p">()</span> <span class="p">:]</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">so_match</span><span class="o">.</span><span class="n">end</span><span class="p">():]</span>
             <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;/&quot;</span><span class="p">:</span>
                 <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="k">return</span> <span class="n">URIRef</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">SCHEMA_ORG</span><span class="p">)</span>
@@ -147,11 +147,11 @@
 <span class="sd">    Creates a ConjunctiveGraph from  the provided file or text. If both are</span>
 <span class="sd">    provided then text is used.</span>
 
-<span class="sd">    NOTE: Namespace use of &lt;http://schema.org&gt;, &lt;https://schema.org&gt;, or</span>
-<span class="sd">    &lt;http://schema.org/&gt; is normalized to &lt;https://schema.org/&gt; if ``normalize``</span>
-<span class="sd">    is True.</span>
+<span class="sd">    NOTE: Namespace use of ``&lt;http://schema.org&gt;``, ``&lt;https://schema.org&gt;``, or</span>
+<span class="sd">    ``&lt;http://schema.org/&gt;`` is normalized to ``&lt;https://schema.org/&gt;`` if</span>
+<span class="sd">    ``normalize`` is True.</span>
 
-<span class="sd">    NOTE: Case of SO: properties in SO_TERMS is adjusted consistency if</span>
+<span class="sd">    NOTE: Case of ``SO:`` properties in `SO_TERMS` is adjusted consistency if</span>
 <span class="sd">    ``deslop`` is True</span>
 
 <span class="sd">    Args:</span>
@@ -199,10 +199,10 @@
 <span class="sd">    Extract jsonld entries from provided HTML text</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        html: HTML text to be parsed</span>
+<span class="sd">        html(string): HTML text to be parsed</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        ConjunctiveGraph instance</span>
+<span class="sd">        ConjunctiveGraph: Graph loaded from html</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">jslde</span> <span class="o">=</span> <span class="n">JsonLdExtractor</span><span class="p">()</span>
@@ -284,10 +284,10 @@
 <span class="sd">    Retrieve literal SO:Dataset.identifier entries</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        g: ConjunctiveGraph</span>
+<span class="sd">        g (Graph): Graph containing ``SO:Dataset``</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        list of identifier strings</span>
+<span class="sd">        list: A list of ``{value:, url:, propertyId:}`` with url=None and propertyId=&quot;Literal&quot;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">q</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">SPARQL_PREFIXES</span>
@@ -303,7 +303,7 @@
     <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">qres</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">qres</span><span class="p">:</span>
-        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s2">&quot;propertyId&quot;</span><span class="p">:</span><span class="s2">&quot;Literal&quot;</span><span class="p">,</span> <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">})</span>
     <span class="k">return</span> <span class="n">res</span></div>
 
 
@@ -312,7 +312,7 @@
 <span class="sd">    Extract structured SO:Dataset.identifier entries</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        g: ConjunctiveGraph</span>
+<span class="sd">        g (Graph): Graph containing ``SO:Dataset``</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        list: A list of ``{value:, url:, propertyId:}``</span>
@@ -342,13 +342,17 @@
 
 <div class="viewcode-block" id="getDatasetIdentifiers"><a class="viewcode-back" href="../../sotools.common.html#sotools.common.getDatasetIdentifiers">[docs]</a><span class="k">def</span> <span class="nf">getDatasetIdentifiers</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Return a list of SO:Dataset.identifier entries from the provided Graph</span>
+<span class="sd">    Return a list of ``SO:Dataset.identifier`` entries from the provided Graph</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        g: ConjunctiveGraph</span>
+<span class="sd">        g (Graph): Graph containing ``SO:Dataset``</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        list: A list of ``string`` or ``{value:, url:, propertyId:}``</span>
+<span class="sd">        list: A list of ``{value:, url:, propertyId:}``</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. jupyter-execute:: examples/code/eg_datasetidentifiers_01.py</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># First get any identifiers that are literals with no additional context</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">getLiteralDatasetIdentifiers</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
@@ -438,10 +442,14 @@
 <span class="sd">    Extract a list of metadata links SO:about(SO:Dataset)</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        g: ConjunctiveGraph</span>
+<span class="sd">        g(Graph): Graph containing an ``SO:Dataset``</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        list: A list of ``{dateModified:, encodingFormat:, contentUrl:, description:, subjectOf:,}``</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. jupyter-execute:: examples/code/eg_metadatalinks_about.py</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">q</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">SPARQL_PREFIXES</span>
@@ -478,28 +486,20 @@
 <span class="sd">    Extract links to metadata documents describing SO:Dataset</span>
 
 <span class="sd">    Metadata docs can be referenced different ways</span>
+
 <span class="sd">    * as SO:Dataset.subjectOf</span>
 <span class="sd">    * the inverse of 1, SO:CreativeWork.about(SO:Dataset)</span>
 <span class="sd">    * SO:Dataset.encoding</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        g: ConjunctiveGraph</span>
+<span class="sd">        g (Graph): Graph containing ``SO:Dataset``</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        list: A list of ``{dateModified:, encodingFormat:, contentUrl:, description:, subjectOf:,}``</span>
 
-<span class="sd">    Example::</span>
+<span class="sd">    Example:</span>
 
-<span class="sd">        &gt;&gt;&gt; from pprint import pprint</span>
-<span class="sd">        &gt;&gt;&gt; import sotools</span>
-<span class="sd">        INFO:rdflib:RDFLib Version: 4.2.2</span>
-<span class="sd">        &gt;&gt;&gt; g = sotools.loadSOGraph(filename=ds_m_encoding.json)ds_m_encoding.json&gt;&gt; links = sotools.getMetadataLinks(g)</span>
-<span class="sd">        &gt;&gt;&gt; pprint(links)</span>
-<span class="sd">        [{&#39;contentUrl&#39;: &#39;https://my.server.net/datasets/00.xml&#39;,</span>
-<span class="sd">          &#39;dateModified&#39;: rdflib.term.Literal(&#39;2019-10-10T12:43:11+00:00.000&#39;),</span>
-<span class="sd">          &#39;description&#39;: &#39;ISO TC211 XML rendering of metadata&#39;,</span>
-<span class="sd">          &#39;encodingFormat&#39;: &#39;http://www.isotc211.org/2005/gmd&#39;,</span>
-<span class="sd">          &#39;subjectOf&#39;: &#39;file:///Users/vieglais/git/sotools/sotools/sotools/data/data/ds-00&#39;}]</span>
+<span class="sd">    .. jupyter-execute:: examples/code/eg_metadatalinks_01.py</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">getDatasetMetadataLinksFromEncoding</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
     <span class="n">res</span> <span class="o">+=</span> <span class="n">getDatasetMetadataLinksFromSubjectOf</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
