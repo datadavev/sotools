@@ -7,3 +7,4 @@ pytest
 requests
 extruct
 scrapy
+sphinxcontrib-log_cabinet
