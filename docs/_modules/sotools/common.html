@@ -222,7 +222,11 @@
 <span class="sd">        url (string): Url to process</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        ConjunctiveGraph instance</span>
+<span class="sd">        ConjunctiveGraph: Graph of instance</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. jupyter-execute:: examples/code/eg_loadfromurl_01.py</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="n">requests</span><span class="o">.</span><span class="n">codes</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>

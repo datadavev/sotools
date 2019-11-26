@@ -1,0 +1,52 @@
+# Shape to evaluate schema:MediaObject instances that provide the value of
+# schema:encoding for an instance of schema:Dataset
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix schema: <http://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix d1: <http://ns.dataone.org/schema/2019/08/SO/Dataset#> .
+
+d1:rdfPrefix
+  sh:declare [
+    sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#"^^xsd:anyURI ;
+    sh:prefix "rdf" ;
+  ] .
+
+d1:schemaPrefix
+  sh:declare [
+    sh:namespace "http://schema.org/"^^xsd:anyURI ;
+    sh:prefix "schema" ;
+  ] .
+
+d1:MediaObjectShape
+    a sh:NodeShape ;
+    sh:target [
+        a sh:SPARQLTarget ;
+        sh:prefixes d1:rdfPrefix, d1:schemaPrefix ;
+        sh:select """
+            SELECT ?this
+            WHERE {
+                ?DF rdf:type schema:Dataset .
+                ?DF schema:encoding ?this .
+                ?this rdf:type schema:MediaObject .
+            }
+        """ ;
+    ] ;
+    sh:property [
+        sh:path schema:contentUrl ;
+        sh:minCount 1 ;
+        sh:message "schema:contentUrl is required for the encoding property of a Dataset"
+    ] ;
+    sh:property [
+        sh:path schema:encodingFormat ;
+        sh:minCount 1 ;
+        sh:message "schema:encodingFormat should provide the format of the encoding of the referenced resource" ;
+        sh:severity sh:Warning ;
+    ] ;
+    sh:property [
+        sh:path schema:dateModified ;
+        sh:minCount 1 ;
+        sh:message "schema:dateModified should indicate when the referenced resource was last modified" ;
+        sh:severity sh:Warning ;
+    ]
+.

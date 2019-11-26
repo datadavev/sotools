@@ -222,12 +222,12 @@ The links to external metadata:
 [ { &#39;contentUrl&#39;: &#39;https://my.server.org/data/ds-02/metadata.xml&#39;,
     &#39;dateModified&#39;: None,
     &#39;description&#39;: &#39;None&#39;,
-    &#39;encodingFormat&#39;: &#39;application/rdf+xml&#39;,
+    &#39;encodingFormat&#39;: &#39;http://ns.dataone.org/metadata/schema/onedcx/v1.0&#39;,
     &#39;subjectOf&#39;: &#39;file:///Users/vieglais/git/sotools/sotools/docsource/source/examples/data/ds-02&#39;},
   { &#39;contentUrl&#39;: &#39;https://my.server.org/data/ds-02/metadata.xml&#39;,
     &#39;dateModified&#39;: None,
     &#39;description&#39;: &#39;None&#39;,
-    &#39;encodingFormat&#39;: &#39;http://ns.dataone.org/metadata/schema/onedcx/v1.0&#39;,
+    &#39;encodingFormat&#39;: &#39;application/rdf+xml&#39;,
     &#39;subjectOf&#39;: &#39;file:///Users/vieglais/git/sotools/sotools/docsource/source/examples/data/ds-02&#39;}]
 </pre></div>
 </div>
@@ -544,9 +544,28 @@ ns1:demo_2 a SO:Dataset ;
 <dd class="field-odd"><p><strong>url</strong> (<em>string</em>) – Url to process</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>ConjunctiveGraph instance</p>
+<dd class="field-even"><p>Graph of instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ConjunctiveGraph</p>
 </dd>
 </dl>
+<p>Example:</p>
+<div class="jupyter_container docutils container">
+<div class="code_cell highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sotools</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="k">import</span> <span class="n">pprint</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;https://www.bco-dmo.org/dataset/679374&quot;</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadSOGraphFromUrl</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">sotools</span><span class="o">.</span><span class="n">getDatasetIdentifiers</span><span class="p">(</span><span class="n">g</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[ { &#39;propertyId&#39;: &#39;Literal&#39;,
+    &#39;url&#39;: None,
+    &#39;value&#39;: &#39;http://lod.bco-dmo.org/id/dataset/679374&#39;}]
+</pre></div>
+</div>
+</div>
 </dd></dl>
 
 <dl class="function">
@@ -572,7 +591,7 @@ ns1:demo_2 a SO:Dataset ;
 <span class="n">sotools</span><span class="o">.</span><span class="n">renderGraph</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
 </pre></div>
 </div>
-<img alt="_images/sotools.common_5_0.svg" src="_images/sotools.common_5_0.svg" /></div>
+<img alt="_images/sotools.common_6_0.svg" src="_images/sotools.common_6_0.svg" /></div>
 </dd></dl>
 
 </div>

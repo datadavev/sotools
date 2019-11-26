@@ -178,7 +178,11 @@ def loadSOGraphFromUrl(url):
         url (string): Url to process
 
     Returns:
-        ConjunctiveGraph instance
+        ConjunctiveGraph: Graph of instance
+
+    Example:
+
+    .. jupyter-execute:: examples/code/eg_loadfromurl_01.py
     """
     response = requests.get(url)
     if response.status_code != requests.codes.ok:
