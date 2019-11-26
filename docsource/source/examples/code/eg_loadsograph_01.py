@@ -1,7 +1,7 @@
 # Load a Dataset from json-ld, normalize schema.org namespace, and dump as ttl.
 import sotools
 import json
-json_source = "source/examples/data/ds_bad_namespace.json"
+json_source = "examples/data/ds_bad_namespace.json"
 g = sotools.loadSOGraph(filename=json_source,
                         publicID="https://my.data.net/data/",
                         normalize=True,

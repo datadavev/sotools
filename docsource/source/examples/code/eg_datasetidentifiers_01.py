@@ -3,7 +3,7 @@ import sotools
 import json
 from pprint import pprint
 
-json_source = "source/examples/data/id_structured_01.json"
+json_source = "examples/data/id_structured_01.json"
 g = sotools.loadSOGraph(filename=json_source)
 identifiers = sotools.getDatasetIdentifiers(g)
 print("The json-ld source graph:")

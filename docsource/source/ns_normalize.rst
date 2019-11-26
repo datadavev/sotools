@@ -20,7 +20,7 @@ the resulting ``RDF:type`` values as recognized by rdflib are:
    from rdflib import ConjunctiveGraph
    g = ConjunctiveGraph()
    g.parse(
-       "source/examples/data/ds_bad_namespace.json",
+       "examples/data/ds_bad_namespace.json",
        format="json-ld",
        publicID="https://my.server.net/data/"
    )
@@ -62,7 +62,7 @@ the same queries:
    import sotools
 
    g = sotools.loadSOGraph(
-       filename="source/examples/data/ds_bad_namespace.json",
+       filename="examples/data/ds_bad_namespace.json",
        publicID="https://my.server.net/data/"
    )
 

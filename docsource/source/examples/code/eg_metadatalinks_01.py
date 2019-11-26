@@ -5,7 +5,7 @@ from pprint import pprint
 
 # Note: in this case two entries are returned because the single
 # link is recognized with two different encodingFormats
-json_source = "source/examples/data/ds_m_subjectof.json"
+json_source = "examples/data/ds_m_subjectof.json"
 g = sotools.loadSOGraph(filename=json_source)
 links = sotools.getDatasetMetadataLinks(g)
 print("The source graph:")

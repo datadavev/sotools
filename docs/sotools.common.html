@@ -222,12 +222,12 @@ The links to external metadata:
 [ { &#39;contentUrl&#39;: &#39;https://my.server.org/data/ds-02/metadata.xml&#39;,
     &#39;dateModified&#39;: None,
     &#39;description&#39;: &#39;None&#39;,
-    &#39;encodingFormat&#39;: &#39;http://ns.dataone.org/metadata/schema/onedcx/v1.0&#39;,
+    &#39;encodingFormat&#39;: &#39;application/rdf+xml&#39;,
     &#39;subjectOf&#39;: &#39;file:///Users/vieglais/git/sotools/sotools/docsource/source/examples/data/ds-02&#39;},
   { &#39;contentUrl&#39;: &#39;https://my.server.org/data/ds-02/metadata.xml&#39;,
     &#39;dateModified&#39;: None,
     &#39;description&#39;: &#39;None&#39;,
-    &#39;encodingFormat&#39;: &#39;application/rdf+xml&#39;,
+    &#39;encodingFormat&#39;: &#39;http://ns.dataone.org/metadata/schema/onedcx/v1.0&#39;,
     &#39;subjectOf&#39;: &#39;file:///Users/vieglais/git/sotools/sotools/docsource/source/examples/data/ds-02&#39;}]
 </pre></div>
 </div>
@@ -409,12 +409,21 @@ The links to external metadata:
 <p>Example:</p>
 <div class="jupyter_container docutils container">
 <div class="code_cell highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load a graph and evaluate if it contains a SO:Dataset</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">sotools</span>
-<span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadSOGraph</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;source/examples/data/ds_bad_namespace.json&quot;</span><span class="p">)</span>
-<span class="n">sotools</span><span class="o">.</span><span class="n">hasDataset</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="c1">#data_root = os.path.join(os.path.dirname(__file__),&quot;../data/&quot;)</span>
+
+<span class="c1">#g = sotools.loadSOGraph(</span>
+<span class="c1">#    filename=os.path.join(data_root, &quot;ds_bad_namespace.json&quot;),</span>
+<span class="c1">#    publicID=&quot;https://my.data.net/data/&quot;</span>
+<span class="c1">#)</span>
+<span class="c1">#sotools.hasDataset(g)</span>
 </pre></div>
 </div>
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>3
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/Users/vieglais/git/sotools/env/lib/python3.7/site-packages/ipykernel_launcher.py
 </pre></div>
 </div>
 </div>
@@ -552,11 +561,12 @@ ns1:demo_2 a SO:Dataset ;
 </dl>
 <p>Example:</p>
 <div class="jupyter_container docutils container">
-<div class="code_cell highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sotools</span>
+<div class="code_cell highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load graph from a URL and print the SO:Dataset.identifier values found</span>
+<span class="kn">import</span> <span class="nn">sotools</span>
 <span class="kn">from</span> <span class="nn">pprint</span> <span class="k">import</span> <span class="n">pprint</span>
 
-<span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;https://www.bco-dmo.org/dataset/679374&quot;</span>
-<span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadSOGraphFromUrl</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://www.bco-dmo.org/dataset/679374&quot;</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sotools</span><span class="o">.</span><span class="n">loadSOGraphFromUrl</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 <span class="n">pprint</span><span class="p">(</span><span class="n">sotools</span><span class="o">.</span><span class="n">getDatasetIdentifiers</span><span class="p">(</span><span class="n">g</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
