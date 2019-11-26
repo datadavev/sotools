@@ -1,0 +1,6 @@
+type: sphinx
+python:
+  version: 3
+  requirements_file: rtd_requirements.txt
+formats:
+  - none

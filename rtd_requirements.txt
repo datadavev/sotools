@@ -1,0 +1,9 @@
+pallets_sphinx_themes
+jupyter-sphinx
+graphviz
+rdflib
+rdflib-jsonld
+pytest
+requests
+extruct
+scrapy
