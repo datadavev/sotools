@@ -3,7 +3,7 @@ import sotools
 import json
 from pprint import pprint
 
-json_source = "examples/data/ds_m_about.json"
+json_source = "examples/data/ds_m_subjectof.json"
 g = sotools.loadSOGraph(filename=json_source, publicID="https://my.server.net/data/")
 links = sotools.getDatasetMetadataLinks(g)
 print("The source graph:")

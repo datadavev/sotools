@@ -24,7 +24,6 @@ on crawling and indexing with DataONE infrastructure.
 
    Herein the term "``SO:``" refers to the ``https://schema.org/`` namespace or any equivalents.
 
-
 Indices and tables
 __________________
 

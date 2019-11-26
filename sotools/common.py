@@ -328,6 +328,10 @@ def getDatasetMetadataLinksFromEncoding(g):
 
     Returns:
         list: A list of ``{dateModified:, encodingFormat:, contentUrl:, description:, subjectOf:,}``
+
+    Example:
+
+    .. jupyter-execute:: examples/code/eg_metadatalinks_encoding.py
     """
     q = (
         SPARQL_PREFIXES
@@ -362,10 +366,14 @@ def getDatasetMetadataLinksFromSubjectOf(g):
     Extract list of metadata links from SO.Dataset.subjectOf
 
     Args:
-        g: ConjunctiveGraph
+        g (Graph): Graph containing the ``SO:Dataset``
 
     Returns:
         list: A list of ``{dateModified:, encodingFormat:, contentUrl:, description:, subjectOf:,}``
+
+    Example:
+
+    .. jupyter-execute:: examples/code/eg_metadatalinks_subjectof.py
     """
     q = (
         SPARQL_PREFIXES
