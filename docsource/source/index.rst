@@ -20,15 +20,6 @@ on crawling and indexing with DataONE infrastructure.
    sotools.common
 
 
-.. totree::
-   :maxdepth: 1
-   :caption: Drafts
-
-   loading_jsonld
-   dataset_identifiers
-   external_metadata
-
-
 .. note::
 
    Herein the term "``SO:``" refers to the ``https://schema.org/`` namespace or any equivalents.
