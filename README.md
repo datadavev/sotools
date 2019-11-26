@@ -6,5 +6,5 @@ A collection of notes and tools on working with Schema.org Dataset
 structures, with particular emphasis on crawling and indexing with 
 DataONE infrastructure.
 
-Documentation and notes at [/sotools](https://dave.vieglais.com/sotools).
+Documentation and notes on RTD at [so-tools.readthedocs.io](https://so-tools.readthedocs.io/).
 
