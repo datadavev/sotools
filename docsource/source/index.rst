@@ -17,10 +17,16 @@ on crawling and indexing with DataONE infrastructure.
    :caption: Contents:
 
    ns_normalize
+   sotools.common
+
+
+.. totree::
+   :maxdepth: 1
+   :caption: Drafts
+
    loading_jsonld
    dataset_identifiers
    external_metadata
-   sotools.common
 
 
 .. note::
