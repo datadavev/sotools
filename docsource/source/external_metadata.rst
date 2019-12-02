@@ -108,11 +108,11 @@ The links and other information can be extracted using the SPARQL::
     PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX SO:   <https://schema.org/>
 
-    SELECT ?dateModified ?encodingFormat ?url ?description ?about
+    SELECT ?dateModified ?encodingFormat ?contentUrl ?description ?about
     WHERE {
         ?about rdf:type SO:Dataset .
-        ?about SO:subjectOf ?y .
-        ?y SO:url ?url .
+        ?y SO:about ?about .
+        ?y SO:contentUrl ?contentUrl .
         ?y SO:encodingFormat ?encodingFormat .
         OPTIONAL {
           ?y SO:dateModified ?dateModified .
