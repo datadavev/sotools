@@ -43,6 +43,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "jupyter_sphinx.execute",
     "sphinx.ext.viewcode",
+    "sphinx.ext.graphviz",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
