@@ -2,3 +2,11 @@ p.admonition-title {
   font-weight: bold !important;
   font-size: 1em !important;
 }
+
+a {
+  color: #b80b30;
+}
+
+code {
+  color: inherit;
+}

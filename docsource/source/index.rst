@@ -17,6 +17,7 @@ on crawling and indexing with DataONE infrastructure.
    :caption: Contents:
 
    ns_normalize
+   external_metadata
    sotools.common
 
 
