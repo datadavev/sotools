@@ -10,7 +10,7 @@ the relationship between the linked resource and the `SO:Dataset` and its compon
 
 Three options for linking to external metadata documents are described here:
 
-1. Using :ref:`subjectof-label` indicate the ``SO:Dataset`` is the subject of an ``SO:CreativeWork`` of derivatives.
+1. Using :ref:`subjectof-label` to indicate the ``SO:Dataset`` is the subject of an ``SO:CreativeWork`` of derivatives.
 2. Using the inverse of 1, :ref:`about-label`
 3. Using :ref:`encoding-label` to indicate the referenced ``SO:MediaObject`` is an alternative encoding of the ``SO:Dataset`` document.
 
@@ -112,8 +112,8 @@ For example:
 
 .. _encoding-label:
 
-`encooding` metadata links
---------------------------
+`encoding` metadata links
+-------------------------
 
 The ``encoding`` property is defined [#encoding]_ as:
 
