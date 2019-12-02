@@ -41,10 +41,10 @@ None of these will match for a query that relies on the schema.org namespace of 
 
    sparql = """
      PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-     PREFIX so: <https://schema.org/>
+     PREFIX SO: <https://schema.org/>
      SELECT ?x
      {
-        ?x rdf:type so:Dataset .
+        ?x rdf:type SO:Dataset .
      } """
 
    qres = g.query(sparql)
