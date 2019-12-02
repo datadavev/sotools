@@ -56,7 +56,7 @@ The links and other information can be extracted using the SPARQL::
         }
     }
 
-Which is implemented in the method `func:sotools.common.getDatasetMetadataLinksFromSubjectOf`.
+Which is implemented in the method :func:`sotools.common.getDatasetMetadataLinksFromSubjectOf` .
 
 For example:
 
@@ -104,7 +104,7 @@ The links and other information can be extracted using the SPARQL::
         }
     }
 
-which is implemented in the `func:sotools.common.getDatasetMetadataLinksFromAbout`.
+which is implemented in the :func:`sotools.common.getDatasetMetadataLinksFromAbout`.
 
 For example:
 
@@ -153,7 +153,7 @@ The links and other information can be extracted using the SPARQL::
         ?y SO:description ?description .
     }
 
-which is implemented with the method `func:sotools.common.getDatasetMetadataLinksFromEncoding`.
+which is implemented with the method :func:`sotools.common.getDatasetMetadataLinksFromEncoding`.
 
 For example:
 
