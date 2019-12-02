@@ -33,6 +33,14 @@ a value from the DataONE vocabulary of object formats [#objectformats]_.
    :language: JSON
    :linenos:
 
+.. jupyter-execute::
+   :hide-code:
+
+   import sotools
+   json_source = "examples/data/ds_m_subjectof.json"
+   g = sotools.loadSOGraph(filename=json_source, publicID="https://my.server.net/data/")
+   sotools.renderGraph(g)
+
 Hence:
 
 :link: ``https://my.server.org/data/ds-02/metadata.xml``
@@ -80,6 +88,14 @@ a value which is drawn from the DataONE vocabulary of object formats.
 .. literalinclude:: examples/data/ds_m_about.json
    :language: JSON
    :linenos:
+
+.. jupyter-execute::
+   :hide-code:
+
+   import sotools
+   json_source = "examples/data/ds_m_about.json"
+   g = sotools.loadSOGraph(filename=json_source, publicID="https://my.server.net/data/")
+   sotools.renderGraph(g)
 
 Hence:
 
@@ -131,6 +147,14 @@ URL ``https://my.server.net/datasets/00.xml``
 .. literalinclude:: examples/data/ds_m_encoding.json
    :language: JSON
    :linenos:
+
+.. jupyter-execute::
+   :hide-code:
+
+   import sotools
+   json_source = "examples/data/ds_m_encoding.json"
+   g = sotools.loadSOGraph(filename=json_source, publicID="https://my.server.net/data/")
+   sotools.renderGraph(g)
 
 Hence:
 
