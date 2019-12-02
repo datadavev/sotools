@@ -4,7 +4,13 @@ p.admonition-title {
 }
 
 a {
+  color: inherit;
+}
+
+a:hover {
   color: #b80b30;
+  /*border-bottom-color: #b80b30;*/
+  border-bottom-style: dotted;
 }
 
 code {

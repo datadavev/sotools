@@ -1,10 +1,10 @@
 Linking to metadata documents
 =============================
 
-A dataset may have associated metadata serialized in formats other than the `SO:Dataset`, and
+A dataset may have associated metadata serialized in formats other than the `SO:Dataset` [#dataset]_ , and
 it is beneficial to indicate how those metadata may be retrieved.
 
-There are several options in `SO` for providing links to resources associated with a `SO:Dataset`. Each of these
+There are several options for providing links to resources associated with a `SO:Dataset`. Each of these
 must satisfy the criteria of providing a link to the resource, indicating the type of the linked resource, and
 the relationship between the linked resource and the `SO:Dataset` and its components.
 
@@ -183,7 +183,7 @@ For example:
 
 .. jupyter-execute:: examples/code/eg_metadatalinks_encoding_02.py
 
-
+.. [#dataset] https://schema.org/Dataset
 .. [#subjectof] https://schema.org/subjectOf
 .. [#creativework] https://schema.org/CreativeWork
 .. [#encodingformat] https://schema.org/encodingFormat

@@ -4,9 +4,9 @@ Normalizing schema.org namespace
 Consistent representation of namespaces simplifies programmatic processing of markup. For example, even though
 conceptually it is clear the terms ``http://schema.org/Dataset`` and ``https://schema.org/Dataset`` (note the protocol
 difference) are referring to https://schema.org/Dataset, these are programmatically treated as different
-entities. The schema.org guidelines are somewhat ambivalent on the topic, with perhaps emphasis on "https".
+entities. The schema.org guidelines [#sofaq]_ are somewhat ambivalent on the topic, with some emphasis on "https" adoption.
 
-The trailing slash (/) is also important. Without it, common RDF processing libraries such as rdflib will construct
+The trailing slash (/) is also important. Without it, common RDF processing libraries such as rdflib [#rdflib]_ will construct
 a term like "https://schema.orgDataset". For example given the three ``SO:Dataset`` entries:
 
 .. literalinclude:: examples/data/ds_bad_namespace.json
@@ -73,4 +73,5 @@ the same queries:
    qres = g.query(sparql)
    print(f"Number of matches = {len(qres)}")
 
-
+.. [#sofaq] https://schema.org/docs/faq.html#19
+.. [#rdflib] https://github.com/RDFLib/rdflib
