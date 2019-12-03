@@ -16,6 +16,7 @@ on crawling and indexing with DataONE infrastructure.
    :maxdepth: 1
    :caption: Contents:
 
+   test_namespace
    ns_normalize
    external_metadata
    sotools.common

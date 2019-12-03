@@ -3,6 +3,7 @@ jupyter-sphinx
 graphviz
 rdflib
 rdflib-jsonld
+pyshacl
 pytest
 requests
 extruct
