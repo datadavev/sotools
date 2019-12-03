@@ -1,3 +1,7 @@
+body {
+  font-family: "Gil Sans Light", "Aria", sans-serif;
+}
+
 p.admonition-title {
   font-weight: bold !important;
   font-size: 1em !important;
@@ -15,4 +19,8 @@ a:hover {
 
 code {
   color: inherit;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: "Palatino", "Times New Roman", serif;
 }
