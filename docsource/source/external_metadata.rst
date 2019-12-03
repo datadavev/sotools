@@ -1,18 +1,19 @@
 Linking to metadata documents
 =============================
 
-A dataset may have associated metadata serialized in formats other than the `SO:Dataset` [#dataset]_ , and
+A dataset may have associated metadata serialized in formats other than the ``SO:Dataset`` [#dataset]_ , and
 it is beneficial to indicate how those metadata may be retrieved.
 
-There are several options for providing links to resources associated with a `SO:Dataset`. Each of these
+There are several options for providing links to resources associated with a ``SO:Dataset``. Each of these
 must satisfy the criteria of providing a link to the resource, indicating the type of the linked resource, and
-the relationship between the linked resource and the `SO:Dataset` and its components.
+the relationship between the linked resource and the ``SO:Dataset`` and its components.
 
 Three options for linking to external metadata documents are described here:
 
 1. Using :ref:`subjectof-label` to indicate the ``SO:Dataset`` is the subject of an ``SO:CreativeWork`` of derivatives.
 2. Using the inverse of 1, :ref:`about-label`
-3. Using :ref:`encoding-label` to indicate the referenced ``SO:MediaObject`` is an alternative encoding of the ``SO:Dataset`` document.
+3. Using :ref:`encoding-label` to indicate the referenced ``SO:MediaObject`` is an alternative encoding of the
+   ``SO:Dataset`` document.
 
 These are more fully described below, with examples.
 
@@ -21,13 +22,14 @@ These are more fully described below, with examples.
 `subjectOf` metadata links
 --------------------------
 
-The ``subjectOf`` [#subjectof]_ property indicates that the current ``SO:`` entity is the subject of the linked property. In the following
-example, the ``SO:Dataset`` with id ``ds-02`` is the subject of the ``SO:CreativeWork`` [#creativework]_ document located at the url
-``https://my.server.org/data/ds-02/metadata.xml``.
+The ``subjectOf`` [#subjectof]_ property indicates that the current ``SO:`` entity is the subject of the linked
+property. In the following example, the ``SO:Dataset`` with id ``ds-02`` is the subject of the
+``SO:CreativeWork`` [#creativework]_ document located at the url ``https://my.server.org/data/ds-02/metadata.xml``.
 
-The type of the linked metadata document is indicated by the ``encodingFormat`` [#encodingformat]_ list. In this case, the document has
-an ``encodingFormat`` of ``application/rdf+xml`` and also ``http://ns.dataone.org/metadata/schema/onedcx/v1.0``, which is
-a value from the DataONE vocabulary of object formats [#objectformats]_.
+The type of the linked metadata document is indicated by the ``encodingFormat`` [#encodingformat]_ list. In this case,
+the document has an ``encodingFormat`` of ``application/rdf+xml`` and also
+``http://ns.dataone.org/metadata/schema/onedcx/v1.0``, which is a value from the DataONE vocabulary of object
+formats [#objectformats]_.
 
 .. literalinclude:: examples/data/ds_m_subjectof.json
    :language: JSON
@@ -47,7 +49,7 @@ Hence:
 :type: Dublin Core in RDF-XML
 :relationship: The ``SO:Dataset`` is the subject of the metadata
 
-The links and other information can be extracted using the SPARQL::
+The links (and some other information) can be extracted using the SPARQL::
 
     PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX SO:   <https://schema.org/>

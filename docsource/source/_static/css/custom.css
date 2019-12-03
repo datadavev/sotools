@@ -11,10 +11,18 @@ a {
   color: inherit;
 }
 
-a:hover {
+a:hover, a.reference:hover, div.sphinxsidebar a:hover {
   color: #b80b30;
   /*border-bottom-color: #b80b30;*/
-  border-bottom-style: dotted;
+  border-bottom-style: None;
+}
+
+a.footnote-reference, a.fn-backref {
+  border-bottom-style: None;
+}
+
+a.footnote-reference:hover, a.fn-backref:hover {
+  border-bottom-style: None;
 }
 
 code {
