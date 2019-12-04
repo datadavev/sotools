@@ -17,6 +17,9 @@ The SHACL tests are applied and results printed:
 
 .. jupyter-execute::
 
+    # the following sets up for running on Binder
+    import binder_setup
+    # Run SHACL validation
     import rdflib
     import pyshacl
     shape_graph = rdflib.Graph()

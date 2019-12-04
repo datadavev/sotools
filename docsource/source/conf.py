@@ -56,6 +56,13 @@ exclude_patterns = []
 
 issues_github_path = "datadavev/sotools"
 
+jupyter_sphinx_thebelab_config = {
+    'requestKernel': True,
+    'binderOptions': {
+        'repo': "datadavev/sotools",
+    },
+}
+
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for

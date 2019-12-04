@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 kwargs = {
     'name': 'sotools',
@@ -7,7 +7,8 @@ kwargs = {
     'author': 'Dave Vieglais',
     'url': 'https://github.com/datadavev/sotools',
     'license': 'Apache License, Version 2.0',
-    'packages': ['sotools', 'sotools.data'],
+    #'packages': ['sotools', 'binder_setup'],
+    'packages': find_packages(),
     'package_data': {'sotools': ['data/data/*.jsonld', 'data/shapes/*.jsonld', 'data/shapes/*.ttl']},
     'install_requires': [
         'rdflib','rdflib-jsonld'

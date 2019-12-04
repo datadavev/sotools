@@ -38,6 +38,7 @@ formats [#objectformats]_.
 .. jupyter-execute::
    :hide-code:
 
+   import binder_setup
    import sotools
    json_source = "examples/data/ds_m_subjectof.json"
    g = sotools.loadSOGraph(filename=json_source, publicID="https://my.server.net/data/")
