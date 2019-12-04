@@ -10,3 +10,4 @@ extruct
 scrapy
 sphinxcontrib-log_cabinet
 sphinx_issues
+quilt

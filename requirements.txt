@@ -1,10 +1,13 @@
+pallets_sphinx_themes
+jupyter-sphinx
 graphviz
 rdflib
 rdflib-jsonld
+pyshacl
 pytest
 requests
 extruct
 scrapy
-pyshacl
+sphinxcontrib-log_cabinet
+sphinx_issues
 quilt
-
