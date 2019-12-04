@@ -1,6 +1,12 @@
 Testing for a bad namespace with SHACL
 ======================================
 
+.. contents:: Contents
+   :local:
+
+Overview
+--------
+
 This is a brute force approach to using SHACL to report invalid use of a namespace. It
 is only effective where there are limited combinations of the bad namespace and
 matching classes for testing.
@@ -17,9 +23,6 @@ The SHACL tests are applied and results printed:
 
 .. jupyter-execute::
 
-    # the following sets up for running on Binder
-    import binder_setup
-    # Run SHACL validation
     import rdflib
     import pyshacl
     shape_graph = rdflib.Graph()
@@ -54,3 +57,31 @@ Does not match any of the bad namespace tests and so conforms.
         debug=False
     )
     print(results_text)
+
+
+Running code on this page
+-------------------------
+
+All examples on this page can be run live in Binder. To do so:
+
+1. Click on the "Activate Binder" button
+2. Wait for Binder to be active. This can take a while, you can watch progress in your
+   browser's `javascript console`_. When a line like ``Kernel: connected (89dfd3c8...`` appears,
+   Binder should be ready to go.
+3. Run the following **before** any other script on the page. This sets the right
+   path context for loading examples etc.
+
+.. thebe-button:: Activate Binder
+
+.. jupyter-execute::
+   :hide-code:
+   :hide-output:
+
+   import os
+   try:
+       os.chdir("docsource/source")
+   except:
+       pass
+   print("Page is ready. You can now run other code blocks on this page.")
+
+.. _javascript console: https://webmasters.stackexchange.com/questions/8525/how-do-i-open-the-javascript-console-in-different-browsers

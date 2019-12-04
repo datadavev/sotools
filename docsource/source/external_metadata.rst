@@ -1,6 +1,12 @@
 Linking to metadata documents
 =============================
 
+.. contents:: Contents
+   :local:
+
+Overview
+--------
+
 A dataset may have associated metadata serialized in formats other than the ``SO:Dataset`` [#dataset]_ , and
 it is beneficial to indicate how those metadata may be retrieved.
 
@@ -38,7 +44,6 @@ formats [#objectformats]_.
 .. jupyter-execute::
    :hide-code:
 
-   import binder_setup
    import sotools
    json_source = "examples/data/ds_m_subjectof.json"
    g = sotools.loadSOGraph(filename=json_source, publicID="https://my.server.net/data/")
@@ -186,6 +191,10 @@ For example:
 
 .. jupyter-execute:: examples/code/eg_metadatalinks_encoding_02.py
 
+
+References
+----------
+
 .. [#dataset] https://schema.org/Dataset
 .. [#subjectof] https://schema.org/subjectOf
 .. [#creativework] https://schema.org/CreativeWork
@@ -194,3 +203,31 @@ For example:
 .. [#about] https://schema.org/about
 .. [#mediaobject] https://schema.org/MediaObject
 .. [#encoding] https://schema.org/encoding
+
+
+Running code on this page
+-------------------------
+
+All examples on this page can be run live in Binder. To do so:
+
+1. Click on the "Activate Binder" button
+2. Wait for Binder to be active. This can take a while, you can watch progress in your
+   browser's `javascript console`_. When a line like ``Kernel: connected (89dfd3c8...`` appears,
+   Binder should be ready to go.
+3. Run the following **before** any other script on the page. This sets the right
+   path context for loading examples etc.
+
+.. thebe-button:: Activate Binder
+
+.. jupyter-execute::
+   :hide-code:
+   :hide-output:
+
+   import os
+   try:
+       os.chdir("docsource/source")
+   except:
+       pass
+   print("Page is ready. You can now run other code blocks on this page.")
+
+.. _javascript console: https://webmasters.stackexchange.com/questions/8525/how-do-i-open-the-javascript-console-in-different-browsers
