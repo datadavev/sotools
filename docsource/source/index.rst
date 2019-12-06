@@ -22,9 +22,34 @@ on crawling and indexing with DataONE infrastructure.
    sotools.common
 
 
+.. graphviz::
+
+   digraph foo {
+      rankdir="BT";
+      graph [fontname="avenir", fontsize=10];
+      node [fontname="avenir", fontsize=10];
+      edge [fontname="avenir", fontsize=10];
+      Thing [shape=rectangle, style=filled, fillcolor=darkseagreen2];
+      CreativeWork [shape=rectangle, style=filled, fillcolor=darkseagreen2];
+      Dataset [shape=rectangle, style=filled, fillcolor=darkseagreen2];
+      MediaObject [shape=rectangle, style=filled, fillcolor=darkseagreen2];
+      Intangible [shape=rectangle, style=filled, fillcolor=darkseagreen2];
+      PropertyValue [shape=rectangle, style=filled, fillcolor=darkseagreen2];
+
+      CreativeWork -> Thing [style=dashed, arrowhead=onormal];
+      Intangible -> Thing  [style=dashed, arrowhead=onormal];
+      Dataset -> CreativeWork  [style=dashed, arrowhead=onormal];
+      MediaObject -> CreativeWork [style=dashed, arrowhead=onormal];
+      PropertyValue -> Intangible [style=dashed, arrowhead=onormal];
+
+   }
+
+
+
 .. note::
 
    Herein the term "``SO:``" refers to the ``https://schema.org/`` namespace or any equivalents.
+
 
 Indices and tables
 __________________

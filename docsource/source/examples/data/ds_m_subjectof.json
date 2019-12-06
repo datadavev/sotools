@@ -1,7 +1,6 @@
 {
     "@context": {
-        "@vocab": "https://schema.org/",
-        "datacite": "http://purl.org/spar/datacite/"
+        "@vocab": "https://schema.org/"
     },
     "@id": "ds-02",
     "url": "https://my.server.org/data/ds-02",

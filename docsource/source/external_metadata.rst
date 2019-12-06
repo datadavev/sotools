@@ -192,8 +192,8 @@ For example:
 .. jupyter-execute:: examples/code/eg_metadatalinks_encoding_02.py
 
 
-References
-----------
+Footnotes
+---------
 
 .. [#dataset] https://schema.org/Dataset
 .. [#subjectof] https://schema.org/subjectOf

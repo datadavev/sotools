@@ -91,7 +91,12 @@ html_title = f"SOtools Documentation ({version})"
 html_show_sourcelink = False
 
 html_css_files = [
+    "css/blf5grc.css",
     "css/custom.css",
+]
+
+html_js_files = [
+    "js/thebe_status.js",
 ]
 
 autoclass_content = 'both'

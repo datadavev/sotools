@@ -1,23 +1,4 @@
-Dataset Dates of Creation and Modification
-==========================================
-
-.. contents:: Contents
-   :local:
-
-Overview
---------
-
-Dates of creation and modification are fundamental properties of a dataset. For consumers such as DataONE, modification
-dates are used to determine if cached copies of content are stale and so should be updated. This document describes
-how creation and modification dates are retrieved from ``SO:Dataset`` resources exposed through a web publishing
-pattern.
-
-
-
-
-Footnotes
----------
-
+.. include this to insert a Binder activation section.
 
 Running code on this page
 -------------------------
@@ -32,6 +13,22 @@ All examples on this page can be run live in Binder. To do so:
    path context for loading examples etc.
 
 .. thebe-button:: Activate Binder
+
+.. raw:: html
+
+    <script>
+    $("#thebelab-activate-button").off("click");
+    $("#thebelab-activate-button").click(function() {
+        let activateButton = document.getElementById("thebelab-activate-button");
+        if (activateButton.classList.contains('thebelab-active2')) {
+            return;
+        }
+        thebe_place_status_field();
+        thebe_activate_cells();
+        activateButton.classList.add('thebelab-active2');
+    });
+    </script>
+
 
 .. jupyter-execute::
    :hide-code:

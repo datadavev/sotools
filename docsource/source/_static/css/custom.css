@@ -1,10 +1,13 @@
 body {
-  font-family: "Gil Sans Light", "Aria", sans-serif;
+  /*font-family: "Gil Sans Light", "Aria", sans-serif;*/
+  font-family: "adobe-garamond-pro", "Palatino", "Times New Roman", serif;
+  color: #000000;
+  font-size: 18px;
 }
 
 p.admonition-title {
   font-weight: bold !important;
-  font-size: 1em !important;
+  font-size: 1.3rem !important;
 }
 
 a {
@@ -30,9 +33,62 @@ code {
 }
 
 h1, h2, h3, h4, h5 {
-  font-family: "Palatino", "Times New Roman", serif;
+  font-family: "adobe-garamond-pro", "Palatino", "Times New Roman", serif;
+  /*letter-spacing: +1px;*/
+}
+
+h1 {
+  font-size: 1.7rem;
+}
+h2 {
+  font-size: 1.5rem;
+}
+h3 {
+  font-size: 1.3rem;
+}
+h4 {
+  font-size: 1.1rem;
+}
+h5 {
+  font-size: 1rem;
 }
 
 p.topic-title first {
   font-size: 1em;
+}
+
+.thebe-status-field {
+  background-color: #ccc;
+  margin: auto;
+  padding: 8px;
+}
+
+.thebe-status-field.thebe-status-building {
+  /* Binder is building the image */
+  background-color: yellow;
+}
+
+.thebe-status-field.thebe-status-launching {
+  /* Binder launching the server */
+  background-color: yellow;
+}
+
+.thebe-status-field.thebe-status-starting {
+  /* Binder starting the server */
+  background-color: yellow;
+}
+
+.thebe-status-field.thebe-status-ready {
+  /* The kernel is connected and ready */
+  background-color: lightgreen;
+}
+
+.thebe-status-field.thebe-status-failed {
+  /* Building the image or launching the kernel failed */
+  background-color: red;
+}
+
+.thebe-status-field.thebe-status-busy {
+  /* The kernel is busy (this event is not hooked up yet) */
+  background-color: yellow;
 }

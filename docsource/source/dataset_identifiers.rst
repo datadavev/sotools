@@ -54,10 +54,12 @@ Persistence
 
 There is no notion of immutability in schema.org.
 
-References
-----------
+Foototes
+--------
 
-.. [#id] https://www.w3.org/TR/json-ld/#node-identifiers
+.. [#id] IRIs are a fundamental concept of Linked Data, for nodes to be truly linked, dereferencing
+         the identifier should result in a representation of that node.
+         https://www.w3.org/TR/json-ld/#node-identifiers
 .. [#IRI] An IRI (Internationalized Resource Identifier) is a string that conforms to the
           syntax defined in :rfc:`3987`
 .. [#dataset] https://schema.org/Dataset
