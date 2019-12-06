@@ -12,16 +12,6 @@ Tools for Schema.org Datasets
 Collection of notes and tools on working with Schema.org Dataset structures, with particular emphasis
 on crawling and indexing with DataONE infrastructure.
 
-.. toctree::
-   :maxdepth: 1
-   :caption: Contents:
-
-   test_namespace
-   ns_normalize
-   external_metadata
-   sotools.common
-
-
 .. graphviz::
 
    digraph foo {
@@ -44,6 +34,15 @@ on crawling and indexing with DataONE infrastructure.
 
    }
 
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Contents:
+
+   test_namespace
+   ns_normalize
+   external_metadata
+   sotools.common
 
 
 .. note::
