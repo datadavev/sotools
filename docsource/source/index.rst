@@ -17,21 +17,28 @@ on crawling and indexing with DataONE infrastructure.
    digraph foo {
       rankdir="BT";
       graph [fontname="avenir", fontsize=10];
-      node [fontname="avenir", fontsize=10];
-      edge [fontname="avenir", fontsize=10];
-      Thing [shape=rectangle, style=filled, fillcolor=darkseagreen2];
-      CreativeWork [shape=rectangle, style=filled, fillcolor=darkseagreen2];
-      Dataset [shape=rectangle, style=filled, fillcolor=darkseagreen2];
-      MediaObject [shape=rectangle, style=filled, fillcolor=darkseagreen2];
-      Intangible [shape=rectangle, style=filled, fillcolor=darkseagreen2];
-      PropertyValue [shape=rectangle, style=filled, fillcolor=darkseagreen2];
+      node [fontname="avenir", fontsize=10, target="_blank" shape=rectangle, style=filled, fillcolor=darkseagreen2];
+      edge [fontname="avenir", fontsize=10, style=dashed, arrowhead=onormal];
+      Thing [label="SO:Thing", href="https://schema.org/Thing"];
+      CreativeWork [href="https://schema.org/CreativeWork"];
+      Dataset [href="https://schema.org/Dataset"];
+      MediaObject [href="https://schema.org/MediaObject"];
+      DataDownload [href="https://schema.org/DataDownload"];
+      Intangible [href="https://schema.org/Intangible"];
+      PropertyValue [href="https://schema.org/PropertyValue"];
+      Place [href="https://schema.org/Place", target="_blank"];
+      Person [href="https://schema.org/Person", target="_blank"];
+      Organization [href="https://schema.org/Organization"];
 
-      CreativeWork -> Thing [style=dashed, arrowhead=onormal];
-      Intangible -> Thing  [style=dashed, arrowhead=onormal];
-      Dataset -> CreativeWork  [style=dashed, arrowhead=onormal];
-      MediaObject -> CreativeWork [style=dashed, arrowhead=onormal];
-      PropertyValue -> Intangible [style=dashed, arrowhead=onormal];
-
+      CreativeWork -> Thing;
+      Intangible -> Thing;
+      Place -> Thing;
+      Person -> Thing;
+      Organization -> Thing;
+      Dataset -> CreativeWork;
+      MediaObject -> CreativeWork;
+      DataDownload -> MediaObject;
+      PropertyValue -> Intangible;
    }
 
 

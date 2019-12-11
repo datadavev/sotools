@@ -2,6 +2,13 @@ from scrapy.spiders import SitemapSpider
 import sotools
 from pprint import pprint
 
+
+'''
+TODO:
+- get date modified from sitemap
+- generate system metadata
+- preserve state to enable efficient re-harvest
+'''
 class SOBaseSpider(SitemapSpider):
     name = "sobase"
     sitemap_urls = ["https://www.archive.arm.gov/metadata/adc/sitemap.xml"]

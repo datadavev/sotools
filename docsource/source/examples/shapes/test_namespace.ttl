@@ -1,6 +1,6 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix d1: <http://ns.dataone.org/schema/SO#> .
+@prefix d1: <http://ns.dataone.org/schema/SO/nsvalidation#> .
 
 d1:DatasetBad1Shape
     a sh:NodeShape ;
