@@ -227,6 +227,9 @@ def getSubgraph(g, subject, max_depth=100):
     """
     Retrieve the subgraph of g with subject.
 
+    Given the graph ``g``, extract the subgraph identified
+    as the object of the triple with subject ``subject``.
+
     Args:
         g (Graph): Source graph
         subject (URIRef): Subject of the root of the subgraph to retrieve
