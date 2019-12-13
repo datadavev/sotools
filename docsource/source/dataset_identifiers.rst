@@ -44,10 +44,44 @@ of a component (SeriesID or SID). That context is used in this document.
 id and identifier
 -----------------
 
-The ``@id`` property in JSON-LD [#id]_ identifies a node in the RDF graph, and should be an IRI [#IRI]_.
+The ``@id`` property in JSON-LD [#id]_ identifies a node in the RDF graph, and must be an IRI [#IRI]_.
 The ``SO:identifier`` is an optional property of a node that may or may not be a URI, and may or may
-not be the same as the ``@id`` for the node. Ideally, the ``@id`` and the ``SO:identifier`` would
+not be the same as the ``@id`` for the node.
+
+
+
+Ideally, the ``@id`` and the ``SO:identifier`` would
 have the same value though this if often not the case for datasets.
+
+Identifier Conflation
+---------------------
+
+The string "978-1-5387-1847-6" is an identifier, in this case an ISBN. A number 
+of services are available to provide more information about the subject of the 
+identifier. For example, `ISBN Search`_ is a lookup service that provides a HTML 
+view of the results. Goole provides a `Books API`_ that returns structured data,
+though requires anuthentication to use, for example::
+
+  curl "https://www.googleapis.com/books/v1/volumes?key=${GAPIKEY}&q=isbn:9781538718476"
+
+  {
+    "kind": "books#volumes",
+    "totalItems": 1,
+    "items": [
+     {
+      "kind": "books#volume",
+      "id": "SyqzDwAAQBAJ",
+      "etag": "q7NUsBTwiu8",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/SyqzDwAAQBAJ",
+  ...
+
+  Note that the canonical form of the identifier is "``9781538718476``", the commonly
+  used human readable form is "``978-1-5387-1847-6``", and a resolvable form that 
+  varies with the resolving service such as the aforementioned Google Books API.
+
+
+.. ISBN Search: https://isbnsearch.org/isbn/9781538718469
+.. Books API: 
 
 Persistence
 -----------

@@ -3,6 +3,7 @@
 """
 
 import io
+from rdflib.term import Identifier
 from rdflib import ConjunctiveGraph, Namespace, URIRef
 from rdflib.namespace import NamespaceManager
 from rdflib.tools import rdf2dot
@@ -190,6 +191,60 @@ def loadSOGraphFromUrl(url):
             f"GET request to {url} returned a status of {response.status_code}"
         )
     return loadSOGraphFromHtml(response.text, response.url)
+
+
+def inflateSubgraph(g, sg, ts, depth=0, max_depth=100):
+    """
+    Inflate the subgraph sg to contain all children of sg appearing in g.
+
+    Args:
+        g (Graph): The master graph from which the subgraph is extracted
+        sg (Graph): The subgraph, modified in place
+        ts (iterable of triples): list of triples, the objects of which identify subjects to copy frmm g
+        depth (integer): tracks depth of recursion
+        max_depth (integer): maximum recursion depth for retrieving terms
+
+    Returns:
+        None
+    """
+    new_trips = []
+    for t in ts:
+        if isinstance(t[2], Identifier):
+            trips = g.triples((t[2], None, None))
+            for trip in trips:
+                if not trip in sg:
+                    sg.add(trip)
+                    new_trips.append(trip)
+    if len(new_trips) > 0:
+        depth += 1
+        if depth > max_depth:
+            return
+        inflateSubgraph(g, sg, new_trips, depth=depth)
+    return
+
+
+def getSubgraph(g, subject, max_depth=100):
+    """
+    Retrieve the subgraph of g with subject.
+
+    Args:
+        g (Graph): Source graph
+        subject (URIRef): Subject of the root of the subgraph to retrieve
+        max_depth (integer): Maximum recursion depth
+
+    Returns:
+        (Graph) The subgraph of g with subject.
+
+    Example:
+
+    .. jupyter-execute:: examples/code/eg_getsubgraph_01.py
+
+    """
+    sg = ConjunctiveGraph()
+    sg.namespace_manager = NamespaceManager(g)
+    sg += g.triples( (subject, None, None) )
+    inflateSubgraph(g, sg, sg, max_depth=max_depth)
+    return sg
 
 
 def renderGraph(g):
