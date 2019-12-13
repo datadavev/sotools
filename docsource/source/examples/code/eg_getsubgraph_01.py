@@ -20,7 +20,8 @@ test_json = """{
         "@vocab":"https://example.net/"
     },
     "@id":"./parent",
-    "sub":""" + expected_json + """    
+    "sub":""" + expected_json + """,
+    "parent_property":"Should not appear in extracted"   
 }
 """
 
