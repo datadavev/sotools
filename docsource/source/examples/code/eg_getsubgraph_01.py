@@ -27,18 +27,18 @@ test_json = """{
 # Load the full graph, setting the base to "https://example.net/"
 g_full = rdflib.Graph()
 g_full.parse(data=test_json, format="json-ld", publicID="https://example.net/")
-print("===\nFull:")
-print(g_full.serialize(format="nt").decode())
+print("### Full:")
+print(g_full.serialize(format="turtle").decode())
 
 g_expected = rdflib.ConjunctiveGraph()
 g_expected.parse(data=expected_json, format="json-ld", publicID="https://example.net/")
-print("===\nExpected:")
-print(g_expected.serialize(format="nt").decode())
+print("### Expected:")
+print(g_expected.serialize(format="turtle").decode())
 
 #Extract the subgraph that is the object of the subject "https://example.net/sub"
 g_sub = sotools.getSubgraph(g_full, rdflib.URIRef("https://example.net/sub"))
-print("===\nExtracted:")
-print(g_sub.serialize(format="nt").decode())
+print("### Extracted:")
+print(g_sub.serialize(format="turtle").decode())
 
 #Direct comparison of the graphs, will fail if there are BNodes
 print(f"Extracted subgraph is equal to the expected graph: {g_sub == g_expected}")
