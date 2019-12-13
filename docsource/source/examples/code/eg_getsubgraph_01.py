@@ -44,7 +44,7 @@ print(g_sub.serialize(format="turtle").decode())
 #Direct comparison of the graphs, will fail if there are BNodes
 print(f"Extracted subgraph is equal to the expected graph: {g_sub == g_expected}")
 
-# Use isomorphic comparison. This operations can be very expensive if either of
-# the grphs are poorly structured with lots of BNodes
+# Use isomorphic comparison. This operation can be very expensive if either of
+# the graphs are large and degenerate with lots of BNodes.
 print((f"Extracted subgraph is isomorphic with the expected: "
       f"{rdflib.compare.isomorphic(g_sub, g_expected)}"))
