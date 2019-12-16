@@ -27,13 +27,21 @@ function thebe_activate_cells() {
       .attr("class", "thebe-status-field thebe-status-" + data.status)
       .text(data.status);
     if (data.status == "ready") {
-      var thebeInitCells = document.querySelectorAll('.thebelab-init');
-      thebeInitCells.forEach((cell) => {
-        console.log("Initializing ThebeLab with cell: " + cell.id);
-        const initButton = cell.querySelector('.thebelab-run-button');
-        initButton.click();
-      });
+      // This runs the last code block on the page once the kernel is ready.
+      var start_buttons = document.querySelectorAll('.thebelab-run-button');
+      const init_button = start_buttons.item(start_buttons.length-1);
+      init_button.click();
     }
   });
+  /* This doesn't work - never called.
+  thebelab.events.on("request-kernel", function(kernel) {
+     kernel.requestExecute(
+      {
+        code:"import os\ntry:\n  os.chdir('docsource/source')\nexcept:\n  pass\n"
+      }
+    )
+  });
+
+   */
 }
 

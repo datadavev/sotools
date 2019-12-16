@@ -1,16 +1,19 @@
 .. include this to insert a Binder activation section.
 
-Running code on this page
--------------------------
+How to run code on this page
+----------------------------
 
-All examples on this page can be run live in Binder. To do so:
+All examples on this page can be run live in Mybinder_. To do so:
 
 1. Click on the "Activate Binder" button
 2. Wait for Binder to be active. This can take a while, you can watch progress in your
    browser's `javascript console`_. When a line like ``Kernel: connected (89dfd3c8...`` appears,
    Binder should be ready to go.
-3. Run the following **before** any other script on the page. This sets the right
-   path context for loading examples etc.
+3. The following code sets up the code path for examples and should execute
+   automatically when Binder is ready. Wait for the output before running other
+   scripts on this page.
+
+.. _Mybinder: https://mybinder.org/
 
 .. thebe-button:: Activate Binder
 
