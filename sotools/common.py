@@ -7,6 +7,7 @@ from rdflib.term import Identifier
 from rdflib import ConjunctiveGraph, Namespace, URIRef
 from rdflib.namespace import NamespaceManager
 from rdflib.tools import rdf2dot
+import pyshacl
 import graphviz
 import json
 import requests
@@ -83,7 +84,7 @@ def _normalizeTerm(t):
         v = str(t)
         so_match = RE_SO.match(v)
         if so_match is not None:
-            v = v[so_match.end():]
+            v = v[so_match.end() :]
             if v[-1] == "/":
                 v = v[:-1]
             return URIRef(v, SCHEMA_ORG)
@@ -245,9 +246,36 @@ def getSubgraph(g, subject, max_depth=100):
     """
     sg = ConjunctiveGraph()
     sg.namespace_manager = NamespaceManager(g)
-    sg += g.triples( (subject, None, None) )
+    sg += g.triples((subject, None, None))
     inflateSubgraph(g, sg, sg, max_depth=max_depth)
     return sg
+
+
+def validateSHACL(shape_graph, data_graph):
+    """
+    Validate data against a SHACL shape using common options.
+
+    Args:
+        shape_graph (ConjunctiveGraph): A SHACL shape graph
+        data_graph (ConjunctiveGraph): Data graph to be validated with shape_graph
+
+    Returns (tuple): Conformance (boolean), result graph (Graph) and result text
+
+    Example:
+
+    .. jupyter-execute:: examples/code/eg_validate_01.py
+    
+    """
+    conforms, result_graph, result_text = pyshacl.validate(
+        data_graph,
+        shacl_graph=shape_graph,
+        inference="rdfs",
+        meta_shacl=True,
+        abort_on_error=False,
+        debug=False,
+        advanced=True,
+    )
+    return conforms, result_graph, result_text
 
 
 def renderGraph(g):
@@ -321,7 +349,7 @@ def getLiteralDatasetIdentifiers(g):
     res = []
     qres = g.query(q)
     for v in qres:
-        res.append({"value": str(v[0]), "propertyId":"Literal", "url": None})
+        res.append({"value": str(v[0]), "propertyId": "Literal", "url": None})
     return res
 
 

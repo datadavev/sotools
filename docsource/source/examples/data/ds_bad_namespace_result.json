@@ -1,0 +1,17 @@
+{
+  "@context": {
+    "@vocab": "http://ns.dataone.org/schema/SO",
+    "shacl": "http://www.w3.org/ns/shacl#"
+  },
+  "@type": "shacl:ValidationReport",
+  "shacl:conforms": false,
+  "shacl:result": {
+    "@type": "shacl:ValidationResult",
+    "shacl:focusNode": "https://example.com/test-00",
+    "shacl:resultMessage": "Expecting SO namespace of <https://schema.org/> not <http://schema.org/>",
+    "shacl:resultSeverity": "shacl:Violation",
+    "shacl:sourceConstraintComponent": "shacl:NotConstraintComponent",
+    "shacl:sourceShape": "http://ns.dataone.org/schema/SO#DatasetBad2Shape",
+    "shacl:value": "https://example.com/test-00"
+  }
+}

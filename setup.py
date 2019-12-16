@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 kwargs = {
     'name': 'sotools',
-    'version': '1.0.0',
+    'version': '1.2.0',
     'description': 'Tools and ',
     'author': 'Dave Vieglais',
     'url': 'https://github.com/datadavev/sotools',

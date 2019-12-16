@@ -78,6 +78,34 @@ For example:
 
 .. jupyter-execute:: examples/code/eg_metadatalinks_subjectof_02.py
 
+Conformance to the ``SO:subjectOf`` approach can be evaluated using the SHACL shape:
+
+.. literalinclude:: examples/shapes/test_dataset_subjectof.ttl
+   :linenos:
+
+For example:
+
+.. jupyter-execute::
+   :linenos:
+
+   import rdflib
+   import sotools
+   import pyshacl
+   json_source = "examples/data/ds_m_subjectof.json"
+   data_graph = sotools.loadSOGraph(filename=json_source, publicID="https://my.server.net/data/")
+   shape_graph = rdflib.ConjunctiveGraph()
+   shape_graph.parse("examples/shapes/test_dataset_subjectof.ttl", format="turtle")
+   conforms, result_graph, result_text = pyshacl.validate(
+     data_graph,
+     shacl_graph=shape_graph,
+     inference="rdfs",
+     meta_shacl=True,
+     abort_on_error=False,
+     debug=False,
+     advanced=True
+   )
+   print(result_text)
+
 .. _about-label:
 
 `about` metadata links
