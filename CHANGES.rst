@@ -1,17 +1,6 @@
-Version 1.2.0
--------------
-
-- :commit:``
-- Added :func:`validateSHACL` as a convenience wrapper for ``pyshacl.validate()``
 - Added this log.
-
-Version 1.1.0
--------------
-
-- :commit:`01c6d8a21b103348e663dadbb46b67327f42f7d7`
-- Added :func:`getSubgraph` to extract a subgraph.
-
-Version 1.0.0
--------------
-- :commit:`4df09e0e77991377a9836780727ef651456e85a0`
-- Base implementation with documentation.
+- Added :func:`validateSHACL` as a convenience wrapper for ``pyshacl.validate()``. :commit:`65d1732715dd4d6a59449223421f59549c2bfd1a`
+- :release: v1.1 2019-12-13
+- Added :func:`getSubgraph` to extract a subgraph. :commit:`01c6d8a21b103348e663dadbb46b67327f42f7d7`
+- :release: v1.0 2019-12-04
+- Base implementation with documentation. :commit:`4df09e0e77991377a9836780727ef651456e85a0`
