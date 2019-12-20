@@ -251,33 +251,6 @@ def getSubgraph(g, subject, max_depth=100):
     return sg
 
 
-def validateSHACL(shape_graph, data_graph):
-    """
-    Validate data against a SHACL shape using common options.
-
-    Args:
-        shape_graph (ConjunctiveGraph): A SHACL shape graph
-        data_graph (ConjunctiveGraph): Data graph to be validated with shape_graph
-
-    Returns (tuple): Conformance (boolean), result graph (Graph) and result text
-
-    Example:
-
-    .. jupyter-execute:: examples/code/eg_validate_01.py
-    
-    """
-    conforms, result_graph, result_text = pyshacl.validate(
-        data_graph,
-        shacl_graph=shape_graph,
-        inference="rdfs",
-        meta_shacl=True,
-        abort_on_error=False,
-        debug=False,
-        advanced=True,
-    )
-    return conforms, result_graph, result_text
-
-
 def renderGraph(g):
     """
     For rendering an rdflib graph in Jupyter notebooks
