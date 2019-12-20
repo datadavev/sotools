@@ -1,4 +1,4 @@
-import sotools
+import sotools.shack
 import rdflib
 
 data_source = "examples/data/ds_bad_namespace.json"
@@ -7,7 +7,7 @@ data_graph.parse(data_source, format="json-ld", publicID="https://example.net/da
 shape_source = "examples/shapes/test_namespace.ttl"
 shape_graph = rdflib.ConjunctiveGraph()
 shape_graph.parse(shape_source, format="turtle")
-conforms, result_graph, result_text = sotools.validateSHACL(shape_graph, data_graph)
+conforms, result_graph, result_text = sotools.shack.validateSHACL(shape_graph, data_graph)
 print(f"Data shape conforms: {conforms}")
 print(f"Results text: \n{result_text}")
 print("Results graph:")
