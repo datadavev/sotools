@@ -6,7 +6,6 @@ import rdflib
 import rdflib.compare
 import pyshacl
 
-
 def validateSHACL(shape_graph, data_graph):
     """
     Validate data against a SHACL shape using common options.

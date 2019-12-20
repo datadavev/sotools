@@ -5,6 +5,7 @@ Modified version of rdflib.tools.rdf2dot
 
 import collections
 import textwrap
+import html
 import rdflib
 
 LABEL_PROPERTIES = [

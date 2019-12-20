@@ -50,6 +50,7 @@ on crawling and indexing with DataONE infrastructure.
    ns_normalize
    external_metadata
    sotools.common
+   sotools.rdf2dot
    changelog
 
 

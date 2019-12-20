@@ -158,8 +158,9 @@ def setup(app):
 
             def run(self):
                 module_name = self.arguments[0]
+                from_list = module_name.split(".")[:-1]
                 try:
-                    m = __import__(module_name, globals(), locals(), [])
+                    m = __import__(module_name, globals(), locals(), [".".join(from_list)])
                     if 'functions' in self.options:
                         _, methods = self.get_members(m, 'function', ['__init__'])
                         self.content = ["~%s.%s" % (module_name, method) for method in methods if not method.startswith('_')]

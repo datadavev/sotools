@@ -6,14 +6,13 @@ import io
 from rdflib.term import Identifier
 from rdflib import ConjunctiveGraph, Namespace, URIRef
 from rdflib.namespace import NamespaceManager
-from rdflib.tools import rdf2dot
-import pyshacl
 import graphviz
 import json
 import requests
 from extruct.jsonld import JsonLdExtractor
 import logging
 import re
+from . import rdf2dot
 
 SCHEMA_ORG = "https://schema.org/"
 SO_PREFIX = "SO"
@@ -249,6 +248,8 @@ def getSubgraph(g, subject, max_depth=100):
     sg += g.triples((subject, None, None))
     inflateSubgraph(g, sg, sg, max_depth=max_depth)
     return sg
+
+
 
 
 def renderGraph(g):
