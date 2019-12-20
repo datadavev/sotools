@@ -1,0 +1,19 @@
+{
+    "@context": {
+        "@vocab": "https://schema.org/"
+    },
+    "@id": "ds_m_subjectof_01.json",
+    "url": "https://my.server.org/data/ds_m_subjectof_01",
+    "@type": "Dataset",
+    "identifier": "ds_m_subjectof_01",
+    "name": "Dataset subjectOf metadata",
+    "description": "Dataset snippet with descriptive metadata indicated through subjectOf relation.",
+    "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "subjectOf": {
+        "@id": "ds_m_subjectof_01/metadata.xml",
+        "@type": "CreativeWork",
+        "name": "Dublin Core Metadata Document Describing the Dataset",
+        "url": "https://my.server.org/data/ds_m_subjectof_01/metadata.xml",
+        "encodingFormat": ["application/rdf+xml", "http://ns.dataone.org/metadata/schema/onedcx/v1.0"]
+    }
+}

@@ -3,7 +3,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix SO: <https://schema.org/> .
-@prefix d1: <http://ns.dataone.org/schema/SO/1.0/> .
+@prefix d1: <http://ns.dataone.org/schema/SO/1.0/SHACL/> .
 
 d1:rdfPrefix
   sh:declare [
@@ -18,6 +18,8 @@ d1:schemaPrefix
   ] .
 
 d1:subjectofCreativeWorkShape
+    # Verify that the target of a subjectOf property in an SO:Dataset
+    # has a url property if it is an instance of SO:CreativeWork
     a sh:NodeShape ;
     sh:target [
         a sh:SPARQLTarget ;
@@ -38,6 +40,8 @@ d1:subjectofCreativeWorkShape
     ] .
 
 d1:subjectofMediaObjectShape
+    # Verify that the target of a subjectOf property in an SO:Dataset
+    # has a url or contentUrl property if it is an instance of SO:MediaObject or its subclasses
     a sh:NodeShape ;
     sh:target [
         a sh:SPARQLTarget ;
@@ -47,7 +51,8 @@ d1:subjectofMediaObjectShape
             WHERE {
                 ?DS rdf:type SO:Dataset .
                 ?DS SO:subjectOf ?this .
-                ?this rdf:type SO:MediaObject .
+                ?this rdf:type ?type .
+                ?type rdfs:subClassOf* SO:MediaObject .
             }
         """ ;
     ] ;
@@ -62,3 +67,4 @@ d1:subjectofMediaObjectShape
             sh:minCount 1;
         ]
     ) .
+

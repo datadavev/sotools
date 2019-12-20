@@ -2,18 +2,18 @@
     "@context": {
         "@vocab": "https://schema.org/"
     },
-    "@id": "ds-02",
-    "url": "https://my.server.org/data/ds-02",
+    "@id": "ds_m_subjectof_02",
+    "url": "https://my.server.org/data/ds_m_subjectof_02",
     "@type": "Dataset",
     "identifier": "dataset-02",
     "name": "Dataset subjectOf metadata",
-    "description": "Dataset snippet with descriptive metadata indicated through subjectOf relation.",
+    "description": "Dataset snippet with descriptive metadata indicated through subjectOf relation to MediaObject.",
     "license": "https://creativecommons.org/publicdomain/zero/1.0/",
     "subjectOf": {
-        "@id": "ds-02/metadata.xml",
-        "@type": "CreativeWork",
+        "@id": "ds_m_subjectof_02/metadata.xml",
+        "@type": "MediaObject",
         "name": "Dublin Core Metadata Document Describing the Dataset",
-        "url": "https://my.server.org/data/ds-02/metadata.xml",
+        "url": "https://my.server.org/data/ds_m_subjectof_02/metadata.xml",
         "encodingFormat": ["application/rdf+xml", "http://ns.dataone.org/metadata/schema/onedcx/v1.0"]
     }
 }

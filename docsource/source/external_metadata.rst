@@ -37,7 +37,7 @@ the document has an ``encodingFormat`` of ``application/rdf+xml`` and also
 ``http://ns.dataone.org/metadata/schema/onedcx/v1.0``, which is a value from the DataONE vocabulary of object
 formats [#objectformats]_.
 
-.. literalinclude:: examples/data/ds_m_subjectof.json
+.. literalinclude:: examples/data/ds_m_subjectof_01.json
    :language: JSON
    :linenos:
 
@@ -45,7 +45,7 @@ formats [#objectformats]_.
    :hide-code:
 
    import sotools
-   json_source = "examples/data/ds_m_subjectof.json"
+   json_source = "examples/data/ds_m_subjectof_01.json"
    g = sotools.loadSOGraph(filename=json_source, publicID="https://my.server.net/data/")
    sotools.renderGraph(g)
 
@@ -91,7 +91,7 @@ For example:
    import rdflib
    import sotools
    import pyshacl
-   json_source = "examples/data/ds_m_subjectof.json"
+   json_source = "examples/data/ds_m_subjectof_01.json"
    data_graph = sotools.loadSOGraph(filename=json_source, publicID="https://my.server.net/data/")
    shape_graph = rdflib.ConjunctiveGraph()
    shape_graph.parse("examples/shapes/test_dataset_subjectof.ttl", format="turtle")

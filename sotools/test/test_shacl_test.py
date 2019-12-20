@@ -2,6 +2,10 @@ import rdflib
 import sotools.common
 import sotools.shack
 
+"""
+Some simple tests for the SHACL validation tool
+"""
+
 PUBLICID = "https://example.net/"
 
 prefix = """
@@ -116,7 +120,7 @@ class TestSHACLTest:
         expected_graph = rdflib.Graph()
         expected_graph.parse(data=expected_valid_source, format="turtle", publicID=PUBLICID)
         result = sotools.shack.shaclTestCase(shape_graph, data_graph, expected_graph)
-        self._printResult(result)
+        #self._printResult(result)
         assert result["isomorphic"]
         assert result["similar"]
 
@@ -129,6 +133,6 @@ class TestSHACLTest:
         expected_graph = rdflib.Graph()
         expected_graph.parse(data=expected_invalid_source, format="turtle", publicID=PUBLICID)
         result = sotools.shack.shaclTestCase(shape_graph, data_graph, expected_graph)
-        self._printResult(result)
+        #self._printResult(result)
         assert result["isomorphic"]
         assert result["similar"]
