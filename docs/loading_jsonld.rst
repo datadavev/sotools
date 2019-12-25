@@ -1,7 +1,7 @@
 Loading JSON LD
 ===============
 
-.. literalinclude:: examples/data/ds_m_encoding.json
+.. literalinclude:: ../examples/data/ds_m_encoding.json
    :language: JSON
 
 .. jupyter-execute::

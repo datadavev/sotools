@@ -9,7 +9,7 @@ entities. The schema.org guidelines [#sofaq]_ are somewhat ambivalent on the top
 The trailing slash (/) is also important. Without it, common RDF processing libraries such as rdflib [#rdflib]_ will construct
 a term like "https://schema.orgDataset". For example given the three ``SO:Dataset`` entries:
 
-.. literalinclude:: examples/data/ds_bad_namespace.json
+.. literalinclude:: ../examples/data/ds_bad_namespace.json
    :language: JSON
    :linenos:
 

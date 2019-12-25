@@ -13,11 +13,11 @@ matching classes [#targets]_ for testing.
 
 Using the SHACL shapes:
 
-.. literalinclude:: examples/shapes/test_namespace.ttl
+.. literalinclude:: ../examples/shapes/test_namespace.ttl
 
 and a graph with three ``SO:Dataset`` sub-graphs that use invalid namespaces:
 
-.. literalinclude:: examples/data/ds_bad_namespace.json
+.. literalinclude:: ../examples/data/ds_bad_namespace.json
 
 The SHACL tests are applied and results printed:
 
@@ -41,7 +41,7 @@ The SHACL tests are applied and results printed:
 
 For comparison, a valid ``SO:Dataset``:
 
-.. literalinclude:: examples/data/ds_m_about.json
+.. literalinclude:: ../examples/data/ds_m_about.json
 
 Does not match any of the bad namespace tests and so conforms.
 

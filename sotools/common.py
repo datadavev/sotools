@@ -124,7 +124,7 @@ def loadSOGraph(
 
     Example:
 
-    .. jupyter-execute:: examples/code/eg_loadsograph_01.py
+    .. jupyter-execute:: ../examples/code/eg_loadsograph_01.py
 
     """
     g = ConjunctiveGraph()
@@ -183,7 +183,7 @@ def loadSOGraphFromUrl(url):
 
     Example:
 
-    .. jupyter-execute:: examples/code/eg_loadfromurl_01.py
+    .. jupyter-execute:: ../examples/code/eg_loadfromurl_01.py
     """
     response = requests.get(url)
     if response.status_code != requests.codes.ok:
@@ -240,7 +240,7 @@ def getSubgraph(g, subject, max_depth=100):
 
     Example:
 
-    .. jupyter-execute:: examples/code/eg_getsubgraph_01.py
+    .. jupyter-execute:: ../examples/code/eg_getsubgraph_01.py
 
     """
     sg = ConjunctiveGraph()
@@ -264,7 +264,7 @@ def renderGraph(g):
 
     Example:
 
-    .. jupyter-execute:: examples/code/eg_rendergraph_01.py
+    .. jupyter-execute:: ../examples/code/eg_rendergraph_01.py
     """
     fp = io.StringIO()
     rdf2dot.rdf2dot(g, fp)
@@ -283,7 +283,7 @@ def hasDataset(g):
 
     Example:
 
-    .. jupyter-execute:: examples/code/eg_hasdataset_01.py
+    .. jupyter-execute:: ../examples/code/eg_hasdataset_01.py
 
     """
     q = (
@@ -372,7 +372,7 @@ def getDatasetIdentifiers(g):
 
     Example:
 
-    .. jupyter-execute:: examples/code/eg_datasetidentifiers_01.py
+    .. jupyter-execute:: ../examples/code/eg_datasetidentifiers_01.py
     """
     # First get any identifiers that are literals with no additional context
     res = getLiteralDatasetIdentifiers(g)
@@ -391,7 +391,7 @@ def getDatasetMetadataLinksFromEncoding(g):
 
     Example:
 
-    .. jupyter-execute:: examples/code/eg_metadatalinks_encoding.py
+    .. jupyter-execute:: ../examples/code/eg_metadatalinks_encoding.py
     """
     q = (
         SPARQL_PREFIXES
@@ -433,7 +433,7 @@ def getDatasetMetadataLinksFromSubjectOf(g):
 
     Example:
 
-    .. jupyter-execute:: examples/code/eg_metadatalinks_subjectof.py
+    .. jupyter-execute:: ../examples/code/eg_metadatalinks_subjectof.py
     """
     q = (
         SPARQL_PREFIXES
@@ -477,7 +477,7 @@ def getDatasetMetadataLinksFromAbout(g):
 
     Example:
 
-    .. jupyter-execute:: examples/code/eg_metadatalinks_about.py
+    .. jupyter-execute:: ../examples/code/eg_metadatalinks_about.py
     """
     q = (
         SPARQL_PREFIXES
@@ -527,7 +527,7 @@ def getDatasetMetadataLinks(g):
 
     Example:
 
-    .. jupyter-execute:: examples/code/eg_metadatalinks_01.py
+    .. jupyter-execute:: ../examples/code/eg_metadatalinks_01.py
     """
     res = getDatasetMetadataLinksFromEncoding(g)
     res += getDatasetMetadataLinksFromSubjectOf(g)

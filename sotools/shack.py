@@ -18,7 +18,7 @@ def validateSHACL(shape_graph, data_graph):
 
     Example:
 
-    .. jupyter-execute:: examples/code/eg_validate_01.py
+    .. jupyter-execute:: ../examples/code/eg_validate_01.py
 
     """
     conforms, result_graph, result_text = pyshacl.validate(

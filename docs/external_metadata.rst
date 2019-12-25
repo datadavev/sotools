@@ -37,7 +37,7 @@ the document has an ``encodingFormat`` of ``application/rdf+xml`` and also
 ``http://ns.dataone.org/metadata/schema/onedcx/v1.0``, which is a value from the DataONE vocabulary of object
 formats [#objectformats]_.
 
-.. literalinclude:: examples/data/ds_m_subjectof_01.json
+.. literalinclude:: ../examples/data/ds_m_subjectof_01.json
    :language: JSON
    :linenos:
 
@@ -76,11 +76,11 @@ Which is implemented in the method :func:`sotools.common.getDatasetMetadataLinks
 
 For example:
 
-.. jupyter-execute:: examples/code/eg_metadatalinks_subjectof_02.py
+.. jupyter-execute:: ../examples/code/eg_metadatalinks_subjectof_02.py
 
 Conformance to the ``SO:subjectOf`` approach can be evaluated using the SHACL shape:
 
-.. literalinclude:: examples/shapes/test_dataset_subjectof.ttl
+.. literalinclude:: ../examples/shapes/test_dataset_subjectof.ttl
    :linenos:
 
 For example:
@@ -121,7 +121,7 @@ id ``./metadata.xml`` is ``about`` the ``SO:Dataset`` with id ``./`` and the ``S
 The type of the metadata document as indicated by the ``encodingFormat`` property is ``http://www.isotc211.org/2005/gmd``,
 a value which is drawn from the DataONE vocabulary of object formats.
 
-.. literalinclude:: examples/data/ds_m_about.json
+.. literalinclude:: ../examples/data/ds_m_about.json
    :language: JSON
    :linenos:
 
@@ -160,7 +160,7 @@ which is implemented in the :func:`sotools.common.getDatasetMetadataLinksFromAbo
 
 For example:
 
-.. jupyter-execute:: examples/code/eg_metadatalinks_about_02.py
+.. jupyter-execute:: ../examples/code/eg_metadatalinks_about_02.py
 
 .. _encoding-label:
 
@@ -180,7 +180,7 @@ an id of ``ds_m_encoding#media-object`` and ``encodingFormat`` of ``http://www.i
 from the DataONE vocabulary of object formats. The media object is located at the
 URL ``https://my.server.net/datasets/00.xml``
 
-.. literalinclude:: examples/data/ds_m_encoding.json
+.. literalinclude:: ../examples/data/ds_m_encoding.json
    :language: JSON
    :linenos:
 
@@ -217,7 +217,7 @@ which is implemented with the method :func:`sotools.common.getDatasetMetadataLin
 
 For example:
 
-.. jupyter-execute:: examples/code/eg_metadatalinks_encoding_02.py
+.. jupyter-execute:: ../examples/code/eg_metadatalinks_encoding_02.py
 
 
 Footnotes
