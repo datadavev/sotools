@@ -33,15 +33,5 @@ function thebe_activate_cells() {
       init_button.click();
     }
   });
-  /* This doesn't work - never called.
-  thebelab.events.on("request-kernel", function(kernel) {
-     kernel.requestExecute(
-      {
-        code:"import os\ntry:\n  os.chdir('docsource/source')\nexcept:\n  pass\n"
-      }
-    )
-  });
-
-   */
 }
 
