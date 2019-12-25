@@ -9,7 +9,7 @@ kwargs = {
     'license': 'Apache License, Version 2.0',
     #'packages': ['sotools', 'binder_setup'],
     'packages': find_packages(),
-    'package_data': {'sotools': ['data/data/*.jsonld', 'data/shapes/*.jsonld', 'data/shapes/*.ttl']},
+    'package_data': {},
     'install_requires': [
         'rdflib','rdflib-jsonld'
     ],

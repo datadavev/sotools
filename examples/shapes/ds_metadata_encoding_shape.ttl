@@ -4,7 +4,7 @@
 @prefix schema: <http://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix d1: <http://ns.dataone.org/schema/2019/08/SO/Dataset#> .
+@prefix d1: <http://ns.dataone.org/schema/SO/1.0/SHACL/> .
 
 d1:rdfPrefix
   sh:declare [
