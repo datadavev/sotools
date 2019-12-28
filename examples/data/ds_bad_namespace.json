@@ -1,26 +1,39 @@
-[
-  {
-    "@context": {
-      "@vocab": "https://schema.org"
-    },
-    "@id":"demo_0",
-    "@type":"Dataset",
-    "name": "https, no trailing slash"
+{
+  "@context":{
+    "d1": "https://ns.dataone.org/schema/SO/1.0/SHACL/"
   },
-  {
-    "@context": {
-      "@vocab": "http://schema.org"
+  "@graph":[
+    {
+      "@context": {
+        "@vocab": "https://schema.org"
+      },
+      "@id": "d1:so_no_slash",
+      "@type": "Dataset",
+      "name": "https, no trailing slash"
     },
-    "@id":"demo_1",
-    "@type":"Dataset",
-    "name": "http, no trailing slash"
-  },
-  {
-    "@context": {
-      "@vocab": "http://schema.org/"
+    {
+      "@context": {
+        "@vocab": "http://schema.org"
+      },
+      "@id": "d1:so_http_no_slash",
+      "@type": "Dataset",
+      "name": "http, no trailing slash"
     },
-    "@id":"demo_2",
-    "@type":"Dataset",
-    "name": "http only"
-  }
-]
+    {
+      "@context": {
+        "@vocab": "http://schema.org/"
+      },
+      "@id": "d1:so_http",
+      "@type": "Dataset",
+      "name": "http only"
+    },
+    {
+      "@context": {
+        "@vocab": "https://schema.org/"
+      },
+      "@id": "d1:so_ok",
+      "@type": "Dataset",
+      "name": "SO OK"
+    }
+  ]
+}

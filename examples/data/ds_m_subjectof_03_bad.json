@@ -7,13 +7,13 @@
     "@type": "Dataset",
     "identifier": "dataset-02",
     "name": "Dataset subjectOf metadata",
-    "description": "Dataset snippet with descriptive metadata indicated through subjectOf relation to instance of MediaObject.",
+    "description": "Dataset snippet with descriptive metadata indicated through subjectOf relation to instance of DataDownload.",
     "license": "https://creativecommons.org/publicdomain/zero/1.0/",
     "subjectOf": {
         "@id": "ds_m_subjectof_02/metadata.xml",
-        "@type": "MediaObject",
+        "@type": "DataDownload",
         "name": "Dublin Core Metadata Document Describing the Dataset",
-        "url": "https://my.server.org/data/ds_m_subjectof_02/metadata.xml",
+        "urlX": "https://my.server.org/data/ds_m_subjectof_02/metadata.xml",
         "encodingFormat": ["application/rdf+xml", "http://ns.dataone.org/metadata/schema/onedcx/v1.0"]
     }
 }

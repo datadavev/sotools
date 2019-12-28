@@ -42,6 +42,8 @@ d1:subjectofCreativeWorkShape
 d1:subjectofMediaObjectShape
     # Verify that the target of a subjectOf property in an SO:Dataset
     # has a url or contentUrl property if it is an instance of SO:MediaObject or its subclasses
+    # Note that this shape requires subclass relationships are available, so the schema.org
+    # vocabulary needs to be loaded
     a sh:NodeShape ;
     sh:target [
         a sh:SPARQLTarget ;
@@ -56,7 +58,7 @@ d1:subjectofMediaObjectShape
             }
         """ ;
     ] ;
-    sh:message "url or contentUrl is required for subjectOf as a MediaObject" ;
+    sh:message "url or contentUrl is required for subjectOf as a MediaObject or subclass thereof" ;
     sh:xone (
         [
             sh:path SO:contentUrl;

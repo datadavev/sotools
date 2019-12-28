@@ -13,7 +13,7 @@
         "@id": "ds_m_subjectof_02/metadata.xml",
         "@type": "MediaObject",
         "name": "Dublin Core Metadata Document Describing the Dataset",
-        "url": "https://my.server.org/data/ds_m_subjectof_02/metadata.xml",
+        "urlX": "https://my.server.org/data/ds_m_subjectof_02/metadata.xml",
         "encodingFormat": ["application/rdf+xml", "http://ns.dataone.org/metadata/schema/onedcx/v1.0"]
     }
 }

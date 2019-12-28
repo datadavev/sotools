@@ -10,7 +10,7 @@ import os.path
 import sotools.common
 
 test_data_folder = os.path.join(
-    os.path.dirname(__file__), "../../docsource/source/examples/data/"
+    os.path.dirname(__file__), "../../examples/data/"
 )
 
 test_data = {

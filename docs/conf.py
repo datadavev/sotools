@@ -47,6 +47,11 @@ extensions = [
     "sphinx.ext.graphviz",
 ]
 
+# Intersphinx mappings
+intersphinx_mapping = {
+    'rdflib': ('https://rdflib.readthedocs.io/en/stable/', None),
+}
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 

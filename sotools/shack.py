@@ -6,15 +6,27 @@ import rdflib
 import rdflib.compare
 import pyshacl
 
-def validateSHACL(shape_graph, data_graph):
+def validateSHACL(data_graph, shacl_graph=None, ont_graph=None):
     """
     Validate data against a SHACL shape using common options.
 
-    Args:
-        shape_graph (ConjunctiveGraph): A SHACL shape graph
-        data_graph (ConjunctiveGraph): Data graph to be validated with shape_graph
+    Calls pyshacl.validate with the options:
 
-    Returns (tuple): Conformance (boolean), result graph (Graph) and result text
+    :inference: "rdfs"
+    :meta_shacl: True
+    :abort_on_error: True
+    :debug: False
+    :advanced: True
+
+    When validating shapes that use subclass inference, it is necessary for the relationships to be provided in one
+    of the graphs, or separately with the ``onto_graph`` property.
+
+    Args:
+        shape_graph (:class:`~rdflib.graph.Graph`): A SHACL shape graph
+        data_graph (:class:`~rdflib.graph.Graph`): Data graph to be validated with shape_graph
+        ontology_graph (:class:`~rdflib.graph.Graph`): Optional ontology graph to be added to the data graph
+
+    Returns (tuple): Conformance (boolean), result graph (:class:`~rdflib.graph.Graph`) and result text
 
     Example:
 
@@ -23,7 +35,8 @@ def validateSHACL(shape_graph, data_graph):
     """
     conforms, result_graph, result_text = pyshacl.validate(
         data_graph,
-        shacl_graph=shape_graph,
+        shacl_graph=shacl_graph,
+        ont_graph=ont_graph,
         inference="rdfs",
         meta_shacl=True,
         abort_on_error=False,
@@ -33,25 +46,26 @@ def validateSHACL(shape_graph, data_graph):
     return conforms, result_graph, result_text
 
 
-def shaclTestCase(shape_graph, data_graph, expected_graph):
+def shaclTestCase(data_graph, shacl_graph, expected_graph, ont_graph=None):
     """
     Apply SHACL shape_graph to data_graph and compare with expected_graph.
 
     Result provides isomorphism, similarity, diff_graphs
 
     Args:
-        shape_graph (Graph):
-        data_graph (Graph):
-        expected_graph (Graph):
+        data_graph (:class:`~rdflib.graph.Graph`): The data graph
+        shacl_graph (:class:`~rdflib.graph.Graph`): The SHACL shapes graph
+        expected_graph (:class:`~rdflib.graph.Graph`): Expected outcome of the evaluation
+        onto_graph (:class:`~rdflib.graph.Graph`): Optional ontology or vocabulary graph
 
-    Returns {boolean, boolean, (Graph, Graph, Graph)}:
+    Returns {boolean, boolean, (:class:`~rdflib.graph.Graph`, :class:`~rdflib.graph.Graph`, :class:`~rdflib.graph.Graph`)}:
 
     """
-    conforms, result_graph, result_text = validateSHACL(shape_graph, data_graph)
+    conforms, result_graph, result_text = validateSHACL(data_graph, shacl_graph, ont_graph=ont_graph)
     # Convert to isomorphic form for comparison
     result_graph = rdflib.compare.to_isomorphic(result_graph)
     expected_graph = rdflib.compare.to_isomorphic(expected_graph)
-    res = {"isomorphic":False, "similar": False, "diff":{} }
+    res = {"conforms":conforms, "result_text":result_text, "isomorphic":False, "similar": False, "diff":{} }
     res["isomorphic"] = result_graph == expected_graph
     res["similar"] = rdflib.compare.similar(result_graph, expected_graph)
     g12,g1,g2 = rdflib.compare.graph_diff(result_graph, expected_graph)

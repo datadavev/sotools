@@ -12,7 +12,7 @@ import sotools.common
 # References to test data
 # These are located in the docsource folder
 test_data_folder = os.path.join(
-    os.path.dirname(__file__), "../../docsource/source/examples/data/"
+    os.path.dirname(__file__), "../../examples/data/"
 )
 
 test_data = {

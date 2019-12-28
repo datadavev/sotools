@@ -132,7 +132,7 @@ class TestSHACLTest:
         shape_graph.parse(data=shape_graph_source, format="turtle", publicID=PUBLICID)
         expected_graph = rdflib.Graph()
         expected_graph.parse(data=expected_invalid_source, format="turtle", publicID=PUBLICID)
-        result = sotools.shack.shaclTestCase(shape_graph, data_graph, expected_graph)
+        result = sotools.shack.shaclTestCase(data_graph, shacl_graph=shape_graph, expected_graph=expected_graph)
         #self._printResult(result)
         assert result["isomorphic"]
         assert result["similar"]
